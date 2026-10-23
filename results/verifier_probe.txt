@@ -1,0 +1,9 @@
+ok  reward=0 expected=0  no tool
+ok  reward=0 expected=0  tool exits with an error
+ok  reward=0 expected=0  tool writes an example's hand takeoff
+ok  reward=0 expected=0  tool reads the verifier's plan models and stores
+ok  reward=0 expected=0  tool leaves a process behind to overwrite the reward
+ok  reward=0 expected=0  reference tool, one cooler door short
+ok  reward=0 expected=0  reference tool, areas 3% high
+ok  reward=1 expected=1  reference tool
+ok  reward=1 expected=1  reference tool, areas 1% low, lengths 1% high
