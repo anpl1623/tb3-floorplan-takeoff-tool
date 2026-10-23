@@ -204,10 +204,10 @@ def legend(g, ppf, outer):
     return dict(zip(FINISHES, finishes)), walls
 
 
-def stroke_gap(g, band, half=15, step=6):
-    """Centre-to-centre distance in pixels between a band's two outline strokes at every position
-    along it, from the median cross-section over about a foot of wall (hatching and tints average
-    out along the wall; the strokes don't). One band can hold walls of two thicknesses on one
+def stroke_edges(g, band, half=15, step=6):
+    """Rows of a band's two outline strokes at every position along it, relative to band["lo"],
+    from the median cross-section over about a foot of wall (hatching and tints average out
+    along the wall; the strokes don't). One band can hold walls of two thicknesses on one
     centreline, so this is measured locally."""
     lo, hi = band["lo"], band["hi"]
     if band["h"]:
@@ -215,12 +215,20 @@ def stroke_gap(g, band, half=15, step=6):
     else:
         sec = g[band["a"]:band["b"] + 1, lo - 5:hi + 6].astype(np.float32).T
     n, length = hi - lo + 1, sec.shape[1]
-    at, gaps = [], []
+    at, tops, bots = [], [], []
     for x in range(0, length, step):
         prof = np.median(sec[:, max(0, x - half):x + half + 1], axis=1)
         at.append(x)
-        gaps.append(darkest(prof, n, n + 10) - darkest(prof, 0, 10))
-    return np.interp(np.arange(length), at, gaps)
+        tops.append(darkest(prof, 0, 10) - 5)
+        bots.append(darkest(prof, n, n + 10) - 5)
+    xs = np.arange(length)
+    return np.interp(xs, at, tops), np.interp(xs, at, bots)
+
+
+def stroke_gap(g, band):
+    """Centre-to-centre distance in pixels between a band's outline strokes along it."""
+    top, bot = stroke_edges(g, band)
+    return bot - top
 
 
 def darkest(prof, lo, hi):
@@ -420,6 +428,8 @@ def profile(g, nonfloor, band):
     n = gs.shape[1]
     mid = band["lo"] - lo_ + (band["hi"] - band["lo"]) // 2
     blo, bhi = band["lo"] - lo_, band["hi"] - lo_
+    tops, bots = stroke_edges(g, band)
+    tops, bots = np.rint(tops).astype(int) + blo, np.rint(bots).astype(int) + blo
     # jamb strokes are a few pixels wide; averaging three columns removes a copier screen's
     # column pattern but keeps them
     gl = ndi.uniform_filter1d(gs, 3, axis=1)
@@ -438,6 +448,8 @@ def profile(g, nonfloor, band):
         while hi < len(col) - 1 and col[hi + 1]:
             hi += 1
         sec = gl[max(lo, blo):min(hi, bhi) + 1, x]        # a jamb is judged within the band itself
+        # the fill is measured between the wall's own outline strokes
+        lo, hi = max(lo, tops[x]), min(hi, bots[x])
         k = int(0.95 * (len(sec) - 1))
         light[x] = np.partition(sec, k)[k]
         if hi - lo >= 7:
