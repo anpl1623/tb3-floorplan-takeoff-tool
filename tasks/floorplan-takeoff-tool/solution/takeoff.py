@@ -781,10 +781,9 @@ def cooler_lineups(cells):
 
     def step(i, j, along_x):
         (x, y), (a, b) = spots[i], spots[j]
-        # an end door's clipped triangle reads a little long, never short
         if along_x:
-            return 2.3 < abs(a - x) < 2.95 and abs(b - y) < 0.4
-        return 2.3 < abs(b - y) < 2.95 and abs(a - x) < 0.4
+            return 2.05 < abs(a - x) < 2.95 and abs(b - y) < 0.4
+        return 2.05 < abs(b - y) < 2.95 and abs(a - x) < 0.4
     out = []
     for along_x in (True, False):
         seen = set()
@@ -799,8 +798,18 @@ def cooler_lineups(cells):
                         group.add(j)
                         todo.append(j)
             seen |= group
-            if len(group) >= 4:
-                out += [(spots[k][0], spots[k][1], along_x) for k in group]
+            # a door with one triangle lost reads a little off centre; a look-alike cell beside the
+            # end of a lineup (a hatch's cell) sits short of the next 2'-6" centre
+            run = sorted(group, key=lambda k: spots[k][0 if along_x else 1])
+            pos = lambda k: spots[k][0 if along_x else 1]
+            # (if instead the next door is the one off centre, the end door is still two centres
+            # from the one after)
+            while len(run) >= 3 and pos(run[1]) - pos(run[0]) < 2.35 and abs(pos(run[2]) - pos(run[0]) - 5.0) > 0.15:
+                run.pop(0)
+            while len(run) >= 3 and pos(run[-1]) - pos(run[-2]) < 2.35 and abs(pos(run[-1]) - pos(run[-3]) - 5.0) > 0.15:
+                run.pop()
+            if len(run) >= 4:
+                out += [(spots[k][0], spots[k][1], along_x) for k in run]
     return out
 
 
