@@ -6,19 +6,23 @@
 The workflow is the one an estimator follows in a PDF measuring tool, done on
 the raster:
 
-  1. straighten the scan and calibrate it against the graphic scale printed
-     under the plan (0-32 feet), because archive prints were not reproduced at
-     scale;
+  1. flatten the paper and ink (faded prints, photocopies, yellowed colour
+     scans), straighten the scan and calibrate it against the graphic scale
+     printed under the plan (0-32 feet), because archive prints were not
+     reproduced at scale;
   2. split the floor into regions bounded by heavy linework (walls, finish
      transitions and door thresholds), give each region its share of the
-     linework it is bounded by, and identify its finish from the hatch
-     spacing and direction given in the legend;
-  3. trace each wall type along its centerline, bridging door openings and
-     running into walls it meets as far as their centerline;
-  4. find door openings as gaps in the walls and classify them by width and
-     swing symbol;
-  5. count fixtures from the closed white cells their linework forms, sized
-     against the symbols in the legend.
+     linework it is bounded by, and identify its finish by matching its texture
+     (tone, contrast, spacing and direction) against the finish swatches in
+     this sheet's own legend, since every architect's office hatches finishes
+     its own way;
+  3. trace each wall along its centerline, bridging door openings and running
+     into walls it meets as far as their centerline, and type each stretch by
+     matching its thickness and poche against the legend's partition swatches;
+  4. find door openings from the jamb strokes across the walls and classify
+     them by width and by what is drawn in the opening;
+  5. count fixtures (the chain's own blocks, the same on every sheet) from the
+     closed white cells their linework forms.
 
 Usage: python3 takeoff.py <scan.pdf> <takeoff.json>
 """
@@ -393,7 +397,7 @@ def bands(nonfloor, ppf):
             top = np.where(m, rows, m.shape[0]).min(axis=0)[filled]
             bot = np.where(m, rows, -1).max(axis=0)[filled]
             lo, hi = across.start + int(np.median(top)), across.start + int(np.median(bot))
-            if not (0.25 * ppf <= hi - lo + 1 <= 1.2 * ppf):
+            if not (0.3 * ppf <= hi - lo + 1 <= 1.2 * ppf):
                 continue
             out.append(dict(h=horizontal, lo=lo, hi=hi, c=(lo + hi) / 2, a=along.start, b=along.stop - 1))
     return out, nonfloor
@@ -415,6 +419,7 @@ def profile(g, nonfloor, band):
         ms = nonfloor[band["a"]:band["b"] + 1, lo_:hi_].T
     n = gs.shape[1]
     mid = band["lo"] - lo_ + (band["hi"] - band["lo"]) // 2
+    blo, bhi = band["lo"] - lo_, band["hi"] - lo_
     mean = np.full(n, 255.0)
     dark = np.zeros(n)
     light = np.full(n, 255.0)                 # how light the lightest part of the cross-section is
@@ -429,7 +434,7 @@ def profile(g, nonfloor, band):
         hi = mid
         while hi < len(col) - 1 and col[hi + 1]:
             hi += 1
-        sec = gs[lo:hi + 1, x]
+        sec = gs[max(lo, blo):min(hi, bhi) + 1, x]        # a jamb is judged within the band itself
         k = int(0.95 * (len(sec) - 1))
         light[x] = np.partition(sec, k)[k]
         if hi - lo >= 7:
@@ -735,18 +740,44 @@ def count_cells(cells, name):
     return len(pts) / CELLS[name][3]
 
 
+def cooler_lineups(cells):
+    """Cooler doors as (x, y, along_x): a door's diagonal splits it into two triangles whose cells
+    sit within a foot of each other (the strokes clip the acute tips), so a door is one cluster
+    whether one or both triangles survived the scan. Doors come in lineups of four or more at
+    2'-6" centres; look-alike cells (a hatch, a checkout) at most pair up."""
+    spots = [(x, y) for x, y, _ in clusters([(x, y) for k, x, y in cells if k == "cooler_doors"], 1.0)]
+
+    def step(i, j, along_x):
+        (x, y), (a, b) = spots[i], spots[j]
+        if along_x:
+            return abs(abs(a - x) - 2.5) < 0.45 and abs(b - y) < 0.4
+        return abs(abs(b - y) - 2.5) < 0.45 and abs(a - x) < 0.4
+    out = []
+    for along_x in (True, False):
+        seen = set()
+        for i in range(len(spots)):
+            if i in seen:
+                continue
+            group, todo = {i}, [i]
+            while todo:
+                k = todo.pop()
+                for j in range(len(spots)):
+                    if j not in group and step(k, j, along_x):
+                        group.add(j)
+                        todo.append(j)
+            seen |= group
+            if len(group) >= 4:
+                out += [(spots[k][0], spots[k][1], along_x) for k in group]
+    return out
+
+
 def cooler_mask(cells, shape, outer, ppf):
     """Pixels of the cooler door strips: a lineup of door rectangles along a case front
     is as thin as a partition and hatched by its diagonals, so it is masked out before
     walls are traced."""
     x0, _, _, y1 = outer
-    spots = [(x, y) for x, y, _ in clusters([(x, y) for k, x, y in cells if k == "cooler_doors"], 1.0)]
     mask = np.zeros(shape, bool)
-    for x, y in spots:
-        along_x = any(abs(abs(a - x) - 2.5) < 0.45 and abs(b - y) < 0.4 for a, b in spots)
-        along_y = any(abs(abs(b - y) - 2.5) < 0.45 and abs(a - x) < 0.4 for a, b in spots)
-        if not (along_x or along_y):
-            continue
+    for x, y, along_x in cooler_lineups(cells):
         hx, hy = (1.35, 0.5) if along_x else (0.5, 1.35)
         r0, r1 = int(y1 - (y + hy) * ppf), int(y1 - (y - hy) * ppf)
         c0, c1 = int(x0 + (x - hx) * ppf), int(x0 + (x + hx) * ppf)
@@ -755,16 +786,7 @@ def cooler_mask(cells, shape, outer, ppf):
 
 
 def cooler_doors(cells):
-    """Cooler doors: a door's diagonal splits it into two triangles whose cells sit
-    within a foot of each other (the strokes clip the acute tips), so a door is one
-    cluster whether one or both triangles survived the scan. Doors come in lineups
-    at 2'-6" centres; a look-alike cell on its own elsewhere is not a door."""
-    spots = [(x, y) for x, y, _ in clusters([(x, y) for k, x, y in cells if k == "cooler_doors"], 1.0)]
-
-    def in_lineup(x, y):
-        return any((abs(abs(a - x) - 2.5) < 0.45 and abs(b - y) < 0.4) or
-                   (abs(abs(b - y) - 2.5) < 0.45 and abs(a - x) < 0.4) for a, b in spots)
-    return sum(1 for x, y in spots if in_lineup(x, y))
+    return len(cooler_lineups(cells))
 
 
 def under_fixtures(lab, codes, areas, ppf, weak=frozenset()):

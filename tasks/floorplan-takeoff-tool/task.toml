@@ -22,7 +22,7 @@ tags = ["quantity-takeoff", "construction-estimating", "architectural-drawings",
 expert_time_estimate_hours = 6
 
 [verifier]
-timeout_sec = 2400.0
+timeout_sec = 4500.0
 environment_mode = "separate"
 
 [agent]

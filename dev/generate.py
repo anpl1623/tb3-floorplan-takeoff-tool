@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Generate scanned as-built floor plans and their takeoff ground truth.
 
-For each store seed: lay out the store (dev/plan.py), plot sheet A101 at 200 dpi
-(dev/render.py), and simulate the archive scan: printed at a reduction between
-95% and 100%, scanned with a skew of up to 0.8 degrees, blur, sensor noise,
-uneven lamp shading and JPEG compression, then wrapped in an image-only PDF.
+For each store seed: lay out the store (dev/plan.py) and plot sheet A101 at
+200 dpi in one architect's office standard (dev/offices.py, dev/render.py).
+The print then reaches the archive clean, faded (light toner), photocopied
+(paper dropped to white, lines solid, greys screened at about 100 lpi) or
+yellowed; it is scanned printed at a reduction between 95% and 100%, with a
+skew of up to 0.8 degrees, blur, sensor noise, uneven lamp shading and JPEG
+compression (a yellowed print in colour), and wrapped in an image-only PDF.
 
-  --examples  the stores the agent gets, with their hand takeoffs
-  --hidden    the stores the verifier runs the agent's tool on
-  --preview   also write PNGs to dev/out/ to look at
+The examples come from three offices, the hidden stores from the other five.
+Writes the example scans and hand takeoffs to environment/data/examples/, the
+hidden scans to tests/stores/ (named by seed), and copies plan.py to tests/.
 
 Usage: python dev/generate.py [--preview SEED ...]
 """
