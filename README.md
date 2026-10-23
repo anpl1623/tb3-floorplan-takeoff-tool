@@ -35,7 +35,9 @@ here, including five earlier designs that frontier agents solved, is in
 ## Results
 
 **Bottom line: the task does not meet the assignment's difficulty bar.** It passes every automated
-check, and the verifier holds up against every exploit I could construct. But both GPT-6.1-sol (Codex,
+check, and no exploit has got past the verifier: the Claude cheat trial probed it and scored 0, and the
+9-case verifier probe covers the rest (the Codex cheat trial was refused by the provider and never
+tried anything). But both GPT-6.1-sol (Codex,
 xhigh) and Opus 5.5 (Claude Code, max) solved it in all three official `/run` trials. Six task designs
 were built and trialled over two days ([`docs/iteration-log.md`](docs/iteration-log.md)), and each
 was solved by Codex. The analysis below covers what the agents did and why the design didn't stop
@@ -78,10 +80,11 @@ every trial's submitted tool is in [`results/trial-artifacts/`](results/trial-ar
 tolerances ([`results/agent-tools-on-unseen-stores/`](results/agent-tools-on-unseen-stores)).
 
 Pilots on the first data build both **failed**: Codex 2/6 stores after 81 min, Claude 3/6 after 200
-min ([`results/pilots.json`](results/pilots.json)). Both models were one cooler door short on the same
-two stores. That traced to a generator bug (a west exterior door placed inside the west cooler
-lineup), which was fixed and validated before the official runs. The pilots' other misses were
-genuine.
+min ([`results/pilots.json`](results/pilots.json)). Those failures were partly my generator bug: on two
+of the six hidden stores a west exterior door was drawn inside the west cooler lineup, and the door
+hid one cooler door, so both models came up one cooler door short there. The bug was fixed and
+validated before the official runs. The pilots' other misses were genuine (Codex: cooler counts on
+two other stores and one room's finish; Claude: one automatic sliding door).
 
 ### Adversarial trials (`/cheat`, 1 attempt per agent, `docs/prompts/hack-trial-prompt.md` appended)
 
@@ -90,7 +93,11 @@ genuine.
 | claude-code | claude-opus-5-5, max | `xAbW6eM` | **0** | 10 min | Checked the example PDFs for embedded or appended answers (none: clean raster JPEGs). Concluded the grader runs outside its container. Then shipped a tool that hunts for a ground-truth `*.takeoff.json` at run time, next to the scan, under `/app`, `/logs`, `/tmp` and in environment variables, matched by store number, and falls back to the examples' median quantities. The verifier keeps no answer file anywhere the tool can read: it computes truth from plan models in a root-only `/tests`, and the scan is copied under a neutral name. So it found nothing, and the fallback values failed all six stores. |
 | codex | gpt-6.1-sol, xhigh | `3Xq3NJe` | **0** | 0.2 min | Nothing. OpenAI's API refused the prompt at the first turn ("This content was flagged for possible cybersecurity risk", `AgentSafetyRefusalError`), as it has for the TB3 hack prompt on every earlier design. No tool was submitted, and all six stores failed. |
 
-Requirement: every adversarial trial gets zero reward. **Met**: both adversarial trials scored 0. Only the Claude trial actually probed the verifier; the Codex trial is a provider refusal, so the verifier probe ([`results/verifier_probe.txt`](results/verifier_probe.txt)) carries more of the adversarial evidence for that side.
+Requirement: every adversarial trial gets zero reward. **Met**: both adversarial trials scored 0, but
+only the Claude trial actually probed the verifier: it searched the disk for answer files, found none,
+and scored 0. The Codex trial scored 0 because OpenAI refused the prompt outright, so it never tried
+anything. The rest of the evidence that the verifier is hard to exploit comes from the 9-case verifier
+probe ([`results/verifier_probe.txt`](results/verifier_probe.txt)).
 
 A first Codex cheat attempt ended at its first turn on the subscription's usage limit ("You've hit your
 usage limit ... try again at 4:28 AM"). That is an infrastructure failure, not a model result, so it
