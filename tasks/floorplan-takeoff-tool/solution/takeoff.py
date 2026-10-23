@@ -932,8 +932,15 @@ def takeoff(path, debug=False):
     swatches = {code: describe(swatch_tiles(g, r, ppf), ppf) for code, r in fin_rects.items()}
     refs = partition_refs(g, wall_rects, ppf)
     codes, weak = {}, set()
+    spans = ndi.find_objects(lab)
     for i in range(1, len(width) + 1):
-        if width[i - 1] < 20:          # wall bands, door openings, slivers
+        if width[i - 1] < 9:           # wall poche, door openings, slivers
+            continue
+        if width[i - 1] < 20:
+            # a door's swing or an endcap is too small to judge but floor all the same; a long thin
+            # region is the inside of a wall
+            if max(spans[i - 1][0].stop - spans[i - 1][0].start, spans[i - 1][1].stop - spans[i - 1][1].start) < 4.5 * ppf:
+                codes[i] = None
             continue
         codes[i], scores = classify_finish(g, lab == i, ppf, swatches)
         if scores.get("weak"):
