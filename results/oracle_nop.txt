@@ -1,4 +1,4 @@
-it7-oracle (reference tool at afeea81) reward=1
-======================== 13 passed in 209.78s (0:03:29) ========================
+it7-oracle-final (reference tool at 50a73d1) reward=1
+======================== 13 passed in 109.75s (0:01:49) ========================
 it7-nop reward=0
 ============================== 13 failed in 0.23s ==============================
