@@ -49,7 +49,7 @@ OFFICES = {
     "BRANDT": office("BRANDT & OKAFOR", [
         ("lines", 0, 0.6), ("joints", 10.0), ("stipple", 0.7), ("cross", 45, 135, 1.0),
         ("cross", 0, 90, 1.0), ("dots", 0.5, 0.06), ("tint", 0.82), ("tint", 0.66)],
-        cmu=("cross", 0, 90, 0.33), p2=("lines", 45, 0.2), p1=("tint", 0.82), hatch_grey=0.48, hatch_lw=0.28),
+        cmu=("cross", 45, 135, 0.3), p2=("tint", 0.7), p1=("tint", 0.86), hatch_grey=0.48, hatch_lw=0.28),
     "STILLWATER": office("STILLWATER PARTNERS", [
         ("double", 0, 0.75, 0.1), ("joints", 9.0), ("dots", 1.25, 0.07), ("dashed", 45, 0.8, 1.0, 0.4),
         ("cross", 0, 90, 1.25), ("cross", 45, 135, 0.6), ("lines", 135, 0.4), ("lines", 0, 0.2)],

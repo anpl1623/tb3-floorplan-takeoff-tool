@@ -60,24 +60,32 @@ def scan(gray, rng):
 
 
 def reproduce(gray, rng, kind):
-    """The state the sheet reached the archive in. Returns a greyscale or RGB array."""
+    """The print that reached the archive: the plotted sheet as is, faded, or photocopied."""
     g = gray.astype(np.float32)
     if kind == "faded":            # an old print: light toner, soft edges
         g = cv2.GaussianBlur(g, (0, 0), float(rng.uniform(0.6, 0.9)))
         g = 255 - (255 - g) * float(rng.uniform(0.55, 0.7))
-    elif kind == "photocopy":      # a copier screens greys into dots and blackens lines
-        g = cv2.GaussianBlur(g, (0, 0), 0.7)
+    elif kind == "photocopy":      # a copier drops the paper to white, prints lines solid and screens greys
+        g = np.where(g > float(rng.uniform(222, 232)), 255.0, g)
+        g = np.clip((g - 40.0) * (255.0 / 200.0), 0, 255)
+        # the copier's screen is about 100 lines per inch: Bayer dots at twice the scan resolution
         h, w = g.shape
-        t = np.tile(BAYER, (h // 4 + 1, w // 4 + 1))[:h, :w] * 255
-        g = np.where(g > t, 255.0, 0.0)
-        g = cv2.GaussianBlur(g, (0, 0), 0.5)
-        g = 255 - (255 - g) * 0.92 + rng.normal(0, 3.0, g.shape)
-    elif kind == "colour":         # a colour scan of a yellowed print
-        k = (np.clip(g, 0, 255) / 255.0)[..., None]
-        paper = np.array([242, 232, 204], np.float32) * float(rng.uniform(0.97, 1.0))
-        ink = np.array([38, 40, 56], np.float32)
-        g = paper * k + ink * (1 - k) + rng.normal(0, 3.0, gray.shape + (3,))
+        out = np.empty_like(g)
+        t = np.tile(BAYER, (128 // 4, (2 * w) // 4 + 1))[:, :2 * w] * 255
+        for r in range(0, h, 64):
+            strip = cv2.resize(g[r:r + 64], (2 * w, 2 * min(64, h - r)), interpolation=cv2.INTER_LINEAR)
+            screened = np.where(strip > t[:strip.shape[0]], 255.0, 0.0).astype(np.float32)
+            out[r:r + 64] = cv2.resize(screened, (w, min(64, h - r)), interpolation=cv2.INTER_AREA)
+        g = out
     return np.clip(g, 0, 255).astype(np.uint8)
+
+
+def colour(scanned, rng):
+    """A colour scan of a yellowed print."""
+    k = (scanned.astype(np.float32) / 255.0)[..., None]
+    paper = np.array([242, 232, 204], np.float32) * float(rng.uniform(0.97, 1.0))
+    ink = np.array([38, 40, 56], np.float32)
+    return np.clip(paper * k + ink * (1 - k) + rng.normal(0, 3.0, scanned.shape + (3,)), 0, 255).astype(np.uint8)
 
 
 def make(seed, office=None, kind=None):
@@ -87,8 +95,9 @@ def make(seed, office=None, kind=None):
     kind = kind or str(rng.choice(SCANS))
     p = plan_mod.build(seed)
     gray = render(p, seed=seed, office=OFFICES[office])
-    scanned, params = scan(gray, rng)
-    page_arr = reproduce(scanned, rng, kind)
+    page_arr, params = scan(reproduce(gray, rng, kind), rng)
+    if kind == "colour":
+        page_arr = colour(page_arr, rng)
     buf = io.BytesIO()
     Image.fromarray(page_arr).save(buf, "JPEG", quality=85, dpi=(DPI, DPI))
     page = Image.open(io.BytesIO(buf.getvalue()))

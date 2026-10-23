@@ -145,7 +145,7 @@ def pattern(spec, poly, rng):
         for _ in range(int(area * density)):
             pt = (rng.uniform(minx, maxx), rng.uniform(miny, maxy))
             if poly.contains(Point(pt)):
-                dots.append((pt[0], pt[1], 0.03))
+                dots.append((pt[0], pt[1], 0.05))
         for _ in range(int(area * 0.12)):
             cx, cy = rng.uniform(minx, maxx), rng.uniform(miny, maxy)
             ang = rng.uniform(0, 2 * math.pi)
