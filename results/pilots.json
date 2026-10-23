@@ -1,0 +1,73 @@
+[
+ {
+  "job": "it7-pilot-codex",
+  "trial": "floorplan-takeoff-tool__KZkP8tb",
+  "agent": "codex",
+  "model": "openai/gpt-6.1-sol",
+  "kwargs": {
+   "reasoning_effort": "xhigh"
+  },
+  "cheat": false,
+  "reward": 0.0,
+  "agent_minutes": 158.1,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "PASSED",
+   "4202": "PASSED",
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4208": "PASSED",
+   "4210": "PASSED",
+   "4205": "FAILED",
+   "4206": "FAILED",
+   "4207": "FAILED",
+   "4209": "FAILED",
+   "4211": "FAILED",
+   "4212": "FAILED"
+  },
+  "failures": [
+   "doors.single: expected 13, got 14",
+   "fixtures.cooler_doors: expected 39, got 38",
+   "wall_lf.P1: expected 170.33 (+/-2.6), got 139.4; wall_lf.P3: expected 153.33 (+/-2.3), got 159.27; doors.single: expected 13, got 11",
+   "wall_lf.P1: expected 177.33 (+/-2.7), got 171.31; wall_lf.P3: expected 143.33 (+/-2.1), got 149.33",
+   "wall_lf.P1: expected 183.33 (+/-2.7), got 177.34; wall_lf.P2: expected 111.67 (+/-2.0), got 117.66"
+  ]
+ },
+ {
+  "job": "it7-pilot-claude",
+  "trial": "floorplan-takeoff-tool__Q8cdiG6",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": false,
+  "reward": 0.0,
+  "agent_minutes": 88.0,
+  "exception": "ApiRateLimitError",
+  "exception_message": "Command failed (exit 1): export PATH=\"$HOME/.local/bin:$PATH\"; harbor_claude_code_instruction_5eef95b03abd429384810f3179ea4af5=\"$HARBOR_CLAUDE_CODE_INSTRUCTION_5EEF95B03ABD429384810F3179EA4AF5\"; unset HARBOR_CLAUDE_CODE_INSTRUCTION_5EEF95B03ABD429384810F3179EA4AF5; printf \"%s\" \"$harbor_claude_code_i",
+  "stores": {
+   "4201": "PASSED",
+   "4204": "PASSED",
+   "4207": "PASSED",
+   "4209": "PASSED",
+   "4210": "PASSED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4205": "FAILED",
+   "4206": "FAILED",
+   "4208": "FAILED",
+   "4211": "FAILED",
+   "4212": "FAILED"
+  },
+  "failures": [
+   "doors.single: expected 12, got 11",
+   "doors.single: expected 13, got 10",
+   "floor_sf.LVT-1: expected 4640.7 (+/-92.8), got 2498.1; floor_sf.PC-1: expected 4386.2 (+/-87.7), got 0.0; floor_sf.SC-1: expected 2056.9 (+/-41.1), got 8585.1",
+   "floor_sf.LVT-1: expected 5237.7 (+/-104.8), got 2815.4; floor_sf.PC-1: expected 4142.3 (+/-82.8), got 6568.4",
+   "floor_sf.LVT-1: expected 7161.6 (+/-143.2), got 12604.4; floor_sf.PC-1: expected 5439.1 (+/-108.8), got 0.0",
+   "floor_sf.PC-1: expected 4395.1 (+/-87.9), got 0.0; floor_sf.SC-1: expected 2080.5 (+/-41.6), got 6484.1; doors.single: expected 13, got 12; fixtures.produce_tables: expected 3, got 2"
+  ]
+ }
+]

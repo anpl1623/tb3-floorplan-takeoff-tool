@@ -309,10 +309,12 @@ def without_lone_lines(g, mask, ppf):
         ink = (cv2.blur(dark, along) > 22).astype(np.uint8)
         se = np.ones((1, long_), np.uint8) if horizontal else np.ones((long_, 1), np.uint8)
         lines = cv2.morphologyEx(ink, cv2.MORPH_OPEN, se).astype(np.float32)
+        neighbours = lines.copy()
+        neighbours[:4], neighbours[-4:], neighbours[:, :4], neighbours[:, -4:] = 0, 0, 0, 0   # a frame's edge is no hatch
         ring = np.ones(2 * near + 1, np.float32)
         ring[near - own:near + own + 1] = 0
         ring = ring[:, None] if horizontal else ring[None, :]
-        lone = (lines > 0) & (cv2.filter2D(lines, -1, ring, borderType=cv2.BORDER_CONSTANT) < 0.5)
+        lone = (lines > 0) & (cv2.filter2D(neighbours, -1, ring, borderType=cv2.BORDER_CONSTANT) < 0.5)
         lone = cv2.dilate(lone.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
         out = np.where(lone, np.roll(out, 8, axis=axis), out)
     return out
@@ -320,7 +322,7 @@ def without_lone_lines(g, mask, ppf):
 
 def swatch_tiles(g, rect, ppf):
     r0, r1, c0, c1 = rect
-    r0, r1, c0, c1 = r0 + 4, r1 - 4, c0 + 4, c1 - 4      # inside the swatch frame
+    r0, r1, c0, c1 = r0 + 6, r1 - 5, c0 + 6, c1 - 5      # inside the swatch frame
     crop = without_lone_lines(g[r0:r1, c0:c1], np.ones((r1 - r0, c1 - c0), bool), ppf)
     tiles = []
     for r in range(0, max(0, crop.shape[0] - WIN_H) + 1, 8):
