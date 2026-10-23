@@ -235,7 +235,7 @@ metaheuristic in C++ gets within about 0.1% of optimal on this problem in minute
 because the problem is benign, which also means local search finds near-optimal plans. A target can't
 separate the reference method from the agent's unless it demands exact optimality.
 
-## Iteration 6: a takeoff tool, judged on stores it has not seen (final)
+## Iteration 6: a takeoff tool, judged on stores it has not seen (solved)
 
 **What iterations 1-5 had in common.** Every version gave the agent one instance and graded its answer
 for that instance. A frontier agent can always solve one instance directly. It can read one drawing by
@@ -317,3 +317,49 @@ because OpenAI's API refused the hack prompt at the first turn (`AgentSafetyRefu
 Given these results, Andrew decided to stop iterating and document the task as it stands, rather than
 spend the remaining days on a seventh design.
 
+
+## Iteration 7: many drafting offices, one legend per sheet
+
+**Why iteration 6 fell.** Every hidden store was drawn to the same CAD standard as the examples. Once
+a tool's computer-vision primitives were robust, generalizing to new layouts was nearly automatic, and
+the agents could make their primitives robust by stress-testing the three examples (rotation, skew,
+stretch, noise, mirroring). The examples showed everything the hidden stores contained.
+
+**Idea.** Make the hidden stores drawn differently, not just laid out differently, while keeping every
+sheet readable on its own. The design note is [`iteration-7-design.md`](iteration-7-design.md):
+eight architect's offices, each with its own floor-finish hatches and partition poché, shown in each
+sheet's legend in the owner's standard order; fixtures and doors stay the owner's blocks. The three
+examples come from three offices and the twelve hidden stores from the other five. The sheets also
+reach the archive in four states: clean prints, faded prints, photocopies and colour scans of yellowed
+prints. A tool has to read each sheet's own legend and match against it, one shot per sheet.
+
+**Generator changes.** `dev/offices.py` defines the eight standards (pattern families: planks, brick,
+lines, dashed, double lines, crosshatch, dot grids, stipple, sawcut joints, flat tints).
+`dev/render.py` draws each sheet's hatches, poché and legend swatches in its office's standard.
+`dev/generate.py` makes the print that reached the archive, then scans it:
+- faded: lighter toner (55-70%) and slightly softer edges;
+- photocopy: paper dropped to white, lines printed solid, greys screened at about 100 lpi;
+- colour: a colour scan of a yellowed print.
+
+Three changes were made while building the reference tool, each to keep the drawings honest rather
+than to make them easier. Photocopies were first simulated by screening the scan, which left wall
+outlines grey; a copier copies the print, so the copy is now made before the scan. Faded prints were
+first blurred twice (fade plus scan), which made fixture outlines lighter than floor hatching; a
+faded print loses toner, so the extra blur is now small. BRANDT's CMU poché was a 0/90 crosshatch,
+which no office uses for masonry; it is now diagonal.
+
+**Reference tool.** The iteration 6 pipeline was kept for calibration, regions, fixtures and doors, and
+rebuilt where the offices differ:
+- finishes are matched one-shot against the sheet's legend swatches: tone, contrast and an
+  orientation-by-spacing spectrum over windows the size of a swatch, after lone sawcut joints and grid
+  lines are removed (a swatch is too small to show them) and room and finish tags are masked;
+- partitions are matched against the legend's partition swatches by outline-stroke gap (thickness),
+  fill tone, fill spread and hatch direction, measured between each wall's own outline strokes and
+  judged per stretch between junctions and openings;
+- jambs are strokes darker than the wall and the opening on either side, so dark tints and copier
+  screens don't hide doors;
+- paper and ink are flattened per sheet (wide-window paper level, ink calibrated on solid black);
+  deskew is a projection search instead of a Hough fit.
+
+It matches every quantity on the three examples and on all twelve hidden stores, and Docker oracle
+validation scores 1.0.
