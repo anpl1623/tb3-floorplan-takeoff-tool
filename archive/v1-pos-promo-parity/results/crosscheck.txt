@@ -1,0 +1,2 @@
+real department problems checked=40692 skipped_too_large=6151
+random stress problems checked=1000

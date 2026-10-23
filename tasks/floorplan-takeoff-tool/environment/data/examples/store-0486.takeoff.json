@@ -1,0 +1,33 @@
+{
+  "floor_sf": {
+    "LVT-1": 4458.7,
+    "PC-1": 4980.0,
+    "SC-1": 2148.7,
+    "EP-1": 541.8,
+    "VCT-1": 1545.6,
+    "CT-1": 337.8,
+    "CPT-1": 336.1,
+    "WOM-1": 160.6
+  },
+  "wall_lf": {
+    "EXT": 501.33,
+    "P1": 204.33,
+    "P2": 110.67,
+    "P3": 153.33
+  },
+  "doors": {
+    "single": 13,
+    "pair": 1,
+    "overhead_coiling": 1,
+    "auto_sliding": 2
+  },
+  "fixtures": {
+    "gondola_sections_4ft": 3,
+    "gondola_sections_3ft": 0,
+    "endcaps": 2,
+    "checkouts": 7,
+    "self_checkouts": 3,
+    "cooler_doors": 43,
+    "produce_tables": 4
+  }
+}

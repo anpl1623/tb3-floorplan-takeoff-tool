@@ -1,0 +1,16 @@
+ok  reward=0 expected=0  empty file
+ok  reward=0 expected=0  template left as nulls
+ok  reward=0 expected=0  numbers as strings
+ok  reward=0 expected=0  NaN everywhere
+ok  reward=0 expected=0  Infinity everywhere
+ok  reward=0 expected=0  booleans for counts
+ok  reward=0 expected=0  nominal scale, not calibrated
+ok  reward=0 expected=0  one cooler door short
+ok  reward=0 expected=0  pair counted as two singles
+ok  reward=0 expected=0  gross area of one finish (+3%)
+ok  reward=0 expected=0  exact takeoff of the drawing as drawn (redlines ignored)
+ok  reward=0 expected=0  ceilings taken off A102 as drawn (A101 wall changes ignored)
+ok  reward=0 expected=0  EM troffers counted as plain troffers
+ok  reward=1 expected=1  exact answer
+ok  reward=1 expected=1  within tolerance (-1.5% areas, +1% lengths)
+ok  reward=1 expected=1  counts as floats

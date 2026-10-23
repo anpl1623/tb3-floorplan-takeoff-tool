@@ -1,0 +1,73 @@
+[
+ {
+  "job": "pilot-codex-1",
+  "trial": "store-remodel-takeoff__ASFEEAb",
+  "task_version": "v2 one clean sheet",
+  "agent": "codex gpt-6.1-sol xhigh",
+  "failed_tests": [],
+  "reward": 1.0,
+  "note": "result.json, reward.txt and ctrf.json corrupted by harbor env-value scrubbing; outcome read from test-stdout.txt"
+ },
+ {
+  "job": "pilot-codex-2",
+  "trial": "store-remodel-takeoff__rjfz5tH",
+  "task_version": "v3 redlines",
+  "agent": "codex gpt-6.1-sol xhigh",
+  "agent_minutes": 7.1,
+  "exception": null,
+  "reward": 0.0,
+  "failed_tests": [
+   "test_partition_lengths"
+  ]
+ },
+ {
+  "job": "run-codex-v3",
+  "trial": "store-remodel-takeoff__6qquBc5",
+  "task_version": "v3 redlines",
+  "agent": "codex gpt-6.1-sol xhigh",
+  "agent_minutes": 5.7,
+  "exception": null,
+  "reward": 1.0,
+  "failed_tests": []
+ },
+ {
+  "job": "run-codex-v3",
+  "trial": "store-remodel-takeoff__GXhEFna",
+  "task_version": "v3 redlines",
+  "agent": "codex gpt-6.1-sol xhigh",
+  "agent_minutes": 7.3,
+  "exception": null,
+  "reward": 1.0,
+  "failed_tests": []
+ },
+ {
+  "job": "run-codex-v3",
+  "trial": "store-remodel-takeoff__dB9huBF",
+  "task_version": "v3 redlines",
+  "agent": "codex gpt-6.1-sol xhigh",
+  "agent_minutes": 7.8,
+  "exception": null,
+  "reward": 1.0,
+  "failed_tests": []
+ },
+ {
+  "job": "pilot-codex-3",
+  "trial": "store-remodel-takeoff__KXi9Jfb",
+  "task_version": "v4 three sheets",
+  "agent": "codex gpt-6.1-sol xhigh",
+  "agent_minutes": 10.2,
+  "exception": null,
+  "reward": 1.0,
+  "failed_tests": []
+ },
+ {
+  "job": "pilot-claude-1",
+  "trial": "store-remodel-takeoff__habzzos",
+  "task_version": "v4 three sheets",
+  "agent": "claude-code claude-opus-5-5 max",
+  "agent_minutes": 40.2,
+  "exception": null,
+  "reward": 1.0,
+  "failed_tests": []
+ }
+]

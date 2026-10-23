@@ -1,0 +1,70 @@
+{
+  "pct_rounded_per_line": {
+    "history": 4031,
+    "pending": 1081
+  },
+  "pct_truncated": {
+    "history": 5665,
+    "pending": 2322
+  },
+  "weight_half_even": {
+    "history": 117,
+    "pending": 27
+  },
+  "weight_truncated": {
+    "history": 5375,
+    "pending": 1771
+  },
+  "tax_half_even": {
+    "history": 27,
+    "pending": 25
+  },
+  "tax_truncated": {
+    "history": 5744,
+    "pending": 1933
+  },
+  "coupons_reduce_tax_base": {
+    "history": 326,
+    "pending": 104
+  },
+  "vendor_deals_reduce_tax_base": {
+    "history": 5406,
+    "pending": 2081
+  },
+  "spend_after_item_deals": {
+    "history": 291,
+    "pending": 379
+  },
+  "spend_on_gross": {
+    "history": 674,
+    "pending": 423
+  },
+  "tie_break_by_deal_id": {
+    "history": 1362,
+    "pending": 847
+  },
+  "tie_break_low_priority": {
+    "history": 1362,
+    "pending": 852
+  },
+  "bogo_cheap_units_grouped": {
+    "history": 0,
+    "pending": 0
+  },
+  "greedy_by_priority": {
+    "history": 622,
+    "pending": 859
+  },
+  "greedy_all_deal_orders": {
+    "history": 363,
+    "pending": 516
+  },
+  "spend_drop_whole_deals_only": {
+    "history": 167,
+    "pending": 233
+  },
+  "coupon_needs_undiscounted_units": {
+    "history": 365,
+    "pending": 111
+  }
+}

@@ -1,0 +1,148 @@
+{
+  "checks": {
+    "verifiable": {
+      "outcome": "pass",
+      "explanation": "The verifier deterministically recomputes expected quantities from tests/plan.py's seeded vector model (random.Random(seed)) and compares against the tool's JSON with fixed tolerances; no LLM-as-judge, no runtime network installs in test.sh (all deps baked into tests/Dockerfile)."
+    },
+    "solvable": {
+      "outcome": "pass",
+      "explanation": "A working 714-line solution/takeoff.py is provided that the author reports matches all six hidden stores and 97/100 additional generated stores; while the pipeline is intricate, it is a direct, known sequence of classical CV steps (deskew, hatch-spectrum classification, wall tracing, jamb pairing) that a CV expert who already knows the recipe could type out in a workday."
+    },
+    "difficult": {
+      "outcome": "pass",
+      "explanation": "The task requires professional-level document/CV engineering: deskewing and scale calibration, spectral hatch classification between near-harmonic finishes, wall poché typing, door jamb disambiguation, and fixture-cell counting, all of which must generalize to unseen store layouts under tight tolerances -- well beyond an undergraduate course project."
+    },
+    "interesting": {
+      "outcome": "pass",
+      "explanation": "Automating quantity takeoffs from scanned as-built plans is a real need in retail construction/store-rollout programs, as the author (who builds retail construction software) attests in the README's Relevant experience section."
+    },
+    "outcome_verified": {
+      "outcome": "pass",
+      "explanation": "Instructions describe only the end state (where to put the tool, its CLI signature, and the takeoff rules/tolerances); tests only check the resulting JSON values against computed ground truth, imposing no constraint on implementation approach or tools used."
+    },
+    "anti_cheat_robustness": {
+      "outcome": "pass",
+      "explanation": "Hidden stores and the plan.py oracle live only in the verifier image under /tests (chmod go-rwx, never shipped to the agent image), the agent's tool is executed as an unprivileged 'takeoff' user with no access to /tests, and kill_runner_processes() sweeps leftover processes by uid before the reward is written."
+    },
+    "task_security": {
+      "outcome": "pass",
+      "explanation": "All Dockerfiles, solve.sh, test.sh, and test_takeoff.py contain only legitimate setup/verification logic; no exfiltration, obfuscation, destructive operations, or prompt injection were found."
+    },
+    "functional_verification": {
+      "outcome": "pass",
+      "explanation": "The verifier executes the agent's actual tool as a subprocess on real scanned PDFs and numerically compares its JSON output to quantities derived from a geometric plan model (shapely) -- no string/keyword matching on source code."
+    },
+    "deterministic_reproducible": {
+      "outcome": "pass",
+      "explanation": "All packages are pinned identically in environment/Dockerfile and tests/Dockerfile, the base image is pinned by digest, and ground truth is recomputed deterministically each run via a seeded random.Random; no live services are used."
+    },
+    "essential_difficulty": {
+      "outcome": "pass",
+      "explanation": "Difficulty comes from genuine image-interpretation reasoning (distinguishing finishes/wall types/door symbols from linework and hatching) rather than output-formatting minutiae; the JSON schema is simple and fully specified by the example takeoffs."
+    },
+    "test_instruction_alignment": {
+      "outcome": "pass",
+      "explanation": "The instruction's tolerance language (2%/8 SF for areas, 1.5%/2 LF for lengths, exact counts) matches AREA_TOL/LENGTH_TOL and the exact-match branch in test_takeoff.py verbatim, and the four JSON sections/keys it tests are exactly those shown as normative in the provided example takeoffs."
+    },
+    "novel": {
+      "outcome": "pass",
+      "explanation": "This is a bespoke synthetic CAD-drawing interpretation problem (hatch-spectrum finish classification, poché-based wall typing, symbol-based fixture counting) with no widely available reference solution to memorize from training data."
+    },
+    "agentic": {
+      "outcome": "pass",
+      "explanation": "Solving this requires iterative exploration of the example scans, writing and debugging a multi-stage image-processing pipeline, and testing against multiple examples -- it cannot be produced by a single zero-shot generation."
+    },
+    "reviewable": {
+      "outcome": "pass",
+      "explanation": "Although the domain (CV + construction estimating) is specialized, the README's detailed Difficulty/Solution/Verification explanations and the fact that ground truth is derived from tests/plan.py's vector model (not hardcoded) let a non-specialist reviewer verify consistency."
+    },
+    "instruction_concision": {
+      "outcome": "pass",
+      "explanation": "instruction.md is human-written, uses absolute paths throughout (/app/examples/, /app/takeoff/), and states estimating conventions (what to measure) without prescribing any CV implementation steps (how to measure); no unnecessary tool/library mentions."
+    },
+    "effective_instruction_length": {
+      "outcome": "pass",
+      "explanation": "instruction.md is 323 words (canary and trailer excluded) with no separate text requirement documents -- the example PDFs/JSONs are data, not prose -- so the instruction is concise and proportionate to the task."
+    },
+    "solution_quality": {
+      "outcome": "pass",
+      "explanation": "solve.sh copies the 714-line solution/takeoff.py (a separate file, not a heredoc) into place and runs it on the real example scans to sanity-check it, demonstrating genuine computation rather than a hardcoded answer."
+    },
+    "separate_verifier_configured": {
+      "outcome": "pass",
+      "explanation": "The only input the verifier reads from the agent is /app/takeoff/ (the declared artifact); tests/Dockerfile bakes both the agent's pinned runtime venv and the verifier's own pytest/ctrf venv at build time, so test.sh performs no runtime installs; shared package pins in environment/Dockerfile and tests/Dockerfile's /opt/runtime venv match exactly."
+    },
+    "environment_hygiene": {
+      "outcome": "pass",
+      "explanation": "environment/Dockerfile only installs the agent's runtime pins and copies the example data (no tests/ or solution/ leakage, no test-only deps); tests/Dockerfile owns all verifier-only tooling; neither Dockerfile uses apt, so apt pinning/cleanup rules do not apply."
+    },
+    "structured_data_schema": {
+      "outcome": "pass",
+      "explanation": "The instruction explicitly marks the example store-*.takeoff.json files as normative ('is in the format the tool has to write'), and the four section names and fixed key lists (finishes, wall types, door types, fixtures) are consistent across all three examples and tests/plan.py."
+    },
+    "typos": {
+      "outcome": "pass",
+      "explanation": "Cross-checking all path and filename references across instruction.md, task.toml, the Dockerfiles, solve.sh, and the test files shows consistent, typo-free usage (/app/takeoff/takeoff.py, /app/examples, /tests/stores, etc.)."
+    },
+    "difficulty_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "The README's Difficulty explanation describes concrete sources of difficulty for both agent and human (near-harmonic hatch spacing, poché wall typing, generalization across varying layouts), notes the data is synthetic but drafted to standard practice, and names the real-world role (construction technology/CV engineer)."
+    },
+    "solution_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "The README's Solution explanation walks through the four pipeline stages (prepare scan, classify finishes, trace walls/doors, count fixtures) and is consistent with the actual structure and comments in solution/takeoff.py."
+    },
+    "verification_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "The Verification explanation describes the separate-container execution, the oracle (plan.py geometric model), and justifies the tolerance values by referencing a simulated-estimator click-error calibration and a described verifier probe's score-0/score-1 cases, consistent with the tolerances actually coded in test_takeoff.py."
+    },
+    "category_and_tags": {
+      "outcome": "pass",
+      "explanation": "Category 'Media' with subcategory 'Design' reasonably captures a document/drawing-interpretation task that uses no learned models, and tags (quantity-takeoff, construction-estimating, architectural-drawings, computer-vision, document-digitization, retail-remodel) are specific and descriptive rather than generic."
+    },
+    "task_name": {
+      "outcome": "pass",
+      "explanation": "'floorplan-takeoff-tool' is a three-word, lowercase kebab-case slug that clearly conveys the task's core deliverable without opening any files."
+    },
+    "resource_configuration": {
+      "outcome": "pass",
+      "explanation": "Verifier timeout (2400s) comfortably covers six 5-minute-capped store runs plus overhead, the 8-hour agent timeout matches the task's acknowledged difficulty, and the bumped memory (8GB) is justified by image-processing workloads on scanned plan rasters rather than used to inflate difficulty artificially."
+    },
+    "task_readme": {
+      "outcome": "pass",
+      "explanation": "README.md includes all required sections (Difficulty, Solution, Verification explanations, Relevant experience) plus a metadata summary, without redundant duplication of the instruction or solution code."
+    },
+    "expert_time_estimate": {
+      "outcome": "pass",
+      "explanation": "6 hours is a plausible best-case estimate for a CV expert who already knows the exact pipeline to implement (distinct from the much longer iterative discovery process the author describes), and is consistent with the stated difficulty and 8-hour agent timeout."
+    },
+    "task_toml_schema": {
+      "outcome": "pass",
+      "explanation": "task.toml only uses recognized fields (schema_version, artifacts, [task], [metadata], [verifier] with timeout_sec/environment_mode, [agent] with timeout_sec, [environment] with build_timeout_sec/cpus/memory_mb/storage_mb/gpus) with no invented fields."
+    },
+    "no_extraneous_files": {
+      "outcome": "pass",
+      "explanation": "Every file in the task directory (Dockerfiles, example data, instruction, solution script and tool, hidden store PDFs, test files, README) is referenced by some part of the build/solve/verify pipeline; no cruft or leftovers were found."
+    },
+    "artifact_efficiency": {
+      "outcome": "pass",
+      "explanation": "The only declared artifact, /app/takeoff/, is the agent's own small deliverable (the tool code itself), not a large build-time-fixed tree; no [[verifier.collect]] hooks are used, so the fail-safe-hook rules do not apply."
+    },
+    "verifier_execution_isolation": {
+      "outcome": "pass",
+      "explanation": "The agent's tool is always executed via runuser as the unprivileged 'takeoff' user (never as root), pytest itself never imports agent code in-process, and the root test.sh derives the binary reward solely from pytest's exit status after killing any leftover processes by uid."
+    },
+    "ctrf_reporting": {
+      "outcome": "pass",
+      "explanation": "test.sh runs pytest with --ctrf /logs/verifier/ctrf.json against test_takeoff.py's parametrized per-store tests, giving reviewers per-store pass/fail granularity rather than just a bare reward."
+    },
+    "do_not_modify_enforced": {
+      "outcome": "not_applicable",
+      "explanation": "instruction.md contains no instruction to avoid modifying, deleting, or preserving any concrete pre-existing artifact."
+    },
+    "binary_reward": {
+      "outcome": "pass",
+      "explanation": "test.sh writes exactly 1 or 0 to /logs/verifier/reward.txt based solely on pytest's exit status, with no intermediate fractional or weighted scoring on any reachable path."
+    }
+  }
+}

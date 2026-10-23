@@ -1,0 +1,23 @@
+{
+  "job_name": "pilot-codex",
+  "jobs_dir": "jobs",
+  "n_attempts": 1,
+  "n_concurrent_trials": 1,
+  "tasks": [
+    {
+      "path": "tasks/floorplan-takeoff-tool"
+    }
+  ],
+  "environment": {
+    "type": "docker"
+  },
+  "agents": [
+    {
+      "name": "codex",
+      "model_name": "openai/gpt-6.1-sol",
+      "kwargs": {
+        "reasoning_effort": "xhigh"
+      }
+    }
+  ]
+}

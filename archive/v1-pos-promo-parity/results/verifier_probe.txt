@@ -1,0 +1,13 @@
+ok  reward=0 expected=0  empty file
+ok  reward=0 expected=0  nan amounts
+ok  reward=0 expected=0  receipt per basket, all zero
+ok  reward=0 expected=0  string amounts
+ok  reward=0 expected=0  one cent off one total
+ok  reward=0 expected=0  one deal attributed to wrong id
+ok  reward=0 expected=0  one receipt missing
+ok  reward=0 expected=0  duplicate receipt
+ok  reward=0 expected=0  extra unknown basket
+ok  reward=0 expected=0  symlink to verifier inputs
+ok  reward=1 expected=1  correct answer
+ok  reward=1 expected=1  correct, floats and explicit zeros
+ok  reward=1 expected=1  correct, shuffled order and pretty keys

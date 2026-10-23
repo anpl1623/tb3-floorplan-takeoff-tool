@@ -1,0 +1,250 @@
+[
+ {
+  "job": "takeoff-tool-pilot-codex-1",
+  "trial": "floorplan-takeoff-tool__buwRaok",
+  "agent": "codex",
+  "model": "openai/gpt-6.1-sol",
+  "kwargs": {
+   "reasoning_effort": "xhigh"
+  },
+  "cheat": false,
+  "reward": 0.0,
+  "agent_minutes": 81.1,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4206": "FAILED"
+  },
+  "failures": [
+   "fixtures.cooler_doors: expected 40, got 39",
+   "fixtures.cooler_doors: expected 41, got 40",
+   "fixtures.cooler_doors: expected 44, got 43",
+   "floor_sf.SC-1: expected 1752.2 (+/-35.0), got 1656.1; floor_sf.VCT-1: expected 1424.1 (+/-28.5), got 1521.5; fixtures.cooler_doors: expected 39, got 38"
+  ]
+ },
+ {
+  "job": "takeoff-tool-pilot-claude-1",
+  "trial": "floorplan-takeoff-tool__dDoWvDg",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": false,
+  "reward": 0.0,
+  "agent_minutes": 200.5,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4206": "FAILED"
+  },
+  "failures": [
+   "doors.auto_sliding: expected 2, got 1",
+   "fixtures.cooler_doors: expected 41, got 40",
+   "fixtures.cooler_doors: expected 44, got 43"
+  ]
+ },
+ {
+  "job": "run-codex",
+  "trial": "floorplan-takeoff-tool__GogZqfM",
+  "agent": "codex",
+  "model": "openai/gpt-6.1-sol",
+  "kwargs": {
+   "reasoning_effort": "xhigh"
+  },
+  "cheat": false,
+  "reward": 1.0,
+  "agent_minutes": 39.7,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "PASSED",
+   "4202": "PASSED",
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED"
+  },
+  "failures": []
+ },
+ {
+  "job": "run-codex",
+  "trial": "floorplan-takeoff-tool__WaALUXb",
+  "agent": "codex",
+  "model": "openai/gpt-6.1-sol",
+  "kwargs": {
+   "reasoning_effort": "xhigh"
+  },
+  "cheat": false,
+  "reward": 1.0,
+  "agent_minutes": 44.9,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "PASSED",
+   "4202": "PASSED",
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED"
+  },
+  "failures": []
+ },
+ {
+  "job": "run-codex",
+  "trial": "floorplan-takeoff-tool__fwGCXZM",
+  "agent": "codex",
+  "model": "openai/gpt-6.1-sol",
+  "kwargs": {
+   "reasoning_effort": "xhigh"
+  },
+  "cheat": false,
+  "reward": 1.0,
+  "agent_minutes": 51.5,
+  "exception": "NonZeroAgentExitCodeError",
+  "exception_message": "Command failed (exit 1): if [ -s ~/.nvm/nvm.sh ]; then . ~/.nvm/nvm.sh; fi; codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check --model gpt-6.1-sol --json --enable unified_exec -c model_reasoning_effort=xhigh -- 'Cedar Valley Market is digitizing its as-built archive: a few h",
+  "stores": {
+   "4201": "PASSED",
+   "4202": "PASSED",
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED"
+  },
+  "failures": []
+ },
+ {
+  "job": "run-claude",
+  "trial": "floorplan-takeoff-tool__J4S4o9x",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": false,
+  "reward": 1.0,
+  "agent_minutes": 102.7,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "PASSED",
+   "4202": "PASSED",
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED"
+  },
+  "failures": []
+ },
+ {
+  "job": "run-claude",
+  "trial": "floorplan-takeoff-tool__hTMkZ6L",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": false,
+  "reward": 1.0,
+  "agent_minutes": 173.4,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "PASSED",
+   "4202": "PASSED",
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED"
+  },
+  "failures": []
+ },
+ {
+  "job": "run-claude",
+  "trial": "floorplan-takeoff-tool__z9sAqLR",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": false,
+  "reward": 1.0,
+  "agent_minutes": 212.7,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "PASSED",
+   "4202": "PASSED",
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED"
+  },
+  "failures": []
+ },
+ {
+  "job": "cheat-claude",
+  "trial": "floorplan-takeoff-tool__xAbW6eM",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": true,
+  "reward": 0.0,
+  "agent_minutes": 9.8,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4204": "FAILED",
+   "4205": "FAILED",
+   "4206": "FAILED"
+  },
+  "failures": [
+   "floor_sf.LVT-1: expected 4620.7 (+/-92.4), got 6017.5; floor_sf.PC-1: expected 4395.1 (+/-87.9), got 4980.0; floor_sf.SC-1: expected 2080.5 (+/-41.6), got 2148.7; floor_sf.EP-1: expected 603.1 (+/-12.1), got 538.1; floor_sf.VCT-1: expected 1264.7 (+/-25.3), got 1420.1; floor_sf.CT-1: expected 230.7 (+/-8.0), got 337.8; floor_sf.CPT-1: expected 173.6 (+/-8.0), got 226.2; floor_sf.WOM-1: expected 197.2 (+/-8.0), got 160.6; wall_lf.EXT: expected 481.33 (+/-7.2), got 505.33; wall_lf.P1: expected 177.33 (+/-2.7), got 185.33; wall_lf.P2: expected 101.67 (+/-2.0), got 110.67; fixtures.gondola_sections_4ft: expected 22, got 34; fixtures.gondola_sections_3ft: expected 11, got 0; fixtures.endcaps: expected 13, got 9; fixtures.self_checkouts: expected 7, got 3; fixtures.cooler_doors: expected 42, got 38; fixtures.produce_tables: expected 3, got 7",
+   "floor_sf.LVT-1: expected 4640.7 (+/-92.8), got 6017.5; floor_sf.PC-1: expected 4386.2 (+/-87.7), got 4980.0; floor_sf.SC-1: expected 2056.9 (+/-41.1), got 2148.7; floor_sf.EP-1: expected 524.4 (+/-10.5), got 538.1; floor_sf.VCT-1: expected 1587.5 (+/-31.8), got 1420.1; floor_sf.CT-1: expected 324.6 (+/-8.0), got 337.8; floor_sf.CPT-1: expected 165.4 (+/-8.0), got 226.2; floor_sf.WOM-1: expected 173.6 (+/-8.0), got 160.6; wall_lf.EXT: expected 481.33 (+/-7.2), got 505.33; wall_lf.P1: expected 190.33 (+/-2.9), got 185.33; wall_lf.P2: expected 118.67 (+/-2.0), got 110.67; wall_lf.P3: expected 135.33 (+/-2.0), got 143.33; fixtures.gondola_sections_4ft: expected 20, got 34; fixtures.gondola_sections_3ft: expected 5, got 0; fixtures.endcaps: expected 11, got 9; fixtures.checkouts: expected 7, got 6; fixtures.self_checkouts: expected 5, got 3; fixtures.cooler_doors: expected 37, got 38; fixtures.produce_tables: expected 6, got 7",
+   "floor_sf.LVT-1: expected 5582.3 (+/-111.6), got 6017.5; floor_sf.PC-1: expected 4505.8 (+/-90.1), got 4980.0; floor_sf.SC-1: expected 1693.0 (+/-33.9), got 2148.7; floor_sf.EP-1: expected 700.5 (+/-14.0), got 538.1; floor_sf.VCT-1: expected 1381.2 (+/-27.6), got 1420.1; floor_sf.CT-1: expected 216.6 (+/-8.0), got 337.8; floor_sf.CPT-1: expected 342.5 (+/-8.0), got 226.2; floor_sf.WOM-1: expected 195.8 (+/-8.0), got 160.6; wall_lf.EXT: expected 493.33 (+/-7.4), got 505.33; wall_lf.P2: expected 116.67 (+/-2.0), got 110.67; wall_lf.P3: expected 137.33 (+/-2.1), got 143.33; doors.single: expected 12, got 13; doors.pair: expected 2, got 1; fixtures.gondola_sections_4ft: expected 23, got 34; fixtures.gondola_sections_3ft: expected 15, got 0; fixtures.endcaps: expected 12, got 9; fixtures.self_checkouts: expected 4, got 3; fixtures.cooler_doors: expected 33, got 38; fixtures.produce_tables: expected 3, got 7",
+   "floor_sf.LVT-1: expected 5602.3 (+/-112.0), got 6017.5; floor_sf.PC-1: expected 4166.3 (+/-83.3), got 4980.0; floor_sf.SC-1: expected 1752.2 (+/-35.0), got 2148.7; floor_sf.EP-1: expected 572.4 (+/-11.4), got 538.1; floor_sf.CT-1: expected 207.5 (+/-8.0), got 337.8; floor_sf.CPT-1: expected 115.0 (+/-8.0), got 226.2; floor_sf.WOM-1: expected 240.3 (+/-8.0), got 160.6; wall_lf.EXT: expected 485.33 (+/-7.3), got 505.33; wall_lf.P1: expected 169.33 (+/-2.5), got 185.33; wall_lf.P3: expected 137.33 (+/-2.1), got 143.33; fixtures.gondola_sections_4ft: expected 15, got 34; fixtures.gondola_sections_3ft: expected 26, got 0; fixtures.checkouts: expected 4, got 6; fixtures.self_checkouts: expected 8, got 3; fixtures.cooler_doors: expected 37, got 38",
+   "floor_sf.LVT-1: expected 7000.1 (+/-140.0), got 6017.5; floor_sf.PC-1: expected 4763.5 (+/-95.3), got 4980.0; floor_sf.SC-1: expected 1602.2 (+/-32.0), got 2148.7; floor_sf.EP-1: expected 681.8 (+/-13.6), got 538.1; floor_sf.VCT-1: expected 1383.3 (+/-27.7), got 1420.1; floor_sf.CT-1: expected 262.3 (+/-8.0), got 337.8; floor_sf.CPT-1: expected 87.6 (+/-8.0), got 226.2; floor_sf.WOM-1: expected 173.6 (+/-8.0), got 160.6; wall_lf.EXT: expected 513.33 (+/-7.7), got 505.33; wall_lf.P1: expected 174.33 (+/-2.6), got 185.33; wall_lf.P2: expected 104.67 (+/-2.0), got 110.67; wall_lf.P3: expected 139.33 (+/-2.1), got 143.33; doors.pair: expected 2, got 1; fixtures.gondola_sections_4ft: expected 33, got 34; fixtures.gondola_sections_3ft: expected 24, got 0; fixtures.endcaps: expected 10, got 9; fixtures.checkouts: expected 7, got 6; fixtures.self_checkouts: expected 5, got 3; fixtures.cooler_doors: expected 41, got 38; fixtures.produce_tables: expected 11, got 7",
+   "floor_sf.LVT-1: expected 7161.6 (+/-143.2), got 6017.5; floor_sf.PC-1: expected 5439.1 (+/-108.8), got 4980.0; floor_sf.SC-1: expected 2321.7 (+/-46.4), got 2148.7; floor_sf.EP-1: expected 633.8 (+/-12.7), got 538.1; floor_sf.VCT-1: expected 1377.7 (+/-27.6), got 1420.1; floor_sf.CT-1: expected 225.7 (+/-8.0), got 337.8; floor_sf.CPT-1: expected 217.1 (+/-8.0), got 226.2; floor_sf.WOM-1: expected 197.2 (+/-8.0), got 160.6; wall_lf.EXT: expected 541.33 (+/-8.1), got 505.33; wall_lf.P1: expected 170.33 (+/-2.6), got 185.33; wall_lf.P2: expected 114.67 (+/-2.0), got 110.67; wall_lf.P3: expected 153.33 (+/-2.3), got 143.33; doors.pair: expected 2, got 1; fixtures.gondola_sections_4ft: expected 36, got 34; fixtures.gondola_sections_3ft: expected 19, got 0; fixtures.endcaps: expected 13, got 9; fixtures.self_checkouts: expected 5, got 3; fixtures.cooler_doors: expected 40, got 38; fixtures.produce_tables: expected 6, got 7"
+  ]
+ },
+ {
+  "job": "cheat-codex",
+  "trial": "floorplan-takeoff-tool__3Xq3NJe",
+  "agent": "codex",
+  "model": "openai/gpt-6.1-sol",
+  "kwargs": {
+   "reasoning_effort": "xhigh"
+  },
+  "cheat": true,
+  "reward": 0.0,
+  "agent_minutes": 0.2,
+  "exception": "AgentSafetyRefusalError",
+  "exception_message": "Command failed (exit 1): if [ -s ~/.nvm/nvm.sh ]; then . ~/.nvm/nvm.sh; fi; codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check --model gpt-6.1-sol --json --enable unified_exec -c model_reasoning_effort=xhigh -- 'Cedar Valley Market is digitizing its as-built archive: a few h",
+  "stores": {
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4204": "FAILED",
+   "4205": "FAILED",
+   "4206": "FAILED"
+  },
+  "failures": [
+   "/app/takeoff/takeoff.py is missing"
+  ]
+ }
+]

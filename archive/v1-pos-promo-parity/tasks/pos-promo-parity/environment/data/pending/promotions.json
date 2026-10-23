@@ -1,0 +1,1209 @@
+{
+  "period": "2026-10",
+  "deals": [
+    {
+      "id": "D2401",
+      "type": "MULTI",
+      "description": "FIZZ 2L 3/$6.00",
+      "funding": "STORE",
+      "skus": [
+        "869066537666",
+        "030099017610",
+        "144222101043",
+        "250985481213"
+      ],
+      "qty": 3,
+      "price": 600,
+      "limit": 3,
+      "priority": 63,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2402",
+      "type": "BOGO",
+      "description": "FIZZ 2L BUY 2 GET 1 FREE MEMBER",
+      "funding": "VENDOR",
+      "skus": [
+        "869066537666",
+        "030099017610",
+        "144222101043",
+        "250985481213"
+      ],
+      "buy": 2,
+      "get": 1,
+      "pct": 100,
+      "limit": 2,
+      "priority": 71,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-15",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2403",
+      "type": "PCT",
+      "description": "FIZZ DIET 2L 10% OFF",
+      "funding": "STORE",
+      "skus": [
+        "030099017610"
+      ],
+      "pct": 10,
+      "priority": 29,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2404",
+      "type": "MULTI",
+      "description": "FIZZ 12PK 2/$11.00",
+      "funding": "VENDOR",
+      "skus": [
+        "471193961667",
+        "302584990143",
+        "839545208448"
+      ],
+      "qty": 2,
+      "price": 1100,
+      "limit": 2,
+      "priority": 56,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-14"
+    },
+    {
+      "id": "D2405",
+      "type": "BOGO",
+      "description": "PEAK SPARKLING BUY 2 GET 1 50% OFF",
+      "funding": "VENDOR",
+      "skus": [
+        "185198343303",
+        "087322287852",
+        "284637985705",
+        "263442571471"
+      ],
+      "buy": 2,
+      "get": 1,
+      "pct": 50,
+      "limit": null,
+      "priority": 64,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2406",
+      "type": "PCT",
+      "description": "PEAK SPARKLING LIME 20% OFF MEMBER",
+      "funding": "STORE",
+      "skus": [
+        "185198343303"
+      ],
+      "pct": 20,
+      "priority": 41,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2407",
+      "type": "MULTI",
+      "description": "VOLT ENERGY 4/$10.00",
+      "funding": "VENDOR",
+      "skus": [
+        "523503548089",
+        "231408139119",
+        "699859658458"
+      ],
+      "qty": 4,
+      "price": 1000,
+      "limit": 2,
+      "priority": 53,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2408",
+      "type": "BOGO",
+      "description": "CRUNCHOS BUY 2 GET 1 50% OFF",
+      "funding": "VENDOR",
+      "skus": [
+        "282194672045",
+        "630276327732",
+        "995128651732",
+        "656912465835"
+      ],
+      "buy": 2,
+      "get": 1,
+      "pct": 50,
+      "limit": null,
+      "priority": 67,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2409",
+      "type": "MULTI",
+      "description": "CRUNCHOS 13OZ 2/$8.00",
+      "funding": "STORE",
+      "skus": [
+        "282194672045",
+        "630276327732"
+      ],
+      "qty": 2,
+      "price": 800,
+      "limit": null,
+      "priority": 59,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2410",
+      "type": "MULTI",
+      "description": "GOLDEN KETTLE 3/$10.00",
+      "funding": "STORE",
+      "skus": [
+        "914120684487",
+        "913883889801",
+        "162406519743",
+        "958913634419"
+      ],
+      "qty": 3,
+      "price": 1000,
+      "limit": 2,
+      "priority": 58,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2411",
+      "type": "BOGO",
+      "description": "GOLDEN KETTLE BUY 1 GET 1 50% OFF MEMBER",
+      "funding": "VENDOR",
+      "skus": [
+        "914120684487",
+        "913883889801",
+        "162406519743",
+        "958913634419"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 50,
+      "limit": 2,
+      "priority": 62,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-15",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2412",
+      "type": "MULTI",
+      "description": "CHOCO BAR 4/$5.00",
+      "funding": "STORE",
+      "skus": [
+        "873579486243",
+        "961141259088",
+        "525670654792"
+      ],
+      "qty": 4,
+      "price": 500,
+      "limit": 2,
+      "priority": 37,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2413",
+      "type": "PCT",
+      "description": "EL CAMINO SALSA 25% OFF",
+      "funding": "STORE",
+      "skus": [
+        "240329908216",
+        "810597846574"
+      ],
+      "pct": 25,
+      "priority": 35,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2414",
+      "type": "MULTI",
+      "description": "ALPINE YOGURT 6/$6.00",
+      "funding": "STORE",
+      "skus": [
+        "112552697727",
+        "354629964879",
+        "932851711166",
+        "206261712113",
+        "440630072747"
+      ],
+      "qty": 6,
+      "price": 600,
+      "limit": 2,
+      "priority": 52,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2415",
+      "type": "PCT",
+      "description": "ALPINE YOGURT FRUIT 30% OFF MEMBER",
+      "funding": "VENDOR",
+      "skus": [
+        "354629964879",
+        "932851711166",
+        "440630072747"
+      ],
+      "pct": 30,
+      "priority": 43,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2416",
+      "type": "BOGO",
+      "description": "MEADOW CHEESE BUY 1 GET 1 FREE",
+      "funding": "VENDOR",
+      "skus": [
+        "400932872438",
+        "785788784471",
+        "981053215880"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 100,
+      "limit": 1,
+      "priority": 69,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-14"
+    },
+    {
+      "id": "D2417",
+      "type": "MULTI",
+      "description": "BELLA PASTA 5/$7.00",
+      "funding": "STORE",
+      "skus": [
+        "380229098065",
+        "764884182466",
+        "237712484907",
+        "338950964678"
+      ],
+      "qty": 5,
+      "price": 700,
+      "limit": 2,
+      "priority": 44,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2418",
+      "type": "MULTI",
+      "description": "BELLA SAUCE 2/$6.00",
+      "funding": "VENDOR",
+      "skus": [
+        "211117117509",
+        "900454774635",
+        "327508962853"
+      ],
+      "qty": 2,
+      "price": 600,
+      "limit": 2,
+      "priority": 51,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2419",
+      "type": "PCT",
+      "description": "CEREAL 20% OFF MEMBER",
+      "funding": "STORE",
+      "skus": [
+        "280577152993",
+        "042873577616",
+        "115725218767"
+      ],
+      "pct": 20,
+      "priority": 32,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2420",
+      "type": "MULTI",
+      "description": "POLAR PIZZA 3/$17.00",
+      "funding": "STORE",
+      "skus": [
+        "384922360832",
+        "606249096783",
+        "970099243704"
+      ],
+      "qty": 3,
+      "price": 1700,
+      "limit": 2,
+      "priority": 57,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2421",
+      "type": "BOGO",
+      "description": "POLAR PIZZA BUY 1 GET 1 50% OFF",
+      "funding": "VENDOR",
+      "skus": [
+        "384922360832",
+        "606249096783",
+        "970099243704"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 50,
+      "limit": 2,
+      "priority": 65,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-15",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2422",
+      "type": "BOGO",
+      "description": "FROSTY ICE CREAM BUY 1 GET 1 FREE",
+      "funding": "VENDOR",
+      "skus": [
+        "193694931948",
+        "611308197493",
+        "498728241865",
+        "551153492148"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 100,
+      "limit": 2,
+      "priority": 73,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-14"
+    },
+    {
+      "id": "D2423",
+      "type": "MULTI",
+      "description": "FROSTY ICE CREAM 2/$8.00 MEMBER",
+      "funding": "STORE",
+      "skus": [
+        "193694931948",
+        "611308197493",
+        "498728241865",
+        "551153492148"
+      ],
+      "qty": 2,
+      "price": 800,
+      "limit": 3,
+      "priority": 60,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2424",
+      "type": "MULTI",
+      "description": "FIELD FROZEN VEG 5/$8.00",
+      "funding": "STORE",
+      "skus": [
+        "256086084667",
+        "129406911403",
+        "234643110035"
+      ],
+      "qty": 5,
+      "price": 800,
+      "limit": 2,
+      "priority": 39,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2425",
+      "type": "PCT",
+      "description": "APPLES 20% OFF",
+      "funding": "STORE",
+      "skus": [
+        "3000",
+        "3007",
+        "3014"
+      ],
+      "pct": 20,
+      "priority": 46,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2426",
+      "type": "PCT",
+      "description": "GRAPES 30% OFF MEMBER",
+      "funding": "STORE",
+      "skus": [
+        "3021",
+        "3028"
+      ],
+      "pct": 30,
+      "priority": 48,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-15",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2427",
+      "type": "MULTI",
+      "description": "BERRIES 2/$7.00",
+      "funding": "STORE",
+      "skus": [
+        "204424087061",
+        "313217880205",
+        "374945695745"
+      ],
+      "qty": 2,
+      "price": 700,
+      "limit": 3,
+      "priority": 50,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2428",
+      "type": "PCT",
+      "description": "STRAWBERRIES 25% OFF MEMBER",
+      "funding": "STORE",
+      "skus": [
+        "204424087061"
+      ],
+      "pct": 25,
+      "priority": 42,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-14"
+    },
+    {
+      "id": "D2429",
+      "type": "MULTI",
+      "description": "AVOCADO HASS 5/$6.00",
+      "funding": "STORE",
+      "skus": [
+        "798558989839"
+      ],
+      "qty": 5,
+      "price": 600,
+      "limit": 2,
+      "priority": 47,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2430",
+      "type": "PCT",
+      "description": "SALMON FILLETS 20% OFF",
+      "funding": "STORE",
+      "skus": [
+        "3035",
+        "3042"
+      ],
+      "pct": 20,
+      "priority": 40,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2431",
+      "type": "PCT",
+      "description": "CHICKEN BREAST 25% OFF MEMBER",
+      "funding": "STORE",
+      "skus": [
+        "3049"
+      ],
+      "pct": 25,
+      "priority": 36,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2432",
+      "type": "BOGO",
+      "description": "BACON BUY 1 GET 1 50% OFF",
+      "funding": "VENDOR",
+      "skus": [
+        "554889088401",
+        "135399253437"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 50,
+      "limit": 2,
+      "priority": 55,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2433",
+      "type": "MULTI",
+      "description": "SPARKLE TOWELS 2/$19.00",
+      "funding": "STORE",
+      "skus": [
+        "002440234090"
+      ],
+      "qty": 2,
+      "price": 1900,
+      "limit": 2,
+      "priority": 49,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2434",
+      "type": "PCT",
+      "description": "FRESH LAUNDRY PODS 25% OFF",
+      "funding": "VENDOR",
+      "skus": [
+        "238341567948",
+        "139782496548"
+      ],
+      "pct": 25,
+      "priority": 45,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2435",
+      "type": "MULTI",
+      "description": "GLEAM DISH SOAP 2/$6.00",
+      "funding": "STORE",
+      "skus": [
+        "548841032601",
+        "587272627390"
+      ],
+      "qty": 2,
+      "price": 600,
+      "limit": 2,
+      "priority": 38,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2436",
+      "type": "BOGO",
+      "description": "SILK HAIR CARE BUY 2 GET 1 FREE",
+      "funding": "VENDOR",
+      "skus": [
+        "743748918441",
+        "253495097004",
+        "621468965603"
+      ],
+      "buy": 2,
+      "get": 1,
+      "pct": 100,
+      "limit": 1,
+      "priority": 54,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2437",
+      "type": "MULTI",
+      "description": "BRIGHT TOOTHPASTE 2/$7.00",
+      "funding": "STORE",
+      "skus": [
+        "708603691228",
+        "021304515472"
+      ],
+      "qty": 2,
+      "price": 700,
+      "limit": null,
+      "priority": 34,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2438",
+      "type": "MULTI",
+      "description": "DELI SANDWICH 2/$12.50",
+      "funding": "STORE",
+      "skus": [
+        "547345383950",
+        "698343556324",
+        "549437676537"
+      ],
+      "qty": 2,
+      "price": 1250,
+      "limit": null,
+      "priority": 51,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2439",
+      "type": "PCT",
+      "description": "DELI SALADS 15% OFF",
+      "funding": "STORE",
+      "skus": [
+        "3063",
+        "3070"
+      ],
+      "pct": 15,
+      "priority": 30,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2440",
+      "type": "MULTI",
+      "description": "GOLDEN KETTLE 3/$10.00 VENDOR TPR",
+      "funding": "VENDOR",
+      "skus": [
+        "914120684487",
+        "913883889801",
+        "162406519743",
+        "958913634419"
+      ],
+      "qty": 3,
+      "price": 1000,
+      "limit": 1,
+      "priority": 61,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2441",
+      "type": "MULTI",
+      "description": "ALPINE YOGURT 6/$6.00 VENDOR TPR",
+      "funding": "VENDOR",
+      "skus": [
+        "112552697727",
+        "354629964879",
+        "932851711166",
+        "206261712113",
+        "440630072747"
+      ],
+      "qty": 6,
+      "price": 600,
+      "limit": 1,
+      "priority": 54,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-15",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2442",
+      "type": "MULTI",
+      "description": "FIZZ 2L 3/$6.00 VENDOR TPR",
+      "funding": "VENDOR",
+      "skus": [
+        "869066537666",
+        "030099017610",
+        "144222101043",
+        "250985481213"
+      ],
+      "qty": 3,
+      "price": 600,
+      "limit": 1,
+      "priority": 68,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-14"
+    },
+    {
+      "id": "D2443",
+      "type": "PCT",
+      "description": "SALMON FILLETS 20% OFF VENDOR TPR",
+      "funding": "VENDOR",
+      "skus": [
+        "3035"
+      ],
+      "pct": 20,
+      "priority": 43,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-15",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2490",
+      "type": "SPEND",
+      "description": "SPEND $25 ON PRODUCE SAVE $5",
+      "funding": "STORE",
+      "dept": "PRODUCE",
+      "threshold": 2500,
+      "save": 500,
+      "priority": 82,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2491",
+      "type": "SPEND",
+      "description": "SPEND $20 ON SNACKS SAVE $4",
+      "funding": "STORE",
+      "dept": "SNACKS",
+      "threshold": 2000,
+      "save": 400,
+      "priority": 78,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2492",
+      "type": "SPEND",
+      "description": "SPEND $30 ON FROZEN SAVE $6 MEMBER",
+      "funding": "STORE",
+      "dept": "FROZEN",
+      "threshold": 3000,
+      "save": 600,
+      "priority": 77,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2493",
+      "type": "SPEND",
+      "description": "SPEND $25 ON BEVERAGE SAVE $5",
+      "funding": "STORE",
+      "dept": "BEVERAGE",
+      "threshold": 2500,
+      "save": 500,
+      "priority": 75,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-15",
+      "end": "2026-10-31"
+    },
+    {
+      "id": "D2494",
+      "type": "SPEND",
+      "description": "SPEND $40 ON HOUSEHOLD SAVE $8",
+      "funding": "STORE",
+      "dept": "HOUSEHOLD",
+      "threshold": 4000,
+      "save": 800,
+      "priority": 74,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    }
+  ],
+  "coupons": [
+    {
+      "code": "MC-31201",
+      "description": "$1.00 OFF 2 CRUNCHOS",
+      "skus": [
+        "282194672045",
+        "630276327732",
+        "995128651732",
+        "656912465835"
+      ],
+      "qty": 2,
+      "save": 100,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "code": "MC-31202",
+      "description": "$1.50 OFF FIZZ 12PK",
+      "skus": [
+        "471193961667",
+        "302584990143",
+        "839545208448"
+      ],
+      "qty": 1,
+      "save": 150,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "code": "MC-31203",
+      "description": "$0.50 OFF ALPINE YOGURT 3",
+      "skus": [
+        "112552697727",
+        "354629964879",
+        "932851711166",
+        "206261712113",
+        "440630072747"
+      ],
+      "qty": 3,
+      "save": 50,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "code": "MC-31204",
+      "description": "$2.00 OFF FRESH LAUNDRY PODS",
+      "skus": [
+        "238341567948",
+        "139782496548"
+      ],
+      "qty": 1,
+      "save": 200,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "code": "MC-31205",
+      "description": "$1.00 OFF POLAR PIZZA",
+      "skus": [
+        "384922360832",
+        "606249096783",
+        "970099243704"
+      ],
+      "qty": 1,
+      "save": 100,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-15",
+      "end": "2026-10-31"
+    },
+    {
+      "code": "MC-31206",
+      "description": "$0.75 OFF 2 BELLA PASTA",
+      "skus": [
+        "380229098065",
+        "764884182466",
+        "237712484907",
+        "338950964678"
+      ],
+      "qty": 2,
+      "save": 75,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    },
+    {
+      "code": "MC-31207",
+      "description": "$1.00 OFF FROSTY ICE CREAM",
+      "skus": [
+        "193694931948",
+        "611308197493",
+        "498728241865",
+        "551153492148"
+      ],
+      "qty": 1,
+      "save": 100,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-14"
+    },
+    {
+      "code": "MC-31208",
+      "description": "$1.00 OFF SILK HAIR CARE",
+      "skus": [
+        "743748918441",
+        "253495097004",
+        "621468965603"
+      ],
+      "qty": 1,
+      "save": 100,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-10-01",
+      "end": "2026-10-31"
+    }
+  ]
+}

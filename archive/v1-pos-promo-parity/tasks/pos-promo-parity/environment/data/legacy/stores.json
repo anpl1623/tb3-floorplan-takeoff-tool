@@ -1,0 +1,28 @@
+{
+  "stores": {
+    "101": {
+      "name": "Cedar Valley Market #101 Riverside",
+      "rates": {
+        "F": 0,
+        "T": 825,
+        "P": 1025
+      }
+    },
+    "102": {
+      "name": "Cedar Valley Market #102 Hillcrest",
+      "rates": {
+        "F": 0,
+        "T": 775,
+        "P": 975
+      }
+    },
+    "103": {
+      "name": "Cedar Valley Market #103 Lakeport",
+      "rates": {
+        "F": 150,
+        "T": 900,
+        "P": 1100
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "job_name": "run-codex",
+  "jobs_dir": "jobs",
+  "n_attempts": 3,
+  "n_concurrent_trials": 3,
+  "tasks": [
+    {
+      "path": "tasks/floorplan-takeoff-tool"
+    }
+  ],
+  "environment": {
+    "type": "docker"
+  },
+  "agents": [
+    {
+      "name": "codex",
+      "model_name": "openai/gpt-6.1-sol",
+      "kwargs": {
+        "reasoning_effort": "xhigh"
+      }
+    }
+  ]
+}

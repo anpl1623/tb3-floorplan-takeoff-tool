@@ -1,0 +1,8 @@
+jobs/
+logs/
+.venv/
+dev/out/
+__pycache__/
+*.pyc
+.DS_Store
+.env.trials

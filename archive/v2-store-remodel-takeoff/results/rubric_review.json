@@ -1,0 +1,148 @@
+{
+  "checks": {
+    "verifiable": {
+      "outcome": "pass",
+      "explanation": "The verifier recomputes ground truth deterministically from a pure-geometry vector model (tests/plan.py, built with shapely, no randomness) and compares it against the agent's JSON output with fixed tolerances. tests/Dockerfile bakes pytest/pytest-json-ctrf/shapely at build time, so test.sh does no network installs at verify time."
+    },
+    "solvable": {
+      "outcome": "pass",
+      "explanation": "solution/solve.sh and solution/takeoff.py implement a working end-to-end pipeline (PDF -> measurements -> redline adjustments -> takeoff.json) that an expert construction estimator with a PDF measuring tool could replicate manually within the claimed 4-hour expert time estimate; the approach matches ordinary takeoff practice, not an exotic multi-day undertaking."
+    },
+    "difficult": {
+      "outcome": "pass",
+      "explanation": "The task requires professional quantity-takeoff expertise: reading architectural drawing conventions (hatch legends, wall poché, door swing symbols), applying 17 handwritten as-built markups with cross-sheet effects, and getting scale calibration right per sheet. This is well beyond an average undergraduate exercise."
+    },
+    "interesting": {
+      "outcome": "pass",
+      "explanation": "Quantity takeoffs from as-built markups are routine, billable work for construction estimators and preconstruction managers (the author states direct professional experience in retail construction/store-rollout software), representing genuine real-world utility."
+    },
+    "outcome_verified": {
+      "outcome": "pass",
+      "explanation": "Tests only check the final takeoff.json values against recomputed ground truth; the instruction describes what to measure and to what conventions, not which tools or steps to use to get there."
+    },
+    "anti_cheat_robustness": {
+      "outcome": "pass",
+      "explanation": "The ground-truth vector model (tests/plan.py) lives only in the verifier image and is never exposed to the agent. The agent's PDF is a plain raster scan (DCTDecode JPEG streams, no embedded text/font/annotation objects per manual PDF inspection), so there is no hidden vector or text layer leaking exact coordinates."
+    },
+    "task_security": {
+      "outcome": "pass",
+      "explanation": "All Dockerfiles, scripts, and data files perform only legitimate task setup/build/verification actions; no exfiltration, obfuscation, destructive operations, or prompt injection was found in any task file."
+    },
+    "functional_verification": {
+      "outcome": "pass",
+      "explanation": "tests/test_takeoff.py compares numeric quantities (areas, lengths, counts) computed from geometric recomputation against the submitted JSON values; there is no string/keyword matching against source or output text."
+    },
+    "deterministic_reproducible": {
+      "outcome": "pass",
+      "explanation": "tests/plan.py is pure deterministic geometry with no RNG; verifier dependencies are pinned exact versions in tests/Dockerfile (pytest==9.1.1, pytest-json-ctrf==0.5.2, shapely==2.0.6) and the base image is pinned by sha256 digest. No live services are used."
+    },
+    "essential_difficulty": {
+      "outcome": "pass",
+      "explanation": "Difficulty stems from reading and reconciling architectural drawings and their as-built markups across sheets, not from clerical formatting; the stated tolerances (2%/6SF for areas, 1.5%/2LF for lengths) explicitly absorb reasonable measurement imprecision rather than demanding exact-pixel accuracy."
+    },
+    "test_instruction_alignment": {
+      "outcome": "pass",
+      "explanation": "The eight quantity groups and tolerance rules stated in instruction.md map exactly to the TEMPLATE keys and AREA_TOL/LENGTH_TOL constants in tests/test_takeoff.py, and the measurement conventions described (face-of-wall vs centerline, fixture/door deduction rules) match how tests/plan.py computes floor, wall, ceiling, and base quantities."
+    },
+    "novel": {
+      "outcome": "pass",
+      "explanation": "The store, drawings, and markups are entirely synthetic and custom to this task; answering correctly requires measuring a specific fictional building, not recalling a memorized textbook problem."
+    },
+    "agentic": {
+      "outcome": "pass",
+      "explanation": "Solving requires opening and visually/programmatically parsing a large multi-page scanned PDF, calibrating scale per sheet, cross-referencing markups across three sheets, and iterating on measurements -- this cannot be done in a single zero-shot generation."
+    },
+    "reviewable": {
+      "outcome": "pass",
+      "explanation": "Ground truth is derived from an explicit, readable vector model (tests/plan.py) rather than hardcoded values, and the scanned drawings' visible red markups were manually cross-checked against solution/redlines.json and plan.py's asbuilt() changes and found consistent, so a careful non-specialist reviewer can verify correctness."
+    },
+    "instruction_concision": {
+      "outcome": "pass",
+      "explanation": "instruction.md uses absolute paths throughout (/app/drawings/..., /app/output/takeoff.json, /app/takeoff_template.json), is clearly human-written, states measurement conventions as task-defining requirements rather than solution hints, and does not mention any specific tools or libraries."
+    },
+    "effective_instruction_length": {
+      "outcome": "pass",
+      "explanation": "instruction.md is 341 words with no other textual requirement documents (the referenced PDF is media and the template is a null-valued JSON schema, not prose); this is tight and non-repetitive given the scope of eight quantity categories and their conventions."
+    },
+    "solution_quality": {
+      "outcome": "pass",
+      "explanation": "solution/takeoff.py performs genuine computation (red-channel dropout, deskew, FFT-based hatch classification, wall-band/jamb tracing, fixture-cell detection) on the actual PDF rather than emitting a hardcoded answer, and the 835-line script is kept as a separate file rather than inlined in solve.sh."
+    },
+    "separate_verifier_configured": {
+      "outcome": "pass",
+      "explanation": "The verifier only reads the declared artifact /app/output/takeoff.json and files baked into /tests/ via COPY; all verifier tooling (pytest, pytest-json-ctrf, shapely) is pre-installed in tests/Dockerfile with no runtime installs in test.sh; there are no duplicated assets between environment/ and tests/ to drift."
+    },
+    "environment_hygiene": {
+      "outcome": "pass",
+      "explanation": "environment/Dockerfile copies only the drawings and template into the agent image (no tests/solution leakage, no test-only deps baked in); tests/Dockerfile owns all verifier-only dependencies baked at build time. Neither Dockerfile installs apt packages, so no cleanup concern applies."
+    },
+    "structured_data_schema": {
+      "outcome": "pass",
+      "explanation": "The exact output schema is given as a normative file (/app/takeoff_template.json) that the instruction explicitly tells the agent to use, with every null to be replaced by a quantity."
+    },
+    "typos": {
+      "outcome": "pass",
+      "explanation": "Cross-checked file paths and identifiers across instruction.md, Dockerfiles, solve.sh, and tests; all references (drawings path, takeoff_template.json, takeoff.json, redlines/rooms filenames) are consistent with no typos found."
+    },
+    "difficulty_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "README's Difficulty explanation describes concrete sources of difficulty for both agent and human (hatch/poché discrimination, 17 cross-sheet markups, per-sheet scale drift), states the drawings are synthetic but follow standard drafting practice, and names the real-world role (construction estimator/preconstruction manager) without citing pass rates."
+    },
+    "solution_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "README's Solution explanation accurately summarizes the actual pipeline in solution/takeoff.py (red dropout, calibration, region/hatch classification, wall tracing, fixture counting, markup application) and is congruent with the code reviewed."
+    },
+    "verification_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "README's Verification explanation describes what is compared (shapely-derived areas/lengths/counts from the recomputed as-built plan) and gives concrete calibration rationale for the inequality tolerances (reference method's worst-case error, a simulated 2px-error estimator at the 99th percentile, and why a per-area floor is needed), consistent with the actual test file."
+    },
+    "category_and_tags": {
+      "outcome": "pass",
+      "explanation": "Category Operations with subcategory Construction is a reasonable fit for a construction-estimating task that does not match Science/Software/ML/Security/Hardware/Media, and the tags (quantity-takeoff, construction-estimating, architectural-drawings, raster-measurement, computer-vision, retail-remodel) are specific and descriptive rather than generic."
+    },
+    "task_name": {
+      "outcome": "pass",
+      "explanation": "store-remodel-takeoff is a concise, 3-word, kebab-case name that clearly conveys the task's subject matter."
+    },
+    "resource_configuration": {
+      "outcome": "pass",
+      "explanation": "Verifier timeout (300s), agent timeout (28800s/8h), and environment resources (2 CPU, 8GB RAM) are non-default and plausibly set for the task: the 8-hour agent timeout matches the stated difficulty, and the elevated memory supports legitimate large-raster image processing (7200x4800px sheets) rather than inflating difficulty artificially."
+    },
+    "task_readme": {
+      "outcome": "pass",
+      "explanation": "README.md contains all required sections (Difficulty explanation, Solution explanation, Verification explanation, Relevant experience) plus a task metadata summary, with no unnecessary duplication of instruction or solution code."
+    },
+    "expert_time_estimate": {
+      "outcome": "pass",
+      "explanation": "expert_time_estimate_hours = 4 is non-zero and plausible given the described scope (three sheets, 36 quantities, 17 markups) for an experienced estimator working efficiently."
+    },
+    "task_toml_schema": {
+      "outcome": "pass",
+      "explanation": "task.toml contains only recognized fields in [task], [metadata], [verifier], [agent], and [environment], plus a valid top-level artifacts list; no invented fields are present."
+    },
+    "no_extraneous_files": {
+      "outcome": "pass",
+      "explanation": "Every file in the task directory (Dockerfiles, drawings PDF, template, instruction, README, solution files, test files) is referenced and required to build, run, solve, or verify the task."
+    },
+    "artifact_efficiency": {
+      "outcome": "not_applicable",
+      "explanation": "The sole artifact is the agent's own small deliverable (/app/output/takeoff.json), which is inherently the answer itself with no baked baseline to diff against, and no [[verifier.collect]] hooks are used."
+    },
+    "verifier_execution_isolation": {
+      "outcome": "not_applicable",
+      "explanation": "The verifier never executes agent-produced code; test.sh explicitly notes it only reads and parses the agent's takeoff.json file."
+    },
+    "ctrf_reporting": {
+      "outcome": "pass",
+      "explanation": "test.sh runs pytest with --ctrf /logs/verifier/ctrf.json against the 9 discrete test functions in tests/test_takeoff.py, satisfying the CTRF requirement for pytest-based verifiers."
+    },
+    "do_not_modify_enforced": {
+      "outcome": "not_applicable",
+      "explanation": "instruction.md contains no constraint telling the agent not to modify, delete, or preserve any specific artifact."
+    },
+    "binary_reward": {
+      "outcome": "pass",
+      "explanation": "test.sh writes exactly 1 or 0 to /logs/verifier/reward.txt based solely on the pytest exit code, with no partial-credit or continuous-score paths."
+    }
+  }
+}

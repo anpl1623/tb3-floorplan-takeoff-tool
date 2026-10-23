@@ -1,0 +1,23 @@
+{
+  "job_name": "run-claude",
+  "jobs_dir": "jobs",
+  "n_attempts": 3,
+  "n_concurrent_trials": 3,
+  "tasks": [
+    {
+      "path": "tasks/floorplan-takeoff-tool"
+    }
+  ],
+  "environment": {
+    "type": "docker"
+  },
+  "agents": [
+    {
+      "name": "claude-code",
+      "model_name": "anthropic/claude-opus-5-5",
+      "kwargs": {
+        "reasoning_effort": "max"
+      }
+    }
+  ]
+}

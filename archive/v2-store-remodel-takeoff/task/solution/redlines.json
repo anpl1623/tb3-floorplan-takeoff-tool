@@ -1,0 +1,281 @@
+[
+  {
+    "note": "WALL BUILT 2'-0\" EAST",
+    "action": "move_wall",
+    "at": [
+      118.0,
+      104.0
+    ],
+    "offset": 2.0,
+    "sheet": "A101"
+  },
+  {
+    "note": "WALL NOT BUILT - RMS 122 & 123 ONE ROOM, VCT-1 THRU-OUT. DOOR 115 DELETED",
+    "action": "remove_wall",
+    "at": [
+      138.0,
+      86.0
+    ],
+    "finish": "VCT-1",
+    "delete_door_at": [
+      133.5,
+      92.0
+    ],
+    "sheet": "A101"
+  },
+  {
+    "note": "NEW P1 PARTITION - BALER / RECYCLING RM w/ 3'-0\" DOOR. FINISHES TO MATCH STOCKROOM",
+    "action": "add_wall",
+    "kind": "P1",
+    "segments": [
+      [
+        [
+          80.0,
+          100.0
+        ],
+        [
+          100.0,
+          100.0
+        ]
+      ],
+      [
+        [
+          80.0,
+          100.0
+        ],
+        [
+          80.0,
+          109.7
+        ]
+      ]
+    ],
+    "door": "single",
+    "sheet": "A101",
+    "door_at": [
+      87.5,
+      100.0
+    ],
+    "door_width": 3.0
+  },
+  {
+    "note": "PHARMACY WALL BUILT 4'-0\" SOUTH OF LOCATION SHOWN (DOOR 117 MOVES W/ WALL)",
+    "action": "move_wall",
+    "at": [
+      143.0,
+      50.0
+    ],
+    "offset": -4.0,
+    "sheet": "A101"
+  },
+  {
+    "note": "DOOR 104: (1) 3'-0\" LEAF IN LIEU OF PAIR, INFILL CMU",
+    "action": "change_door",
+    "at": [
+      87.0,
+      80.0
+    ],
+    "to": "single",
+    "sheet": "A101",
+    "width": 3.0,
+    "keep": "start"
+  },
+  {
+    "note": "CPT-1 IN LIEU OF VCT-1 (rm 121 cash office)",
+    "action": "change_finish",
+    "at": [
+      122.0,
+      84.0
+    ],
+    "to": "CPT-1",
+    "sheet": "A101"
+  },
+  {
+    "note": "EPOXY EXTENDS TO GRID LINE B (grid B is 44'-0\" from the west face)",
+    "action": "move_transition",
+    "at": [
+      36.0,
+      101.5
+    ],
+    "to_x": 44.0,
+    "sheet": "A101"
+  },
+  {
+    "note": "RUN NOT INSTALLED",
+    "action": "remove_run",
+    "at": [
+      59.0,
+      50.0
+    ],
+    "y_range": [
+      30,
+      68
+    ],
+    "sheet": "A101"
+  },
+  {
+    "note": "LINEUP EXTENDED - 14 DOORS TOTAL",
+    "action": "set_lineup",
+    "doors": 14,
+    "drawn_box": [
+      3,
+      75,
+      35,
+      80
+    ],
+    "sheet": "A101"
+  },
+  {
+    "note": "SCO NOT INSTALLED",
+    "action": "add_fixtures",
+    "type": "self_checkouts",
+    "count": -1,
+    "sheet": "A101"
+  },
+  {
+    "note": "(2) ADD'L PRODUCE TABLES",
+    "action": "add_fixtures",
+    "type": "produce_tables",
+    "count": 2,
+    "sheet": "A101"
+  },
+  {
+    "note": "BUILT AS (6) 4'-0\" + (1) 3'-0\" SECTIONS",
+    "action": "rebuild_run",
+    "at": [
+      114.0,
+      49.0
+    ],
+    "y_range": [
+      33,
+      66
+    ],
+    "sections_4ft": 6,
+    "sections_3ft": 1,
+    "sheet": "A101"
+  },
+  {
+    "note": "OK AS SHOWN (vestibule)",
+    "action": "none",
+    "sheet": "A101"
+  },
+  {
+    "note": "PAINT ACCENT - SEE A601",
+    "action": "none",
+    "sheet": "A101"
+  },
+  {
+    "note": "FLOOR CRACK @ ENTRY - PATCH ONLY",
+    "action": "none",
+    "sheet": "A101"
+  },
+  {
+    "sheet": "A101",
+    "note": "(new baler room finishes match the stockroom)",
+    "action": "room_schedule",
+    "room": "112",
+    "same_as": "110",
+    "set": {
+      "at": [
+        90.0,
+        105.0
+      ]
+    }
+  },
+  {
+    "sheet": "A102",
+    "note": "PHARMACY: GYP CLG IN LIEU OF ACT-1.",
+    "action": "room_schedule",
+    "room": "102",
+    "set": {
+      "ceiling": "GYP"
+    }
+  },
+  {
+    "sheet": "A102",
+    "note": "(6) L4 IN LIEU OF L2 / L2E",
+    "action": "replace_lights",
+    "box": [
+      128.0,
+      46.0,
+      159.4,
+      79.7
+    ],
+    "remove": [
+      "L2",
+      "L2E"
+    ],
+    "add": {
+      "L4": 6
+    }
+  },
+  {
+    "sheet": "A102",
+    "note": "RMS 122 + 123 ONE ROOM - ACT-1 THRU-OUT.",
+    "action": "room_schedule",
+    "room": "122",
+    "set": {
+      "ceiling": "ACT-1"
+    }
+  },
+  {
+    "sheet": "A102",
+    "note": "JAN L1 -> L2",
+    "action": "convert_lights",
+    "box": [
+      130.3,
+      80.3,
+      137.8,
+      91.7
+    ],
+    "from": "L1",
+    "to": "L2"
+  },
+  {
+    "sheet": "A102",
+    "note": "L3 ROW NOT INSTALLED",
+    "action": "remove_l3_row",
+    "at": [
+      108.5,
+      50.0
+    ]
+  },
+  {
+    "sheet": "A102",
+    "note": "(2) ADD'L L5",
+    "action": "add_lights",
+    "type": "L5",
+    "count": 2
+  },
+  {
+    "sheet": "A102",
+    "note": "ALL CORRIDOR L1 TO BE L1E (EM)",
+    "action": "convert_lights",
+    "box": [
+      100.2,
+      92.3,
+      159.4,
+      97.7
+    ],
+    "from": "L1",
+    "to": "L1E"
+  },
+  {
+    "sheet": "A102",
+    "note": "VERIFY DECK HT 22'-0\" +/-",
+    "action": "none"
+  },
+  {
+    "sheet": "A102",
+    "note": "CEILINGS & LIGHTS FOLLOW AS-BUILT WALLS - SEE A101 REDLINES (rooms are rebuilt as built)",
+    "action": "none"
+  },
+  {
+    "sheet": "A601",
+    "note": "CTB-1 (room 102 base)",
+    "action": "room_schedule",
+    "room": "102",
+    "set": {
+      "base": "CTB-1"
+    }
+  }
+]

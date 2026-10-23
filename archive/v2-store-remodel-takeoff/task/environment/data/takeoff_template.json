@@ -1,0 +1,54 @@
+{
+  "floor_sf": {
+    "LVT-1": null,
+    "PC-1": null,
+    "SC-1": null,
+    "EP-1": null,
+    "VCT-1": null,
+    "CT-1": null,
+    "CPT-1": null,
+    "WOM-1": null
+  },
+  "wall_lf": {
+    "EXT": null,
+    "P1": null,
+    "P2": null,
+    "P3": null
+  },
+  "doors": {
+    "single": null,
+    "pair": null,
+    "overhead_coiling": null,
+    "auto_sliding": null
+  },
+  "fixtures": {
+    "gondola_sections_4ft": null,
+    "gondola_sections_3ft": null,
+    "endcaps": null,
+    "checkouts": null,
+    "self_checkouts": null,
+    "cooler_doors": null,
+    "produce_tables": null
+  },
+  "ceilings_sf": {
+    "ACT-1": null,
+    "ACT-2": null,
+    "GYP": null
+  },
+  "base_lf": {
+    "RB-1": null,
+    "CTB-1": null
+  },
+  "lights": {
+    "L1": null,
+    "L1E": null,
+    "L2": null,
+    "L2E": null,
+    "L4": null,
+    "L5": null,
+    "X1": null
+  },
+  "lights_lf": {
+    "L3": null
+  }
+}

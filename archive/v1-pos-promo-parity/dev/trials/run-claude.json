@@ -1,0 +1,26 @@
+{
+  "jobs_dir": "jobs",
+  "tasks": [
+    {
+      "path": "tasks/pos-promo-parity"
+    }
+  ],
+  "environment": {
+    "type": "docker"
+  },
+  "agents": [
+    {
+      "name": "claude-code",
+      "model_name": "anthropic/claude-opus-5-5",
+      "kwargs": {
+        "reasoning_effort": "max"
+      },
+      "env": {
+        "CLAUDE_FORCE_OAUTH": "1"
+      }
+    }
+  ],
+  "job_name": "run-claude",
+  "n_attempts": 3,
+  "n_concurrent_trials": 3
+}

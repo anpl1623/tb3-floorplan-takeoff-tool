@@ -1,0 +1,768 @@
+{
+  "period": "2026-09",
+  "deals": [
+    {
+      "id": "S1101",
+      "type": "MULTI",
+      "description": "FIZZ 2L 2/$4.00",
+      "funding": "STORE",
+      "skus": [
+        "869066537666",
+        "030099017610",
+        "144222101043",
+        "250985481213"
+      ],
+      "qty": 2,
+      "price": 400,
+      "limit": 4,
+      "priority": 61,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1102",
+      "type": "PCT",
+      "description": "FIZZ CHERRY 2L 20% OFF MEMBER",
+      "funding": "STORE",
+      "skus": [
+        "144222101043"
+      ],
+      "pct": 20,
+      "priority": 34,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-14"
+    },
+    {
+      "id": "S1103",
+      "type": "MULTI",
+      "description": "FIZZ 12PK 3/$16.00",
+      "funding": "VENDOR",
+      "skus": [
+        "471193961667",
+        "302584990143",
+        "839545208448"
+      ],
+      "qty": 3,
+      "price": 1600,
+      "limit": 2,
+      "priority": 55,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-15",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1104",
+      "type": "PCT",
+      "description": "PEAK SPARKLING 25% OFF",
+      "funding": "STORE",
+      "skus": [
+        "185198343303",
+        "087322287852",
+        "284637985705",
+        "263442571471"
+      ],
+      "pct": 25,
+      "priority": 47,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1105",
+      "type": "BOGO",
+      "description": "VOLT ENERGY BUY 1 GET 1 FREE",
+      "funding": "VENDOR",
+      "skus": [
+        "523503548089",
+        "231408139119",
+        "699859658458"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 100,
+      "limit": 3,
+      "priority": 70,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-14"
+    },
+    {
+      "id": "S1106",
+      "type": "BOGO",
+      "description": "CRUNCHOS BUY 1 GET 1 FREE",
+      "funding": "VENDOR",
+      "skus": [
+        "282194672045",
+        "630276327732",
+        "656912465835"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 100,
+      "limit": null,
+      "priority": 66,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1107",
+      "type": "MULTI",
+      "description": "GOLDEN KETTLE 2/$7.00",
+      "funding": "STORE",
+      "skus": [
+        "914120684487",
+        "913883889801",
+        "162406519743",
+        "958913634419"
+      ],
+      "qty": 2,
+      "price": 700,
+      "limit": null,
+      "priority": 58,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1108",
+      "type": "PCT",
+      "description": "GOLDEN KETTLE BBQ 30% OFF MEMBER",
+      "funding": "STORE",
+      "skus": [
+        "913883889801"
+      ],
+      "pct": 30,
+      "priority": 49,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-15",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1109",
+      "type": "MULTI",
+      "description": "CHOCO BAR 3/$4.00",
+      "funding": "STORE",
+      "skus": [
+        "873579486243",
+        "961141259088",
+        "525670654792"
+      ],
+      "qty": 3,
+      "price": 400,
+      "limit": 3,
+      "priority": 40,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1110",
+      "type": "MULTI",
+      "description": "ALPINE YOGURT 5/$5.00",
+      "funding": "VENDOR",
+      "skus": [
+        "112552697727",
+        "354629964879",
+        "932851711166",
+        "206261712113",
+        "440630072747"
+      ],
+      "qty": 5,
+      "price": 500,
+      "limit": 2,
+      "priority": 52,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1111",
+      "type": "PCT",
+      "description": "MEADOW SHREDDED CHEESE 20% OFF",
+      "funding": "STORE",
+      "skus": [
+        "400932872438",
+        "785788784471",
+        "981053215880"
+      ],
+      "pct": 20,
+      "priority": 36,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-14"
+    },
+    {
+      "id": "S1112",
+      "type": "MULTI",
+      "description": "BELLA PASTA 4/$6.00",
+      "funding": "STORE",
+      "skus": [
+        "380229098065",
+        "764884182466",
+        "237712484907",
+        "338950964678"
+      ],
+      "qty": 4,
+      "price": 600,
+      "limit": 2,
+      "priority": 45,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1113",
+      "type": "BOGO",
+      "description": "BELLA SAUCE BUY 1 GET 1 FREE MEMBER",
+      "funding": "VENDOR",
+      "skus": [
+        "211117117509",
+        "900454774635",
+        "327508962853"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 100,
+      "limit": 2,
+      "priority": 68,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-15",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1114",
+      "type": "PCT",
+      "description": "CEREAL 15% OFF",
+      "funding": "STORE",
+      "skus": [
+        "280577152993",
+        "042873577616",
+        "115725218767"
+      ],
+      "pct": 15,
+      "priority": 31,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1115",
+      "type": "MULTI",
+      "description": "POLAR PIZZA 2/$11.00",
+      "funding": "STORE",
+      "skus": [
+        "384922360832",
+        "606249096783",
+        "970099243704"
+      ],
+      "qty": 2,
+      "price": 1100,
+      "limit": 3,
+      "priority": 57,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1116",
+      "type": "BOGO",
+      "description": "FROSTY ICE CREAM BUY 1 GET 1 FREE MEMBER",
+      "funding": "VENDOR",
+      "skus": [
+        "193694931948",
+        "611308197493",
+        "498728241865",
+        "551153492148"
+      ],
+      "buy": 1,
+      "get": 1,
+      "pct": 100,
+      "limit": 2,
+      "priority": 72,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-14"
+    },
+    {
+      "id": "S1117",
+      "type": "PCT",
+      "description": "HONEYCRISP APPLES 25% OFF",
+      "funding": "STORE",
+      "skus": [
+        "3007"
+      ],
+      "pct": 25,
+      "priority": 44,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1118",
+      "type": "PCT",
+      "description": "SALMON FILLETS 15% OFF",
+      "funding": "STORE",
+      "skus": [
+        "3035",
+        "3042"
+      ],
+      "pct": 15,
+      "priority": 39,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-15",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1119",
+      "type": "MULTI",
+      "description": "AVOCADO HASS 4/$5.00",
+      "funding": "STORE",
+      "skus": [
+        "798558989839"
+      ],
+      "qty": 4,
+      "price": 500,
+      "limit": 2,
+      "priority": 50,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1120",
+      "type": "PCT",
+      "description": "FRESH LAUNDRY PODS 30% OFF",
+      "funding": "VENDOR",
+      "skus": [
+        "238341567948",
+        "139782496548"
+      ],
+      "pct": 30,
+      "priority": 42,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1121",
+      "type": "MULTI",
+      "description": "SPARKLE TOWELS 2/$20.00",
+      "funding": "STORE",
+      "skus": [
+        "002440234090"
+      ],
+      "qty": 2,
+      "price": 2000,
+      "limit": 2,
+      "priority": 48,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1122",
+      "type": "PCT",
+      "description": "SILK HAIR CARE 25% OFF MEMBER",
+      "funding": "VENDOR",
+      "skus": [
+        "743748918441",
+        "253495097004",
+        "621468965603"
+      ],
+      "pct": 25,
+      "priority": 38,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1123",
+      "type": "MULTI",
+      "description": "DELI SANDWICH 2/$12.00",
+      "funding": "STORE",
+      "skus": [
+        "547345383950",
+        "698343556324",
+        "549437676537"
+      ],
+      "qty": 2,
+      "price": 1200,
+      "limit": null,
+      "priority": 54,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1124",
+      "type": "PCT",
+      "description": "BERRIES 20% OFF",
+      "funding": "STORE",
+      "skus": [
+        "204424087061",
+        "313217880205",
+        "374945695745"
+      ],
+      "pct": 20,
+      "priority": 33,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-15",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1125",
+      "type": "MULTI",
+      "description": "BACON 2/$11.00",
+      "funding": "STORE",
+      "skus": [
+        "554889088401"
+      ],
+      "qty": 2,
+      "price": 1100,
+      "limit": 2,
+      "priority": 46,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1126",
+      "type": "MULTI",
+      "description": "FIZZ 2L 2/$4.00 VENDOR TPR",
+      "funding": "VENDOR",
+      "skus": [
+        "869066537666",
+        "030099017610",
+        "144222101043",
+        "250985481213"
+      ],
+      "qty": 2,
+      "price": 400,
+      "limit": 1,
+      "priority": 66,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-15",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1127",
+      "type": "PCT",
+      "description": "PEAK SPARKLING 25% OFF VENDOR TPR",
+      "funding": "VENDOR",
+      "skus": [
+        "185198343303",
+        "087322287852"
+      ],
+      "pct": 25,
+      "priority": 51,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-14"
+    },
+    {
+      "id": "S1190",
+      "type": "SPEND",
+      "description": "SPEND $25 ON PRODUCE SAVE $4",
+      "funding": "STORE",
+      "dept": "PRODUCE",
+      "threshold": 2500,
+      "save": 400,
+      "priority": 80,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1191",
+      "type": "SPEND",
+      "description": "SPEND $20 ON SNACKS SAVE $3",
+      "funding": "STORE",
+      "dept": "SNACKS",
+      "threshold": 2000,
+      "save": 300,
+      "priority": 76,
+      "member_only": false,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "id": "S1192",
+      "type": "SPEND",
+      "description": "SPEND $30 ON HOUSEHOLD SAVE $5 MEMBER",
+      "funding": "STORE",
+      "dept": "HOUSEHOLD",
+      "threshold": 3000,
+      "save": 500,
+      "priority": 74,
+      "member_only": true,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-15",
+      "end": "2026-09-30"
+    }
+  ],
+  "coupons": [
+    {
+      "code": "MC-20417",
+      "description": "$1.00 OFF 2 GOLDEN KETTLE",
+      "skus": [
+        "914120684487",
+        "913883889801",
+        "162406519743",
+        "958913634419"
+      ],
+      "qty": 2,
+      "save": 100,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "code": "MC-20418",
+      "description": "$2.00 OFF FRESH LAUNDRY PODS",
+      "skus": [
+        "238341567948",
+        "139782496548"
+      ],
+      "qty": 1,
+      "save": 200,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "code": "MC-20419",
+      "description": "$0.75 OFF BELLA SAUCE",
+      "skus": [
+        "211117117509",
+        "900454774635",
+        "327508962853"
+      ],
+      "qty": 1,
+      "save": 75,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    },
+    {
+      "code": "MC-20420",
+      "description": "$1.50 OFF 2 POLAR PIZZA",
+      "skus": [
+        "384922360832",
+        "606249096783",
+        "970099243704"
+      ],
+      "qty": 2,
+      "save": 150,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-14"
+    },
+    {
+      "code": "MC-20421",
+      "description": "$1.00 OFF CRUNCHOS",
+      "skus": [
+        "282194672045",
+        "630276327732",
+        "995128651732",
+        "656912465835"
+      ],
+      "qty": 1,
+      "save": 100,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-15",
+      "end": "2026-09-30"
+    },
+    {
+      "code": "MC-20422",
+      "description": "$0.50 OFF ALPINE YOGURT 4",
+      "skus": [
+        "112552697727",
+        "354629964879",
+        "932851711166",
+        "206261712113",
+        "440630072747"
+      ],
+      "qty": 4,
+      "save": 50,
+      "stores": [
+        101,
+        102,
+        103
+      ],
+      "start": "2026-09-01",
+      "end": "2026-09-30"
+    }
+  ]
+}

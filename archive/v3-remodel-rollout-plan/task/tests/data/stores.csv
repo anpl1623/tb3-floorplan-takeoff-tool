@@ -1,0 +1,73 @@
+store,city,district,weeks,permit_week,disruption,blackout_weeks
+S001,Des Moines,D1,6,9,0.127,32 33
+S002,Ankeny,D1,6,8,0.12,32 33
+S003,Ames,D1,5,11,0.113,33 34
+S004,Newton,D1,3,10,0.125,
+S005,Pella,D1,4,11,0.125,18 19
+S006,Indianola,D1,4,7,0.096,
+S007,Marshalltown,D1,5,1,0.132,
+S008,Grinnell,D1,3,5,0.119,
+S009,Ottumwa,D1,4,6,0.131,
+S010,Carroll,D1,3,3,0.113,
+S011,West Des Moines,D1,6,11,0.112,32 33
+S012,Urbandale,D1,4,6,0.132,32 33
+S013,Cedar Rapids,D2,5,3,0.128,
+S014,Marion,D2,4,6,0.144,
+S015,Iowa City,D2,5,9,0.12,33 34
+S016,Coralville,D2,5,2,0.113,33 34
+S017,Waterloo,D2,4,19,0.115,
+S018,Cedar Falls,D2,4,7,0.095,34
+S019,Dubuque,D2,5,18,0.143,25
+S020,Decorah,D2,4,3,0.131,30
+S021,Muscatine,D2,5,5,0.141,
+S022,Burlington,D2,5,8,0.114,
+S023,Charles City,D2,4,4,0.088,
+S024,Mount Vernon,D2,3,8,0.102,
+S025,Mason City,D3,4,10,0.109,
+S026,Clear Lake,D3,3,9,0.11,27
+S027,Fort Dodge,D3,5,7,0.108,
+S028,Spencer,D3,3,6,0.084,
+S029,Spirit Lake,D3,4,4,0.093,27
+S030,Storm Lake,D3,3,9,0.108,
+S031,Sioux City,D3,6,24,0.1,
+S032,Council Bluffs,D3,4,28,0.119,
+S033,Le Mars,D3,3,4,0.086,24
+S034,Algona,D3,3,3,0.129,
+S035,Okoboji,D3,3,10,0.117,27 28
+S036,Denison,D3,3,8,0.082,
+S037,Davenport,D4,6,8,0.152,
+S038,Bettendorf,D4,5,1,0.112,
+S039,Moline,D4,5,12,0.121,
+S040,Galesburg,D4,4,3,0.117,
+S041,Peoria,D4,6,20,0.122,
+S042,Bloomington,D4,5,16,0.13,
+S043,Champaign,D4,6,3,0.118,33 34
+S044,Macomb,D4,3,4,0.138,
+S045,Quincy,D4,4,1,0.116,24 25
+S046,Kewanee,D4,3,9,0.134,
+S047,Ottawa,D4,3,10,0.095,
+S048,Galena,D4,3,9,0.082,40 41
+S049,Madison,D5,6,14,0.104,35 36
+S050,Middleton,D5,4,5,0.097,
+S051,Janesville,D5,4,5,0.094,
+S052,Beloit,D5,4,1,0.135,
+S053,Rockford,D5,6,26,0.106,
+S054,Freeport,D5,4,3,0.122,
+S055,DeKalb,D5,4,12,0.094,
+S056,Dixon,D5,4,7,0.081,
+S057,Platteville,D5,4,3,0.101,
+S058,Lake Geneva,D5,4,7,0.099,26 27
+S059,Wisconsin Dells,D5,3,3,0.103,26 27
+S060,Baraboo,D5,4,2,0.089,
+S061,La Crosse,D6,4,12,0.135,39 40
+S062,Eau Claire,D6,4,22,0.106,
+S063,Menomonie,D6,3,8,0.104,
+S064,Tomah,D6,3,8,0.114,
+S065,Rochester,D6,5,9,0.13,21 22
+S066,Winona,D6,4,2,0.11,
+S067,Mankato,D6,4,21,0.14,34
+S068,Albert Lea,D6,3,4,0.107,
+S069,Austin,D6,4,2,0.085,
+S070,Owatonna,D6,4,1,0.126,
+S071,Red Wing,D6,4,12,0.14,
+S072,Stevens Point,D6,4,8,0.109,

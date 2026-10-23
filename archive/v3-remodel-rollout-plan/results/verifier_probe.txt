@@ -1,0 +1,15 @@
+ok  reward=0 expected=0  no plan file
+ok  reward=0 expected=0  empty file
+ok  reward=0 expected=0  header only
+ok  reward=0 expected=0  wrong header
+ok  reward=0 expected=0  one store missing
+ok  reward=0 expected=0  a store listed twice
+ok  reward=0 expected=0  unknown crew
+ok  reward=0 expected=0  start week not a number
+ok  reward=0 expected=0  breaks only the windows rule (S001 -> C1 week 46)
+ok  reward=0 expected=0  breaks only the crews rule (S001 -> C1 week 10)
+ok  reward=0 expected=0  breaks only the districts rule (S001 -> C4 week 9)
+ok  reward=0 expected=0  breaks only the starts rule (S001 -> C4 week 14)
+ok  reward=0 expected=0  greedy plan, feasible, $10,631,843
+ok  reward=1 expected=1  reference plan, $10,185,594
+ok  reward=1 expected=1  reference plan, shuffled rows, CRLF, weeks as 12.0, BOM

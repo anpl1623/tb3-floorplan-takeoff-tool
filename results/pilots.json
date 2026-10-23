@@ -1,0 +1,45 @@
+[
+ {
+  "job": "takeoff-tool-pilot-codex-1",
+  "agent": "codex gpt-6.1-sol xhigh",
+  "reward": 0.0,
+  "agent_minutes": 81.1,
+  "exception": null,
+  "stores": {
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4206": "FAILED"
+  },
+  "failures": [
+   "fixtures.cooler_doors: expected 41, got 40",
+   "fixtures.cooler_doors: expected 40, got 39",
+   "floor_sf.SC-1: expected 1752.2 (+/-35.0), got 1656.1; floor_sf.VCT-1: expected 1424.1 (+/-28.5), got 1521.5; fixtures.cooler_doors: expected 39, got 38",
+   "fixtures.cooler_doors: expected 44, got 43"
+  ],
+  "note": "pilot on the first data build; hidden stores 4201 and 4206 had a west door inside the west cooler lineup (generator bug, fixed afterwards)"
+ },
+ {
+  "job": "takeoff-tool-pilot-claude-1",
+  "agent": "claude-code claude-opus-5-5 max",
+  "reward": 0.0,
+  "agent_minutes": 200.5,
+  "exception": null,
+  "stores": {
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4206": "FAILED"
+  },
+  "failures": [
+   "fixtures.cooler_doors: expected 41, got 40",
+   "doors.auto_sliding: expected 2, got 1",
+   "fixtures.cooler_doors: expected 44, got 43"
+  ],
+  "note": "pilot on the first data build; hidden stores 4201 and 4206 had a west door inside the west cooler lineup (generator bug, fixed afterwards)"
+ }
+]
