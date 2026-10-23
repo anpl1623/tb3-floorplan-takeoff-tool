@@ -445,17 +445,16 @@ def profile(g, nonfloor, band):
             inner = gs[lo + 3:hi - 2, x]
             mean[x] = inner.mean()
             dark[x] = (inner < 190).mean()
-    # a jamb or wall end is a stroke across the band, darker than the band's own fill (a dark
-    # tint or a dense hatch can itself be darker than HEAVY)
-    filled = mean[mean < 255.0]
-    fill = float(np.median(filled)) if len(filled) else 255.0
-    thr = min(HEAVY, fill - 45)
-    jamb = light < thr
-    # beside a door opening even a stroke only a little darker than a dark fill is a jamb
-    bare = ndi.uniform_filter1d(mean, 9) >= 238
-    jamb |= (light < fill - 25) & ndi.binary_dilation(bare, iterations=8)
+    # a jamb is a stroke across the band, darker than the wall on one side of it and the opening
+    # on the other (a dark tint or a dense hatch can itself be darker than HEAVY)
+    side = ndi.maximum_filter1d(light, 9)
+    beside = np.minimum(np.roll(side, 8), np.roll(side, -8))
+    jamb = (light < np.minimum(beside - 30, 175)) | (light < 60)
+    # the fill here, over three feet of wall (one band can hold a dark and a light partition)
+    fill = ndi.median_filter(mean, size=73)
+    thr = np.minimum(HEAVY, fill - 45)
     cnt = inner_m.sum(axis=0).astype(np.float64)
-    use = (np.where(inner_m, gs < thr, False).sum(axis=0) < 0.4 * np.maximum(cnt, 1)) & (cnt > 0)
+    use = (np.where(inner_m, gs < thr[None, :], False).sum(axis=0) < 0.4 * np.maximum(cnt, 1)) & (cnt > 0)
     w = inner_m & use[None, :]                # crossing strokes say nothing about the fill
     s1 = np.where(w, gs, 0).sum(axis=0)
     s2 = np.where(w, gs ** 2, 0).sum(axis=0)
@@ -490,7 +489,7 @@ def classify_fill(mean, spread, aniso, gap, refs, breaks=()):
     the positions where the fill is visible). Bare paper is an opening."""
     names = list(refs)
     d = np.stack([np.abs(gap - refs[k][0]) / 1.5 + np.abs(mean - refs[k][1]) / 15.0 + np.abs(spread - refs[k][2]) / 6.0
-                  + np.abs(aniso - refs[k][3]) / 0.15 for k in names])
+                  + np.abs(aniso - refs[k][3]) / 0.3 for k in names])
     open_ = (mean >= 238) & (spread < 8)
     valid = ~open_ & (mean < 250)
     kind = np.full(len(mean), names[0], dtype=object)
