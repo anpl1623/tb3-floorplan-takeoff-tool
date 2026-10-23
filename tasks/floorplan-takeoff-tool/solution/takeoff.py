@@ -340,6 +340,14 @@ def region_tiles(g, mask, ppf, n=32):
     mask = mask[r0:r1, c0:c1]
     inner = cv2.erode(mask.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
     g = without_lone_lines(g[r0:r1, c0:c1], inner, ppf)
+    # room and finish tags and lettering are compact islands inside the region; they are not
+    # part of the finish (a small room's every window would otherwise include its tags)
+    holes, _ = ndi.label(ndi.binary_fill_holes(mask) & ~mask)
+    for i, sl in enumerate(ndi.find_objects(holes), 1):
+        h, w = sl[0].stop - sl[0].start, sl[1].stop - sl[1].start
+        if min(h, w) >= 0.4 * ppf and (holes[sl] == i).sum() >= 0.3 * h * w:
+            box_ = (slice(max(sl[0].start - 3, 0), sl[0].stop + 3), slice(max(sl[1].start - 3, 0), sl[1].stop + 3))
+            mask[box_] = False
     m = mask.astype(np.float32)
     for share in (1.0, 0.85, 0.7):
         inside = cv2.boxFilter(m, -1, (WIN_W + 4, WIN_H + 4), normalize=True, borderType=cv2.BORDER_CONSTANT)
@@ -705,10 +713,14 @@ def fixtures(g, foot, outer, ppf):
                 found.append(("kiosk_frame", cx, cy))     # a kiosk's square around its circle
             elif 1.0 < short < 1.7 and 2.2 < long_ < 3.1 and 0.35 < fill < 0.65:
                 found.append(("bag_well", cx, cy))        # a triangle of a checkout's X-marked bag well
-    # a gondola section is two side-by-side cells either side of the spine; a lone cell is something else
+    # a gondola section is two side-by-side cells either side of the spine, in a run of sections;
+    # a lone cell, or a lone pair, is something else
     def paired(name, x, y):
         return any(k == name and abs(y2 - y) < 0.5 and 1.5 < abs(x2 - x) < 2.5 for k, x2, y2 in found)
-    return [c for c in found if not c[0].startswith("gondola") or paired(*c)]
+
+    def in_run(name, x, y):
+        return any(k.startswith("gondola") and abs(x2 - x) < 0.5 and 2.6 < abs(y2 - y) < 4.4 for k, x2, y2 in found)
+    return [c for c in found if not c[0].startswith("gondola") or (paired(*c) and in_run(*c))]
 
 
 def clusters(points, reach):
@@ -748,13 +760,13 @@ def count_cells(cells, name):
     if name == "produce_tables":
         # the long triangles above and below the table's centre
         groups = clusters(pts, 0.6)
-        used, n = set(), 0
+        used, tables = set(), []
         for i, (x, y, _) in enumerate(groups):
             for j, (x2, y2, _) in enumerate(groups):
                 if i < j and i not in used and j not in used and abs(x - x2) < 0.35 and 1.6 < abs(y - y2) < 2.4:
                     used |= {i, j}
-                    n += 1
-        return n
+                    tables.append(((x + x2) / 2, (y + y2) / 2))
+        return len(tables)
     return len(pts) / CELLS[name][3]
 
 
@@ -763,13 +775,14 @@ def cooler_lineups(cells):
     sit within a foot of each other (the strokes clip the acute tips), so a door is one cluster
     whether one or both triangles survived the scan. Doors come in lineups of four or more at
     2'-6" centres; look-alike cells (a hatch, a checkout) at most pair up."""
-    spots = [(x, y) for x, y, _ in clusters([(x, y) for k, x, y in cells if k == "cooler_doors"], 1.0)]
+    spots = [(x, y) for x, y, _ in clusters([(x, y) for k, x, y in cells if k == "cooler_doors"], 1.2)]
 
     def step(i, j, along_x):
         (x, y), (a, b) = spots[i], spots[j]
+        # an end door's clipped triangle reads a little long, never short
         if along_x:
-            return abs(abs(a - x) - 2.5) < 0.45 and abs(b - y) < 0.4
-        return abs(abs(b - y) - 2.5) < 0.45 and abs(a - x) < 0.4
+            return 2.3 < abs(a - x) < 2.95 and abs(b - y) < 0.4
+        return 2.3 < abs(b - y) < 2.95 and abs(a - x) < 0.4
     out = []
     for along_x in (True, False):
         seen = set()
