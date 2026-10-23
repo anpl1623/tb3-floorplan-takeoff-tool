@@ -2,7 +2,7 @@
   "job_name": "run-codex",
   "jobs_dir": "jobs",
   "n_attempts": 3,
-  "n_concurrent_trials": 3,
+  "n_concurrent_trials": 1,
   "tasks": [
     {
       "path": "tasks/floorplan-takeoff-tool"
