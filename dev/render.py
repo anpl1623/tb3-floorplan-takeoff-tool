@@ -69,50 +69,94 @@ def _parallel(poly, angle, spacing, phase=0.0):
     return _lines_clip(poly, segs)
 
 
-def pattern(code, poly, rng):
-    """Return (line segments, dots, triangles) for a finish hatch, in feet."""
-    lines, dots, tris = [], [], []
-    if code == "LVT-1":
-        w = 7 / 12
-        lines += _parallel(poly, 0, w)
+def _rows(poly, course, length, stagger, angle):
+    """Plank or brick joints: rows `course` apart, joints every `length` along a row,
+    each row shifted by `stagger` feet; rows run along `angle` (0 or 90)."""
+    minx, miny, maxx, maxy = poly.bounds
+    segs = []
+    if angle == 0:
+        lo, hi, a0, a1 = miny, maxy, minx, maxx
+    else:
+        lo, hi, a0, a1 = minx, maxx, miny, maxy
+    row = math.floor(lo / course)
+    while row * course < hi:
+        c0 = row * course
+        off = (row * stagger) % length
+        t = math.floor((a0 - off) / length) * length + off
+        while t < a1:
+            segs.append([(t, c0), (t, c0 + course)] if angle == 0 else [(c0, t), (c0 + course, t)])
+            t += length
+        row += 1
+    return _parallel(poly, 0 if angle == 0 else 90, course) + _lines_clip(poly, segs)
+
+
+def _dashes(segs, dash, gap):
+    out = []
+    for (x0, y0), (x1, y1) in segs:
+        L = math.hypot(x1 - x0, y1 - y0)
+        if L == 0:
+            continue
+        ux, uy = (x1 - x0) / L, (y1 - y0) / L
+        start = (x0 * ux + y0 * uy) % (dash + gap)       # keep dashes aligned across zones
+        t = -start
+        while t < L:
+            a, b = max(t, 0), min(t + dash, L)
+            if b > a:
+                out.append([(x0 + ux * a, y0 + uy * a), (x0 + ux * b, y0 + uy * b)])
+            t += dash + gap
+    return out
+
+
+def pattern(spec, poly, rng):
+    """(line segments, dots as (x, y, r), triangles, tint grey or None) for a pattern spec, in feet."""
+    kind, *a = spec
+    lines, dots, tris, tint = [], [], [], None
+    if kind == "planks":
+        width, length, angle = a
+        lines = _rows(poly, width, length, 1.375, angle)
+    elif kind == "brick":
+        course, length = a
+        lines = _rows(poly, course, length, length / 2, 0)
+    elif kind == "lines":
+        lines = _parallel(poly, a[0], a[1])
+    elif kind == "dashed":
+        angle, spacing, dash, gap = a
+        lines = _dashes(_parallel(poly, angle, spacing), dash, gap)
+    elif kind == "double":
+        angle, spacing, gap = a
+        lines = _parallel(poly, angle, spacing) + _parallel(poly, angle, spacing, phase=gap)
+    elif kind == "cross":
+        lines = _parallel(poly, a[0], a[2]) + _parallel(poly, a[1], a[2])
+    elif kind == "dots":
+        spacing, r = a
         minx, miny, maxx, maxy = poly.bounds
-        row = math.floor(miny / w)
-        while row * w < maxy:
-            y0 = row * w
-            off = (row * 1.375) % 4
-            x = math.floor((minx - off) / 4) * 4 + off
-            segs = []
-            while x < maxx:
-                segs.append([(x, y0), (x, y0 + w)])
-                x += 4
-            lines += _lines_clip(poly, segs) if segs else []
-            row += 1
-    elif code == "PC-1":
-        lines += _parallel(poly, 0, 10) + _parallel(poly, 90, 10)
-    elif code == "SC-1":
+        x = math.floor(minx / spacing) * spacing + spacing / 2
+        while x < maxx:
+            y = math.floor(miny / spacing) * spacing + spacing / 2
+            while y < maxy:
+                if poly.contains(Point(x, y)):
+                    dots.append((x, y, r))
+                y += spacing
+            x += spacing
+    elif kind == "stipple":
+        density = a[0]
         minx, miny, maxx, maxy = poly.bounds
         area = (maxx - minx) * (maxy - miny)
-        for _ in range(int(area * 0.9)):
+        for _ in range(int(area * density)):
             pt = (rng.uniform(minx, maxx), rng.uniform(miny, maxy))
             if poly.contains(Point(pt)):
-                dots.append(pt)
+                dots.append((pt[0], pt[1], 0.03))
         for _ in range(int(area * 0.12)):
             cx, cy = rng.uniform(minx, maxx), rng.uniform(miny, maxy)
-            a = rng.uniform(0, 2 * math.pi)
-            tri = [(cx + 0.28 * math.cos(a + k * 2.094), cy + 0.28 * math.sin(a + k * 2.094)) for k in range(3)]
+            ang = rng.uniform(0, 2 * math.pi)
+            tri = [(cx + 0.28 * math.cos(ang + k * 2.094), cy + 0.28 * math.sin(ang + k * 2.094)) for k in range(3)]
             if poly.contains(Polygon(tri)):
                 tris.append(tri)
-    elif code == "EP-1":
-        lines += _parallel(poly, 45, 1.0)
-    elif code == "VCT-1":
-        lines += _parallel(poly, 0, 1.0) + _parallel(poly, 90, 1.0)
-    elif code == "CT-1":
-        lines += _parallel(poly, 45, 0.75) + _parallel(poly, 135, 0.75)
-    elif code == "CPT-1":
-        lines += _parallel(poly, 135, 0.5)
-    elif code == "WOM-1":
-        lines += _parallel(poly, 0, 0.25)
-    return lines, dots, tris
+    elif kind == "joints":
+        lines = _parallel(poly, 0, a[0]) + _parallel(poly, 90, a[0])
+    elif kind == "tint":
+        tint = a[0]
+    return lines, dots, tris, tint
 
 
 # ---------------------------------------------------------------- drawing --
@@ -162,26 +206,36 @@ def poly_parts(g):
     return [x for x in getattr(g, "geoms", [g]) if isinstance(x, Polygon) and not x.is_empty]
 
 
-def draw_hatched(sh, poly, code, rng, z):
-    lines, dots, tris = pattern(code, poly, rng)
-    sh.lines_ft(lines, zorder=z, **HATCH)
+def draw_hatched(sh, poly, spec, rng, z, office):
+    lines, dots, tris, tint = pattern(spec, poly, rng)
+    if tint is not None:
+        for part in poly_parts(poly):
+            sh.poly_ft(list(part.exterior.coords), fc=str(tint), ec="none", zorder=z - 0.5)
+    sh.lines_ft(lines, zorder=z, color=str(office["hatch_grey"]), linewidth=office["hatch_lw"])
     if dots:
-        xs, ys = zip(*[S(*p) for p in dots])
-        sh.ax.scatter(xs, ys, s=0.35, c="0.3", marker="o", linewidths=0, zorder=z)
+        xs, ys = zip(*[S(x, y) for x, y, r in dots])
+        size = [(2 * r * SCALE * 72) ** 2 for x, y, r in dots]
+        sh.ax.scatter(xs, ys, s=size, c=str(office["hatch_grey"] - 0.15), marker="o", linewidths=0, zorder=z)
     for t in tris:
         sh.poly_ft(t, fill=False, ec="0.35", lw=0.3, zorder=z)
 
 
-def draw_walls(sh, plan, z):
+def draw_poche(sh, part, spec, z, office):
+    """Fill one wall band with an office's poche spec."""
+    lines, dots, tris, tint = pattern(spec, part, random.Random(0))
+    sh.poly_ft(list(part.exterior.coords), fc=str(tint) if tint is not None else "white", ec="none", zorder=z)
+    if lines:
+        sh.lines_ft(lines, color="0.15", linewidth=0.35, zorder=z + 0.1)
+
+
+def draw_walls(sh, plan, z, office):
     openings = unary_union([d.opening() for d in plan.doors])
     bands = {k: unary_union([w.band() for w in plan.walls if w.kind == k]).difference(openings)
              for k in ("EXT", "P3", "P2", "P1")}
     for kind in ("P1", "P2", "P3", "EXT"):
+        spec = office["walls"]["CMU" if kind in ("EXT", "P3") else kind]
         for part in poly_parts(bands[kind]):
-            fc = {"P1": "0.88", "P2": "0.62", "P3": "white", "EXT": "white"}[kind]
-            sh.poly_ft(list(part.exterior.coords), fc=fc, ec="none", zorder=z)
-            if kind in ("EXT", "P3"):
-                sh.lines_ft(_parallel(part, 45, 0.32), color="0.15", linewidth=0.35, zorder=z + 0.1)
+            draw_poche(sh, part, spec, z, office)
     allw = unary_union(list(bands.values()))
     rings = []
     for part in poly_parts(allw):
@@ -379,28 +433,28 @@ def draw_scale_bar(sh, x, y, z):
     sh.text_ft(x + 38, y + 0.5, "FEET", 6.5, z=z)
 
 
-def legend_swatch(sh, code, x, y, rng, z):
+def legend_swatch(sh, spec, x, y, rng, z, office):
     w, h = 0.9 / SCALE, 0.45 / SCALE   # swatch size in plan feet
     fx, fy = (x - OX) / SCALE, (y - OY) / SCALE
     poly = box(fx, fy, fx + w, fy + h)
-    draw_hatched(sh, poly, code, rng, z)
+    draw_hatched(sh, poly, spec, rng, z, office)
     sh.ax.add_patch(Rectangle((x, y), 0.9, 0.45, fill=False, ec="black", lw=0.5, zorder=z + 0.5))
 
 
-def draw_legend(sh, plan_rng, z):
+def draw_legend(sh, plan_rng, z, office):
     x0, top = 24.4, 21.6
     sh.ax.add_patch(Rectangle((x0 - 0.2, 2.2), 7.4, top - 2.0, fill=False, ec="black", lw=0.6, zorder=z))
     sh.text(x0, top - 0.25, "LEGEND", 11, weight="bold", ha="left", z=z)
     y = top - 0.75
     sh.text(x0, y, "FLOOR FINISHES", 8, weight="bold", ha="left", z=z)
-    finishes = [("LVT-1", "LUXURY VINYL PLANK, 7\" x 48\""), ("PC-1", "POLISHED CONCRETE, SAWCUT JOINTS 10'-0\" O.C."),
+    finishes = [("LVT-1", "LUXURY VINYL PLANK"), ("PC-1", "POLISHED CONCRETE"),
                 ("SC-1", "SEALED CONCRETE"), ("EP-1", "RESINOUS EPOXY FLOORING"),
-                ("VCT-1", "VINYL COMPOSITION TILE, 12\" x 12\""), ("CT-1", "PORCELAIN TILE, 9\" x 9\" DIAGONAL"),
-                ("CPT-1", "CARPET TILE, ASHLAR INSTALL"), ("WOM-1", "RECESSED WALK-OFF MAT")]
+                ("VCT-1", "VINYL COMPOSITION TILE"), ("CT-1", "PORCELAIN TILE"),
+                ("CPT-1", "CARPET TILE"), ("WOM-1", "RECESSED WALK-OFF MAT")]
     y -= 0.35
     for code, desc in finishes:
         y -= 0.62
-        legend_swatch(sh, code, x0, y, plan_rng, z)
+        legend_swatch(sh, office["finishes"][code], x0, y, plan_rng, z, office)
         sh.text(x0 + 1.1, y + 0.3, code, 7.5, weight="bold", ha="left", z=z)
         sh.text(x0 + 1.1, y + 0.1, desc, 6, ha="left", z=z)
     y -= 0.55
@@ -412,13 +466,10 @@ def draw_legend(sh, plan_rng, z):
     for code, desc in walls:
         y -= 0.5
         t = THICKNESS[code] * SCALE
-        rect = box(x0, y + 0.2 - t / 2, x0 + 0.9, y + 0.2 + t / 2)
-        fc = {"P2": "0.62", "P1": "0.88"}.get(code, "white")
-        sh.ax.add_patch(Rectangle((x0, y + 0.2 - t / 2), 0.9, t, fc=fc, ec="black", lw=WALL_LW, zorder=z))
-        if code in ("EXT", "P3"):
-            fpoly = box((x0 - OX) / SCALE, (y + 0.2 - t / 2 - OY) / SCALE, (x0 + 0.9 - OX) / SCALE,
-                        (y + 0.2 + t / 2 - OY) / SCALE)
-            sh.lines_ft(_parallel(fpoly, 45, 0.32), color="0.15", linewidth=0.35, zorder=z + 0.1)
+        fpoly = box((x0 - OX) / SCALE, (y + 0.2 - t / 2 - OY) / SCALE, (x0 + 0.9 - OX) / SCALE,
+                    (y + 0.2 + t / 2 - OY) / SCALE)
+        draw_poche(sh, fpoly, office["walls"]["CMU" if code in ("EXT", "P3") else code], z, office)
+        sh.ax.add_patch(Rectangle((x0, y + 0.2 - t / 2), 0.9, t, fill=False, ec="black", lw=WALL_LW, zorder=z + 0.3))
         sx, sy = x0 + 1.25, y + 0.2
         sh.ax.add_patch(RegularPolygon((sx, sy), 6, radius=0.13, orientation=math.pi / 6, fc="white", ec="black",
                                        lw=0.45, zorder=z))
@@ -490,8 +541,9 @@ def draw_title_block(sh, z, plan, number="A101", title="FLOOR PLAN", subtitle="F
     for r in rows:
         ax.plot([x0, x1], [r, r], color="black", lw=0.6, zorder=z)
     cx = (x0 + x1) / 2
-    sh.text(cx, 22.8, "NORTHLINE", 15, weight="bold", z=z)
-    sh.text(cx, 22.3, "RETAIL ARCHITECTS", 9, z=z)
+    words = plan.office_name.split()
+    sh.text(cx, 22.8, words[0], 15, weight="bold", z=z)
+    sh.text(cx, 22.3, " ".join(words[1:]), 9, z=z)
     sh.text(cx, 21.85, "1840 W. COMMERCE ST, SUITE 300", 6, z=z)
     sh.text(cx, 20.8, "CEDAR VALLEY MARKET", 10, weight="bold", z=z)
     sh.text(cx, 20.35, f"STORE #{plan.store}", 9, weight="bold", z=z)
@@ -518,7 +570,10 @@ def draw_title_block(sh, z, plan, number="A101", title="FLOOR PLAN", subtitle="F
     sh.text(cx, 1.6, f"SHEET {page} OF 14", 6, z=z)
 
 
-def render(plan, seed=7):
+def render(plan, seed=7, office=None):
+    from offices import OFFICES
+    office = office or OFFICES["NORTHLINE"]
+    plan.office_name = office["name"]
     rng = random.Random(seed)
     sh = Sheet()
     ax = sh.ax
@@ -527,14 +582,14 @@ def render(plan, seed=7):
     walls = plan.wall_footprint()
     for zone in plan.zones:
         for part in poly_parts(zone.shape.difference(walls)):
-            draw_hatched(sh, part, zone.finish, rng, zfloor)
+            draw_hatched(sh, part, office["finishes"][zone.finish], rng, zfloor, office)
     segs = []
     for t in plan.transitions:
         for g in getattr(t, "geoms", [t]):
             segs.append(list(g.coords))
     sh.lines_ft(segs, color="black", linewidth=EDGE_LW, zorder=zfloor + 1)
     draw_grid_and_dims(sh, plan, zgrid)
-    draw_walls(sh, plan, zwall)
+    draw_walls(sh, plan, zwall, office)
     draw_fixtures(sh, plan, zfix)
     draw_doors(sh, plan, zdoor)
     draw_annotations(sh, plan, zann)
@@ -551,7 +606,7 @@ def render(plan, seed=7):
     sh.ax.add_patch(MplPolygon([(nx, ny + 0.38), (nx - 0.12, ny - 0.2), (nx, ny - 0.08), (nx + 0.12, ny - 0.2)],
                                closed=True, fc="black", zorder=zann))
     sh.text(nx, ny + 0.52, "N", 9, weight="bold", z=zann)
-    y = draw_legend(sh, random.Random(seed + 1), zann)
+    y = draw_legend(sh, random.Random(seed + 1), zann, office)
     draw_notes(sh, y, zann)
     draw_title_block(sh, zann, plan)
     return sh.save_array()
