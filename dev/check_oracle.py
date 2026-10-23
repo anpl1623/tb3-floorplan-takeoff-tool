@@ -72,7 +72,8 @@ def main():
         from functools import partial
         for seed, params, bad in pool.imap(partial(check, tool=TOOL), seeds):
             n_bad += bool(bad)
-            print(f"{'ok ' if not bad else 'BAD'} {seed} scale {params['print_scale']:.3f} skew {params['skew']:+.2f}  "
+            print(f"{'ok ' if not bad else 'BAD'} {seed} {params.get('office', ''):10} {params.get('scan', ''):9} "
+                  f"scale {params['print_scale']:.3f} skew {params['skew']:+.2f}  "
                   + "; ".join(bad), flush=True)
     print(f"{len(seeds) - n_bad}/{len(seeds)} stores fully correct")
 
