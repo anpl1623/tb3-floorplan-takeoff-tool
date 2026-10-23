@@ -63,7 +63,7 @@ def reproduce(gray, rng, kind):
     """The print that reached the archive: the plotted sheet as is, faded, or photocopied."""
     g = gray.astype(np.float32)
     if kind == "faded":            # an old print: light toner, soft edges
-        g = cv2.GaussianBlur(g, (0, 0), float(rng.uniform(0.6, 0.9)))
+        g = cv2.GaussianBlur(g, (0, 0), float(rng.uniform(0.3, 0.5)))
         g = 255 - (255 - g) * float(rng.uniform(0.55, 0.7))
     elif kind == "photocopy":      # a copier drops the paper to white, prints lines solid and screens greys
         g = np.where(g > float(rng.uniform(222, 232)), 255.0, g)

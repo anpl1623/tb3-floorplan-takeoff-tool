@@ -139,13 +139,17 @@ def regions(g, foot):
             heavy[sl][lab_h[sl] == i] = False
     barrier = heavy | ~foot
     free = foot & ~barrier
+    # a faint print can leave a pixel-wide gap in a stroke; cut such necks so a room doesn't run
+    # into the inside of a tinted wall
+    free = cv2.morphologyEx(free.astype(np.uint8), cv2.MORPH_OPEN,
+                            cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))) > 0
     lab, n = ndi.label(free, structure=[[0, 1, 0], [1, 1, 1], [0, 1, 0]])
     dist = ndi.distance_transform_edt(free)
     width = ndi.maximum(dist, lab, index=np.arange(1, n + 1))
     # give line pixels to the nearest region, splitting strokes down the middle. Only strokes: a
     # wall whose poche reads as solid linework (a dark crosshatch on a copy) stays wall
     reach, (iy, ix) = ndi.distance_transform_edt(lab == 0, return_indices=True)
-    grown = np.where(reach <= 1.5, lab[iy, ix], 0) * foot
+    grown = np.where(reach <= 2.0, lab[iy, ix], 0) * foot
     # tags, room-number boxes and other annotations enclosed by a floor region belong to it
     floor_ids = np.nonzero(width >= 20)[0] + 1
     for i, sl in enumerate(ndi.find_objects(grown), 1):
@@ -247,7 +251,7 @@ def partition_refs(g, rects, ppf):
 
 
 # ------------------------------------------------------------- textures --
-WIN = 64
+WIN_H, WIN_W = 64, 160          # a window as large as fits in a legend swatch (2.6' x 6.4')
 F_EDGES = np.array([0.3, 0.55, 0.8, 1.1, 1.5, 2.0, 2.7, 3.6, 4.8, 6.5])    # cycles per foot
 N_ANG = 8
 
@@ -256,8 +260,8 @@ def tile_features(tile, ppf):
     t = tile.astype(np.float64)
     tone = (255.0 - t).mean() / 255.0
     a = t - t.mean()
-    spec = np.abs(np.fft.fft2(a * np.outer(np.hanning(WIN), np.hanning(WIN)))) ** 2
-    fy, fx = np.meshgrid(np.fft.fftfreq(WIN), np.fft.fftfreq(WIN), indexing="ij")
+    spec = np.abs(np.fft.fft2(a * np.outer(np.hanning(WIN_H), np.hanning(WIN_W)))) ** 2
+    fy, fx = np.meshgrid(np.fft.fftfreq(WIN_H), np.fft.fftfreq(WIN_W), indexing="ij")
     f = np.hypot(fx, fy) * ppf
     ang = np.mod(np.arctan2(fy, fx), np.pi)
     fi = np.digitize(f, F_EDGES) - 1
@@ -307,10 +311,10 @@ def swatch_tiles(g, rect, ppf):
     r0, r1, c0, c1 = r0 + 4, r1 - 4, c0 + 4, c1 - 4      # inside the swatch frame
     crop = without_lone_lines(g[r0:r1, c0:c1], np.ones((r1 - r0, c1 - c0), bool), ppf)
     tiles = []
-    for r in range(0, max(0, crop.shape[0] - WIN) + 1, 8):
-        for c in range(0, max(0, crop.shape[1] - WIN) + 1, 16):
-            t = crop[r:r + WIN, c:c + WIN]
-            if t.shape == (WIN, WIN):
+    for r in range(0, max(0, crop.shape[0] - WIN_H) + 1, 8):
+        for c in range(0, max(0, crop.shape[1] - WIN_W) + 1, 5):
+            t = crop[r:r + WIN_H, c:c + WIN_W]
+            if t.shape == (WIN_H, WIN_W):
                 tiles.append(t)
     return tiles
 
@@ -319,16 +323,16 @@ def region_tiles(g, mask, ppf, n=32):
     """Windows inside a region; for rooms too small or cluttered for a clean one, windows that
     are mostly region with the rest filled with the region's mean grey."""
     ys, xs = np.nonzero(mask)
-    r0, r1 = max(ys.min() - WIN, 0), min(ys.max() + WIN + 1, g.shape[0])
-    c0, c1 = max(xs.min() - WIN, 0), min(xs.max() + WIN + 1, g.shape[1])
+    r0, r1 = max(ys.min() - WIN_H, 0), min(ys.max() + WIN_H + 1, g.shape[0])
+    c0, c1 = max(xs.min() - WIN_W, 0), min(xs.max() + WIN_W + 1, g.shape[1])
     mask = mask[r0:r1, c0:c1]
     inner = cv2.erode(mask.astype(np.uint8), np.ones((5, 5), np.uint8)) > 0
     g = without_lone_lines(g[r0:r1, c0:c1], inner, ppf)
     m = mask.astype(np.float32)
     for share in (1.0, 0.85, 0.7):
-        inside = cv2.boxFilter(m, -1, (WIN + 4, WIN + 4), normalize=True, borderType=cv2.BORDER_CONSTANT)
+        inside = cv2.boxFilter(m, -1, (WIN_W + 4, WIN_H + 4), normalize=True, borderType=cv2.BORDER_CONSTANT)
         ys, xs = np.nonzero((inside >= share - 1e-6) & mask)
-        ok = (ys >= WIN // 2) & (xs >= WIN // 2) & (ys < g.shape[0] - WIN // 2) & (xs < g.shape[1] - WIN // 2)
+        ok = (ys >= WIN_H // 2) & (xs >= WIN_W // 2) & (ys < g.shape[0] - WIN_H // 2) & (xs < g.shape[1] - WIN_W // 2)
         ys, xs = ys[ok], xs[ok]
         if len(ys):
             break
@@ -338,9 +342,9 @@ def region_tiles(g, mask, ppf, n=32):
     pick = np.random.default_rng(0).choice(len(ys), size=min(n, len(ys)), replace=False)
     tiles = []
     for p_ in pick:
-        r, c = ys[p_] - WIN // 2, xs[p_] - WIN // 2
-        t = g[r:r + WIN, c:c + WIN].astype(np.float32).copy()
-        t[~mask[r:r + WIN, c:c + WIN]] = fill
+        r, c = ys[p_] - WIN_H // 2, xs[p_] - WIN_W // 2
+        t = g[r:r + WIN_H, c:c + WIN_W].astype(np.float32).copy()
+        t[~mask[r:r + WIN_H, c:c + WIN_W]] = fill
         tiles.append(t)
     return tiles
 
@@ -349,7 +353,7 @@ def distance(a, b):
     """How unlike two textures are: tone, contrast, and (where there is texture to compare) the
     distribution of their energy over spacing and direction."""
     (ta, ca, ha), (tb, cb, hb) = a, b
-    shape = np.abs(ha - hb).sum() * min(1.0, min(ca, cb) / 0.04)
+    shape = np.abs(ha - hb).sum() * min(1.0, max(ca, cb) / 0.04)
     return 6.0 * abs(ta - tb) + 4.0 * abs(ca - cb) + shape
 
 
@@ -398,20 +402,23 @@ def bands(nonfloor, ppf):
 def profile(g, nonfloor, band):
     """Fill statistics of the band interior at every position along it.
 
-    The interior is the band's own cross-section at that position, less three
-    pixels on each side for the outline strokes."""
+    The interior is the wall's own cross-section at that position (one band can
+    hold a thick and a thin wall on one centreline), less three pixels on each
+    side for the outline strokes."""
+    pad = 4
+    lo_, hi_ = max(band["lo"] - pad, 0), band["hi"] + pad + 1
     if band["h"]:
-        gs = g[band["lo"]:band["hi"] + 1, band["a"]:band["b"] + 1].astype(np.float32)
-        ms = nonfloor[band["lo"]:band["hi"] + 1, band["a"]:band["b"] + 1]
+        gs = g[lo_:hi_, band["a"]:band["b"] + 1].astype(np.float32)
+        ms = nonfloor[lo_:hi_, band["a"]:band["b"] + 1]
     else:
-        gs = g[band["a"]:band["b"] + 1, band["lo"]:band["hi"] + 1].astype(np.float32).T
-        ms = nonfloor[band["a"]:band["b"] + 1, band["lo"]:band["hi"] + 1].T
+        gs = g[band["a"]:band["b"] + 1, lo_:hi_].astype(np.float32).T
+        ms = nonfloor[band["a"]:band["b"] + 1, lo_:hi_].T
     n = gs.shape[1]
-    mid = gs.shape[0] // 2
+    mid = band["lo"] - lo_ + (band["hi"] - band["lo"]) // 2
     mean = np.full(n, 255.0)
     dark = np.zeros(n)
     light = np.full(n, 255.0)                 # how light the lightest part of the cross-section is
-    spans = []
+    inner_m = np.zeros(gs.shape, bool)
     for x in range(n):
         col = ms[:, x]
         if not col[mid]:
@@ -426,20 +433,22 @@ def profile(g, nonfloor, band):
         k = int(0.95 * (len(sec) - 1))
         light[x] = np.partition(sec, k)[k]
         if hi - lo >= 7:
+            inner_m[lo + 3:hi - 2, x] = True
             inner = gs[lo + 3:hi - 2, x]
             mean[x] = inner.mean()
             dark[x] = (inner < 190).mean()
-            spans.append((x, inner))
     # a jamb or wall end is a stroke across the band, darker than the band's own fill (a dark
     # tint or a dense hatch can itself be darker than HEAVY)
     filled = mean[mean < 255.0]
     fill = float(np.median(filled)) if len(filled) else 255.0
     thr = min(HEAVY, fill - 45)
     jamb = light < thr
-    s1, s2, cnt = np.zeros(n), np.zeros(n), np.zeros(n)
-    for x, inner in spans:
-        if (inner < thr).mean() < 0.4:            # crossing strokes say nothing about the fill
-            s1[x], s2[x], cnt[x] = inner.sum(), (inner ** 2).sum(), len(inner)
+    cnt = inner_m.sum(axis=0).astype(np.float64)
+    use = (np.where(inner_m, gs < thr, False).sum(axis=0) < 0.4 * np.maximum(cnt, 1)) & (cnt > 0)
+    w = inner_m & use[None, :]                # crossing strokes say nothing about the fill
+    s1 = np.where(w, gs, 0).sum(axis=0)
+    s2 = np.where(w, gs ** 2, 0).sum(axis=0)
+    cnt = w.sum(axis=0).astype(np.float64)
     # spread of the fill over one hatch period along the wall: CMU poche is white with a
     # diagonal hatch, the stud partitions are flat tints
     k = 23
@@ -448,15 +457,16 @@ def profile(g, nonfloor, band):
     spread = np.sqrt(np.maximum(ndi.uniform_filter1d(s2, k) / c - m1 ** 2, 0))
     # which way the hatch runs: a hatch at one angle repeats along one diagonal and not the other,
     # crosshatch and tints along both or neither
-    rows = gs[3:max(4, gs.shape[0] - 3)]
-    dev = rows - rows.mean(axis=0, keepdims=True)
-    use = (cnt[:-1] > 0) & (cnt[1:] > 0)
+    colmean = s1 / np.maximum(cnt, 1)
+    dev = np.where(w, gs - colmean[None, :], 0.0)
     d1 = np.zeros(n)
     d2 = np.zeros(n)
     v = np.zeros(n)
-    d1[:-1] = (dev[:-1, :-1] * dev[1:, 1:]).sum(axis=0) * use
-    d2[:-1] = (dev[1:, :-1] * dev[:-1, 1:]).sum(axis=0) * use
-    v[:-1] = (dev[:, :-1] ** 2).sum(axis=0) * use
+    both1 = w[:-1, :-1] & w[1:, 1:]
+    both2 = w[1:, :-1] & w[:-1, 1:]
+    d1[:-1] = np.where(both1, dev[:-1, :-1] * dev[1:, 1:], 0).sum(axis=0)
+    d2[:-1] = np.where(both2, dev[1:, :-1] * dev[:-1, 1:], 0).sum(axis=0)
+    v[:-1] = (dev[:, :-1] ** 2).sum(axis=0)
     vv = np.maximum(ndi.uniform_filter1d(v, k), 1e-9)
     aniso = (ndi.uniform_filter1d(d1, k) - ndi.uniform_filter1d(d2, k)) / vv
     return ndi.uniform_filter1d(mean, 9), ndi.uniform_filter1d(dark, 9), jamb, spread, aniso
@@ -644,7 +654,11 @@ def fixtures(g, foot, outer, ppf):
     """Fixture cells (name, plan x, plan y): the closed white cells that match a symbol
     in CELLS, plus the square frames of self-checkout kiosks (name "kiosk_frame")."""
     x0, _, _, y1 = outer
-    cells, _ = ndi.label(foot & (g >= 205))
+    # fixture outlines are thin: on a faded print they are barely darker than the paper, so a
+    # cell ends wherever a pixel is a little darker than what is right around it
+    sm = cv2.GaussianBlur(g.astype(np.float32), (0, 0), 0.7)
+    ridge = cv2.morphologyEx(sm, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8)) - sm > 18
+    cells, _ = ndi.label(foot & (g >= 205) & ~ridge)
     area = np.bincount(cells.ravel())
     found = []
     for i, sl in enumerate(ndi.find_objects(cells), 1):
@@ -698,9 +712,10 @@ def count_cells(cells, name):
         return sum(1 for x, y in pts if any(math.hypot(x - a, y - b) < 7.0 and abs(x - a) < 1.5 for a, b in wells))
     if name == "endcaps":
         # an endcap's diagonal splits it into two cells; it sits at the end of a gondola run
-        runs = [(x, y) for k, x, y in cells if k.startswith("gondola")]
+        gond = [(x, y) for k, x, y in cells if k.startswith("gondola")]
+        spines = [((a + c) / 2, b) for a, b in gond for c, d in gond if 1.5 < c - a < 2.5 and abs(b - d) < 0.5]
         return sum(1 for x, y, n in clusters(pts, 1.0)
-                   if any(abs(x - (a + 1.0)) < 1.5 and abs(y - b) < 4.0 for a, b in runs))
+                   if any(abs(x - a) < 0.6 and abs(y - b) < 4.0 for a, b in spines))
     if name == "produce_tables":
         # the long triangles above and below the table's centre
         groups = clusters(pts, 0.6)
@@ -722,8 +737,8 @@ def cooler_mask(cells, shape, outer, ppf):
     spots = [(x, y) for x, y, _ in clusters([(x, y) for k, x, y in cells if k == "cooler_doors"], 1.0)]
     mask = np.zeros(shape, bool)
     for x, y in spots:
-        along_x = any(abs(abs(a - x) - 2.5) < 0.6 and abs(b - y) < 0.6 for a, b in spots)
-        along_y = any(abs(abs(b - y) - 2.5) < 0.6 and abs(a - x) < 0.6 for a, b in spots)
+        along_x = any(abs(abs(a - x) - 2.5) < 0.45 and abs(b - y) < 0.4 for a, b in spots)
+        along_y = any(abs(abs(b - y) - 2.5) < 0.45 and abs(a - x) < 0.4 for a, b in spots)
         if not (along_x or along_y):
             continue
         hx, hy = (1.35, 0.5) if along_x else (0.5, 1.35)
@@ -741,8 +756,8 @@ def cooler_doors(cells):
     spots = [(x, y) for x, y, _ in clusters([(x, y) for k, x, y in cells if k == "cooler_doors"], 1.0)]
 
     def in_lineup(x, y):
-        return any((abs(abs(a - x) - 2.5) < 0.6 and abs(b - y) < 0.6) or
-                   (abs(abs(b - y) - 2.5) < 0.6 and abs(a - x) < 0.6) for a, b in spots)
+        return any((abs(abs(a - x) - 2.5) < 0.45 and abs(b - y) < 0.4) or
+                   (abs(abs(b - y) - 2.5) < 0.45 and abs(a - x) < 0.4) for a, b in spots)
     return sum(1 for x, y in spots if in_lineup(x, y))
 
 
