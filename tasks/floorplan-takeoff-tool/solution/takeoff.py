@@ -472,20 +472,22 @@ def profile(g, nonfloor, band):
     return ndi.uniform_filter1d(mean, 9), ndi.uniform_filter1d(dark, 9), jamb, spread, aniso
 
 
-def classify_fill(mean, spread, aniso, gap, refs):
+def classify_fill(mean, spread, aniso, gap, refs, breaks=()):
     """Wall type at every position along a band: the partition swatch nearest in stroke gap (the
-    thickness), fill tone and fill spread. Bare paper is an opening."""
+    thickness), fill tone, fill spread and hatch direction. A wall changes type only where another
+    wall meets it or at an opening, so each stretch between such breaks is judged as a whole (by
+    the positions where the fill is visible). Bare paper is an opening."""
     names = list(refs)
     d = np.stack([np.abs(gap - refs[k][0]) / 1.5 + np.abs(mean - refs[k][1]) / 15.0 + np.abs(spread - refs[k][2]) / 6.0
                   + np.abs(aniso - refs[k][3]) / 0.15 for k in names])
-    # judge each position by about a foot and a half of wall around it, leaving out openings and
-    # the strokes across the band
     open_ = (mean >= 238) & (spread < 8)
-    valid = (~open_ & (mean < 250)).astype(np.float64)
-    w = 37
-    num = ndi.uniform_filter1d(d * valid, w, axis=1)
-    den = np.maximum(ndi.uniform_filter1d(valid, w), 1e-9)
-    kind = np.array(names, dtype=object)[np.argmin(num / den, axis=0)]
+    valid = ~open_ & (mean < 250)
+    kind = np.full(len(mean), names[0], dtype=object)
+    cuts = sorted({0, len(mean)} | {int(b) for b in breaks if 0 < b < len(mean)})
+    for lo, hi in zip(cuts[:-1], cuts[1:]):
+        v = valid[lo:hi]
+        if v.sum() >= 5:
+            kind[lo:hi] = names[int(np.argmin(d[:, lo:hi][:, v].mean(axis=1)))]
     kind[open_] = "OPEN"
     return kind
 
@@ -564,7 +566,11 @@ def walls_and_doors(g, nonfloor, outer, ppf, refs):
             doors[kind_] += 1
             fx, fy = ft(band, band["a"] + (s + e) / 2)
             door_list.append(dict(kind=kind_, x=fx, y=fy, width=(e - s) / ppf, h=band["h"]))
-        kind = classify_fill(mean, spread, aniso, stroke_gap(g, band), refs)
+        # where other walls meet this one
+        meets = [o["c"] - band["a"] for o in bs if o["h"] != band["h"] and o["a"] - 3 <= band["c"] <= o["b"] + 3
+                 and band["a"] < o["c"] < band["b"]]
+        breaks = meets + [x for se in openings for x in se]
+        kind = classify_fill(mean, spread, aniso, stroke_gap(g, band), refs, breaks)
         inside = np.zeros(n, bool)
         for s, e in openings:
             inside[int(s):int(e) + 1] = True
@@ -722,7 +728,7 @@ def count_cells(cells, name):
         used, n = set(), 0
         for i, (x, y, _) in enumerate(groups):
             for j, (x2, y2, _) in enumerate(groups):
-                if i < j and i not in used and j not in used and abs(x - x2) < 0.6 and 1.2 < abs(y - y2) < 2.8:
+                if i < j and i not in used and j not in used and abs(x - x2) < 0.35 and 1.6 < abs(y - y2) < 2.4:
                     used |= {i, j}
                     n += 1
         return n
