@@ -420,6 +420,9 @@ def profile(g, nonfloor, band):
     n = gs.shape[1]
     mid = band["lo"] - lo_ + (band["hi"] - band["lo"]) // 2
     blo, bhi = band["lo"] - lo_, band["hi"] - lo_
+    # jamb strokes are a few pixels wide; averaging three columns removes a copier screen's
+    # column pattern but keeps them
+    gl = ndi.uniform_filter1d(gs, 3, axis=1)
     mean = np.full(n, 255.0)
     dark = np.zeros(n)
     light = np.full(n, 255.0)                 # how light the lightest part of the cross-section is
@@ -434,7 +437,7 @@ def profile(g, nonfloor, band):
         hi = mid
         while hi < len(col) - 1 and col[hi + 1]:
             hi += 1
-        sec = gs[max(lo, blo):min(hi, bhi) + 1, x]        # a jamb is judged within the band itself
+        sec = gl[max(lo, blo):min(hi, bhi) + 1, x]        # a jamb is judged within the band itself
         k = int(0.95 * (len(sec) - 1))
         light[x] = np.partition(sec, k)[k]
         if hi - lo >= 7:
@@ -448,6 +451,9 @@ def profile(g, nonfloor, band):
     fill = float(np.median(filled)) if len(filled) else 255.0
     thr = min(HEAVY, fill - 45)
     jamb = light < thr
+    # beside a door opening even a stroke only a little darker than a dark fill is a jamb
+    bare = ndi.uniform_filter1d(mean, 9) >= 238
+    jamb |= (light < fill - 25) & ndi.binary_dilation(bare, iterations=8)
     cnt = inner_m.sum(axis=0).astype(np.float64)
     use = (np.where(inner_m, gs < thr, False).sum(axis=0) < 0.4 * np.maximum(cnt, 1)) & (cnt > 0)
     w = inner_m & use[None, :]                # crossing strokes say nothing about the fill
@@ -538,7 +544,8 @@ def walls_and_doors(g, nonfloor, outer, ppf, refs):
                 j = i
                 while j + 1 < n and jamb[j + 1]:
                     j += 1
-                runs_.append((i, j))
+                if j > i:                     # a stroke is wider than one column (a copier's screen can darken one)
+                    runs_.append((i, j))
                 i = j + 1
             else:
                 i += 1
