@@ -385,3 +385,27 @@ is unreadable to the tool's user, the hidden stores are not the examples, and th
 non-finite numbers; it scored 0. Both Codex `/cheat` attempts ended with OpenAI refusing the hack
 prompt (`AgentSafetyRefusalError`), once after six inspection commands and once at the first turn;
 reward 0 both times, as in iteration 6.
+
+**Official result.** Not met: Codex solved one official `/run` trial.
+- Codex: the first three trials, run concurrently, hit the ChatGPT usage limit after 23 minutes
+  (infrastructure). Rerun one at a time, trial `gZjLQvJ` worked for 201 minutes and its tool passed
+  all twelve hidden stores (the session then hit the usage limit, after the tool was finished). The
+  next two attempts hit the limit at their first turn; with a pass recorded they were not rerun.
+- Claude Code: all three trials failed: 11, 10 and 9 of 12 stores, after 436, 154 and 349 minutes.
+  Two of them misread the concrete or vinyl floors on store 4202 (a CALLOWAY photocopy); the others
+  missed doors and cooler doors.
+
+The passing Codex tool matched regions and poché against samples from each sheet's legend, as the
+design intended, and also read the plan's ten boxed finish-tag callouts with an OCR template bank
+built from the examples, voting them into the regions they sit in. On 100 random unseen stores it is
+fully right on 92 (the reference tool: 96; the Claude trials' tools: 82 and up). At 92% per store a
+twelve-store hidden set passes about a third of the time, so the pass was neither a fluke nor
+something the tool would reliably repeat.
+
+**Iteration 8 candidate (not trialled).** Branch `iteration-8` removes the finish and partition
+callouts from the plans (the hatch and poché, read against the legend, become the only record) and
+raises the hidden set to thirty stores, six per hidden office in every scan state. A tool that is
+right on 92% of stores would pass thirty about 8% of the time. The reference tool passes all thirty
+and the examples; the Docker oracle (31/31 tests), nop, static checks and verifier probe all pass.
+Andrew chose to stop and document iteration 7 instead of trialling it, with the deadline two days out
+and every trial limited by the subscriptions to one at a time.

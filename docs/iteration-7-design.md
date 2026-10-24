@@ -59,3 +59,12 @@ The verifier probe is re-run after every change.
   standards are too close and get widened, rather than weakening the reference.
 - **A strong agent may still build a general enough matcher.** The pilots decide: if either agent
   passes its pilot, this design is logged and documented, not taken to official runs.
+
+## Outcome
+
+Both pilots failed, and all three official Claude Code trials failed (11, 10 and 9 of 12 stores). One
+of the Codex official trials passed all twelve stores. Its tool read the legend as intended, and also
+read the boxed finish tags on the plans by OCR, which takes much of the finish judgment off the hatch
+match where a room is tagged. Its tool is fully right on 92% of random stores, so twelve stores were
+not enough to stop it reliably. See the iteration log for the iteration 8 candidate that removes the
+callouts and uses thirty hidden stores.

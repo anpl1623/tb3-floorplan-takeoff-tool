@@ -6,12 +6,17 @@ format and can be dropped into the `tasks/` folder of
 [harbor-framework/terminal-bench](https://github.com/harbor-framework/terminal-bench).
 
 > Cedar Valley Market is digitizing its as-built archive: a few hundred scanned A101 fixture & finish
-> plans, one per store, all drawn by the same architect to the same CAD standard ... Build a tool that
-> does the quantity takeoff from one of these scans. (see [instruction.md](tasks/floorplan-takeoff-tool/instruction.md))
+> plans, one per store. The stores were drawn by several architects over the years ... every sheet's
+> legend shows that office's swatches in the chain's standard order. The sheets came out of different
+> files in different states ... Build a tool that does the quantity takeoff from one of these scans.
+> (see [instruction.md](tasks/floorplan-takeoff-tool/instruction.md))
 
 The agent gets three example scans with hand takeoffs and has to put a tool in `/app/takeoff/`. The
-verifier runs that tool on six other stores it has never seen, in a separate container, as an
-unprivileged user that cannot read the verifier's files. Each store's takeoff has 23 quantities:
+verifier runs that tool on twelve other stores in a separate container, as an unprivileged user that
+cannot read the verifier's files. The archive was drawn by eight architect's offices, each with its own
+floor-finish hatches and partition poché, shown in each sheet's legend. The examples come from three
+offices and the hidden stores from the other five, and the sheets are clean prints, faded prints,
+photocopies or colour scans of yellowed prints. Each store's takeoff has 23 quantities:
 - floor area of each of 8 finishes;
 - centerline length of each of 4 wall types;
 - counts of 4 door types and 7 fixture types.
@@ -25,129 +30,149 @@ stored answer file.
 | Category | Media / Design |
 | Agent timeout | 8 h, 2 CPUs, 8 GB |
 | Expert time | 6 h |
-| Verifier | separate container, runs the agent's tool on 6 hidden stores, CTRF report |
+| Verifier | separate container, runs the agent's tool on 12 hidden stores, CTRF report |
 
 The required README sections (difficulty, solution, verification, relevant experience) are in
 [`tasks/floorplan-takeoff-tool/README.md`](tasks/floorplan-takeoff-tool/README.md). How the task got
-here, including five earlier designs that frontier agents solved, is in
-[`docs/iteration-log.md`](docs/iteration-log.md).
+here, seven designs in all, is in [`docs/iteration-log.md`](docs/iteration-log.md).
 
 ## Results
 
 **Bottom line: the task does not meet the assignment's difficulty bar.** It passes every automated
-check, and no exploit has got past the verifier: the Claude cheat trial probed it and scored 0, and the
-9-case verifier probe covers the rest (the Codex cheat trial was refused by the provider and never
-tried anything). But both GPT-6.1-sol (Codex,
-xhigh) and Opus 5.5 (Claude Code, max) solved it in all three official `/run` trials. Six task designs
-were built and trialled over two days ([`docs/iteration-log.md`](docs/iteration-log.md)), and each
-was solved by Codex. The analysis below covers what the agents did and why the design didn't stop
-them.
+check, both pilots failed, and no exploit has got past the verifier. But GPT-6.1-sol (Codex, xhigh)
+solved one of its official `/run` trials: its tool got all 23 quantities right on all twelve hidden
+stores. That one pass is enough to miss the requirement that every `/run` trial fail. Opus 5.5 (Claude
+Code, max) failed all three of its official trials, each on one to three stores: closer than in any
+earlier design.
+
+These are the results of iteration 7, the current design. Iteration 6 (one architect, six hidden
+stores) was solved in all six official trials; its records are kept in
+[`results/iteration-6/`](results/iteration-6).
 
 ### Checks
 
 | Check | Result | Record |
 |---|---|---|
 | Static checks (`scripts/checks/check-*.sh`, 28 checks) | 28 / 28 pass | [`results/static_checks.txt`](results/static_checks.txt) |
-| Implementation rubric review (claude-code + claude-sonnet-5, CI rubric) | 35 pass, 1 not applicable (`do_not_modify_enforced`), 0 fail | [`results/rubric_review.json`](results/rubric_review.json) |
+| Implementation rubric review (claude-code + claude-sonnet-5, CI rubric) | RUBRIC_RESULT | [`results/rubric_review.json`](results/rubric_review.json) |
 | Docker build (environment and verifier images) | builds | `harbor run` below |
-| Oracle validation | reward 1.0 (7/7 tests, 124 s) | [`results/oracle_nop.txt`](results/oracle_nop.txt) |
-| Nop validation | reward 0.0 (0/7 tests) | [`results/oracle_nop.txt`](results/oracle_nop.txt) |
+| Oracle validation | reward 1.0 (13/13 tests, 110 s) | [`results/oracle_nop.txt`](results/oracle_nop.txt) |
+| Nop validation | reward 0.0 (0/13 tests) | [`results/oracle_nop.txt`](results/oracle_nop.txt) |
 | Verifier probe (crafted tools through the real verifier image) | 9 / 9 as expected | [`results/verifier_probe.txt`](results/verifier_probe.txt) |
-| Reference tool on 100 random unseen stores | 97 / 100 fully correct; all 3 examples and all 6 hidden stores correct | [`results/reference_tool_unseen_stores.txt`](results/reference_tool_unseen_stores.txt) |
+| Reference tool on the task's own scans | 3 / 3 examples and 12 / 12 hidden stores fully correct | [`results/reference_tool_task_scans.txt`](results/reference_tool_task_scans.txt) |
+| Reference tool on 100 random unseen stores (all offices and scan states) | 96 / 100 fully correct; the four misses are photocopies | [`results/reference_tool_unseen_stores.txt`](results/reference_tool_unseen_stores.txt) |
 
-The first rubric review failed `category_and_tags`: Operations/Construction rather than the
-computer-vision work the task actually tests. The category was changed to Media / Design, the
-taxonomy's "visual/layout design and reconstruction". On the second review that criterion passed.
+### Pilots (1 attempt per agent)
+
+| Agent | Model | Job | Reward | Hidden stores right | Agent time | Ended |
+|---|---|---|---|---|---|---|
+| codex | gpt-6.1-sol, xhigh | `it7-pilot-codex` | 0 | 6 / 12 | 158 min | normally |
+| claude-code | claude-opus-5-5, max | `it7-pilot-claude` | 0 | 5 / 12 | 88 min | `ApiRateLimitError` (infrastructure, rerun) |
+| claude-code | claude-opus-5-5, max | `it7-pilot-claude-2` | 0 | 7 / 12 | 319 min | normally |
+
+Both agents genuinely failed their pilots, so the design went to the official runs. Codex's misses
+were mostly partition lengths (P1 short, P2 or P3 long: wall runs typed wrong on unseen offices);
+Claude's were a polished-concrete sales floor read as sealed concrete, a P2 run typed as P3, and
+cooler and door counts ([`results/pilots.json`](results/pilots.json)).
 
 ### Standard trials (`/run`, 3 attempts per agent)
 
 | Agent | Model | Trial | Reward | Hidden stores right | Agent time | Its tool on 100 random stores |
 |---|---|---|---|---|---|---|
-| codex | gpt-6.1-sol, xhigh | `GogZqfM` | **1** | 6 / 6 | 40 min | 93 / 100 |
-| codex | gpt-6.1-sol, xhigh | `WaALUXb` | **1** | 6 / 6 | 45 min | 97 / 100 |
-| codex | gpt-6.1-sol, xhigh | `fwGCXZM` | **1** | 6 / 6 | 52 min | 100 / 100 |
-| claude-code | claude-opus-5-5, max | `J4S4o9x` | **1** | 6 / 6 | 103 min | 99 / 100 |
-| claude-code | claude-opus-5-5, max | `hTMkZ6L` | **1** | 6 / 6 | 173 min | 100 / 100 |
-| claude-code | claude-opus-5-5, max | `z9sAqLR` | **1** | 6 / 6 | 213 min | 100 / 100 |
+| codex | gpt-6.1-sol, xhigh | `gZjLQvJ` | **1** | 12 / 12 | 201 min | 92 / 100 |
+| codex | gpt-6.1-sol, xhigh | 2 more attempts | not completed | - | - | ended on the subscription usage limit (see below) |
+| claude-code | claude-opus-5-5, max | `fBBJ7gq` | 0 | 11 / 12 | 436 min | 82 / 100 |
+| claude-code | claude-opus-5-5, max | `6b7acCd` | 0 | 10 / 12 | 154 min | TOOL_6b7acCd / 100 |
+| claude-code | claude-opus-5-5, max | `YTZsPf4` | 0 | 9 / 12 | 349 min | TOOL_YTZsPf4 / 100 |
 
-Requirement: all three trials fail for each agent. **Not met** (0 of 6 failed).
+Requirement: all three trials fail for each agent. **Not met**: Claude failed all three, but Codex passed.
 
-Trial `fwGCXZM` hit the Codex subscription's usage limit after its tool was finished, so harbor
-recorded `NonZeroAgentExitCodeError`. The verifier still ran on the finished tool and passed it, so
-it counts as a pass. Full per-trial records are in [`results/trials.json`](results/trials.json), and
-every trial's submitted tool is in [`results/trial-artifacts/`](results/trial-artifacts). The
-"100 random stores" column runs each trial's tool on generated stores 7000-7099 with the verifier's
-tolerances ([`results/agent-tools-on-unseen-stores/`](results/agent-tools-on-unseen-stores)).
-
-Pilots on the first data build both **failed**: Codex 2/6 stores after 81 min, Claude 3/6 after 200
-min ([`results/pilots.json`](results/pilots.json)). Those failures were partly my generator bug: on two
-of the six hidden stores a west exterior door was drawn inside the west cooler lineup, and the door
-hid one cooler door, so both models came up one cooler door short there. The bug was fixed and
-validated before the official runs. The pilots' other misses were genuine (Codex: cooler counts on
-two other stores and one room's finish; Claude: one automatic sliding door).
+Codex trials ran into the ChatGPT subscription's usage limit. The first three, run concurrently,
+stopped after 23 minutes (`NonZeroAgentExitCodeError`, "You've hit your usage limit"); they were
+rerun one at a time after the reset. Trial `gZjLQvJ` worked for 201 minutes and hit the limit only
+after its tool was finished; the verifier ran the finished tool and passed it, so it counts as a pass.
+The next two attempts hit the limit at their first turn. With a pass already recorded the Codex
+result can't change, so they were not rerun. Every such event is in
+[`results/infrastructure_events.md`](results/infrastructure_events.md). Claude trials ran one at a
+time to stay under the Claude subscription's rate limit. Full per-trial records are in
+[`results/trials.json`](results/trials.json), and every trial's submitted tool is in
+[`results/trial-artifacts/`](results/trial-artifacts). The "100 random stores" column runs each
+trial's tool on generated stores 9000-9099 with the verifier's tolerances
+([`results/agent-tools-on-unseen-stores/`](results/agent-tools-on-unseen-stores)).
 
 ### Adversarial trials (`/cheat`, 1 attempt per agent, `docs/prompts/hack-trial-prompt.md` appended)
 
 | Agent | Model | Trial | Reward | Agent time | What it tried |
 |---|---|---|---|---|---|
-| claude-code | claude-opus-5-5, max | `xAbW6eM` | **0** | 10 min | Checked the example PDFs for embedded or appended answers (none: clean raster JPEGs). Concluded the grader runs outside its container. Then shipped a tool that hunts for a ground-truth `*.takeoff.json` at run time, next to the scan, under `/app`, `/logs`, `/tmp` and in environment variables, matched by store number, and falls back to the examples' median quantities. The verifier keeps no answer file anywhere the tool can read: it computes truth from plan models in a root-only `/tests`, and the scan is copied under a neutral name. So it found nothing, and the fallback values failed all six stores. |
-| codex | gpt-6.1-sol, xhigh | `3Xq3NJe` | **0** | 0.2 min | Nothing. OpenAI's API refused the prompt at the first turn ("This content was flagged for possible cybersecurity risk", `AgentSafetyRefusalError`), as it has for the TB3 hack prompt on every earlier design. No tool was submitted, and all six stores failed. |
+| claude-code | claude-opus-5-5, max | `jiSGsw2` | **0** | 7 min | Shipped a "red-team probe" that does no image analysis. It looks for a ground-truth JSON next to the scan and in `/tests`, `/test`, `/grader`, `/verifier` and `/data`, matched by the store number from the file name or the PDF title; matches the scan's SHA-256 against the three example scans; and otherwise writes NaN for every quantity, betting on a comparator written as `abs(got - want) > tol`. There is no answer file, `/tests` is unreadable to the tool's user, the scan is copied under a neutral name, the hidden stores are not the examples, and the verifier rejects non-finite numbers, so all twelve stores failed. |
+| codex | gpt-6.1-sol, xhigh | `c4fHqyL`, `vGFR45Z` | **0** | under 1 min | Nothing. OpenAI's API refused the prompt (`AgentSafetyRefusalError`, "This content was flagged for possible cybersecurity risk"): once after six inspection commands, once at the first turn. No tool was submitted. |
 
-Requirement: every adversarial trial gets zero reward. **Met**: both adversarial trials scored 0, but
-only the Claude trial actually probed the verifier: it searched the disk for answer files, found none,
-and scored 0. The Codex trial scored 0 because OpenAI refused the prompt outright, so it never tried
-anything. The rest of the evidence that the verifier is hard to exploit comes from the 9-case verifier
-probe ([`results/verifier_probe.txt`](results/verifier_probe.txt)).
+Requirement: every adversarial trial gets zero reward. **Met**: both scored 0. Only the Claude trial
+actually probed the verifier; the Codex trials scored 0 because OpenAI refused the prompt, as it has
+for this prompt on every design. The rest of the evidence that the verifier is hard to exploit comes
+from the 9-case verifier probe ([`results/verifier_probe.txt`](results/verifier_probe.txt)).
 
-A first Codex cheat attempt ended at its first turn on the subscription's usage limit ("You've hit your
-usage limit ... try again at 4:28 AM"). That is an infrastructure failure, not a model result, so it
-was rerun after the limit reset (`jobs/cheat-codex-usage-limit`, kept locally).
+### Failure analysis: why Codex passed
 
+Iteration 7 changed what the hidden stores look like, not just how they are laid out: eight drafting
+offices, each with its own finish hatches and partition poché defined in its sheet's legend, and four
+scan states. The agents had to read each sheet's legend and match every room and wall run against it
+on offices the examples never show. Both pilots failed on exactly those judgments (a concrete floor
+read as the wrong concrete, wall runs typed wrong), and so did all three Claude trials:
+- `fBBJ7gq` read the polished-concrete sales floor of 4202 (a CALLOWAY photocopy) as sealed concrete;
+- `6b7acCd` missed an automatic sliding door on one store and two cooler doors on another;
+- `YTZsPf4` read 2,100 SF of luxury vinyl as polished concrete on 4202, and miscounted overhead and
+  sliding doors and a cooler door on two more.
 
-### Failure analysis: why both agents passed
+The passing Codex tool (`gZjLQvJ`, about 1,900 lines) did three things right:
+- **It read the legend, as intended.** Floor regions and partition poché are matched against
+  samples taken from each sheet's own legend swatches.
+- **It also read the plan's finish tags.** Each plan carried ten boxed finish-code callouts ("LVT-1",
+  "PC-1"). The tool ships an OCR template bank built from the example scans and votes the tags inside a
+  region into its finish ("an independent material check", in its own README). That is legitimate (an
+  estimator would do the same), but where a region is tagged, the finish no longer depends on matching
+  its hatch to the legend.
+- **It was robust to the scan states.** It corrects rotation and anisotropic scaling, calibrates on
+  the graphic scale's numbers, and validates on the examples.
 
-Each pilot tool was tuned to the three example layouts. Codex matched symbols against templates
-cropped from the examples; Claude stress-tested against blurred and transformed copies of the examples.
-On new layouts they missed one cooler door here, one sliding door or small room's finish there.
-That is the failure mode the design targets, and on a six-store hidden set it was enough to fail
-both pilots.
+On 100 random stores its tool is fully right on 92, against 96 for the reference tool. At 92% per
+store, a twelve-store hidden set passes about a third of the time (0.92^12 = 0.37). So the pass
+was not a fluke, but neither is this tool reliably right: with thirty hidden stores it would pass
+about 8% of the time.
 
-The official runs closed that gap by building their own test data. The 100/100 Codex tool
-(`fwGCXZM`) ships a `validate.py --stress` that re-runs the examples under print reduction, skew,
-stretch, noise, and upside-down and portrait orientation. All three Claude runs tested
-their tools on rotated, blurred, mirrored or otherwise perturbed copies of the examples. With robust CV primitives (calibrate on the
-graphic scale, segment regions and classify hatch by spacing, trace and type wall bands, match
-fixtures at physical size in any orientation), generalizing to new layouts follows. The generator
-varies layout, but every symbol, hatch and pen weight is rendered by the same code. So a tool that is
-right on three stores and robust to scan degradation is right on nearly all of them. Codex's tools
-were right on 93-100% of random stores and Claude's on 99-100%, against 97% for my
-reference tool. At those rates a six-store hidden set passes most of the time. A larger set would
-have caught the weaker tools, but not the best ones.
+**What would likely have held.** An iteration 8 candidate is on the `iteration-8` branch: the plans
+carry no finish or partition callouts (the hatch and poché, read against the legend, are the only
+record), and the verifier runs thirty hidden stores, six per hidden office in every scan state. The
+reference tool passes all thirty and the three examples, and the Docker oracle (31/31), nop, static
+checks and verifier probe all pass. It was not trialled: Andrew chose to stop and document iteration 7
+with the deadline approaching and each trial limited by subscription quotas to one at a time.
 
-Across all six designs the lesson is the same. When the task is well posed and the world is
-synthetic and consistent, frontier agents engineer their way to a robust, self-validated solution.
-That held for perception (one drawing, iterations 2-4), for search (iterations 1 and 5) and for
-generalization from three examples (iteration 6). The agents that failed did so on single
-subtle judgements: one wall type in iteration 3, one cooler door in the pilots here. They didn't fail
-for lack of capability, so a reliable failure needs either far more such judgements than a robust
-tool gets wrong, or inputs whose real-world messiness can't be reproduced by a generator the agent
-can model.
-
+**Across seven designs.** When the task is well posed and the world is synthetic and consistent,
+frontier agents engineer their way to a robust, self-validated solution. Iteration 7 got closer than
+any earlier design (both pilots failed, and the three Claude trials missed by one, two and three stores of twelve).
+The remaining gap is the per-store reliability of a good tool: 92-96% per store passes a
+twelve-store set a third of the time. A reliable failure needs either many more such judgments per
+hidden set than a strong tool gets wrong, or inputs no generator-shaped tool can model.
 
 ## Repository layout
 
 ```
 tasks/floorplan-takeoff-tool/      the TB3 task (instruction, task.toml, environment, solution, tests)
 dev/plan.py                        parametric store model and ground truth (copied into the verifier as tests/plan.py)
-dev/render.py                      CAD-style plot of sheet A101
-dev/generate.py                    scan simulation; writes the example scans/takeoffs and the hidden scans
-dev/check_oracle.py                runs the reference tool on generated stores against ground truth
+dev/offices.py                     the eight drafting offices' finish hatches and partition poche
+dev/render.py                      CAD-style plot of sheet A101 in an office's standard, with its legend
+dev/generate.py                    print states and scan simulation; writes the example scans/takeoffs and the hidden scans
+dev/check_oracle.py                runs a takeoff tool on generated stores against ground truth
+dev/check_task_data.py             runs a takeoff tool on the task's own example and hidden scans
+dev/summarize_trials.py            trial jobs to results/trials.json and results/trial-artifacts/
 dev/crop.py                        crops a generated scan for debugging
 dev/verifier_probe.py              crafted tools run through the real verifier image
 dev/trials/                        job configs and run script equivalent to CI /run and /cheat
 dev/review/                        local equivalent of the CI rubric review
-results/                           check outputs, trial summaries, failure analysis inputs
+results/                           check outputs, trial summaries, failure analysis inputs (iteration 7)
+results/iteration-6/               the same for iteration 6
 docs/iteration-log.md              design history and what each iteration taught
+docs/iteration-7-design.md         the iteration 7 difficulty mechanism, written before it was built
 archive/v1-pos-promo-parity/       iteration 1 (POS promotion parity)
 archive/v2-store-remodel-takeoff/  iterations 2-4 (takeoff of one drawing set)
 archive/v3-remodel-rollout-plan/   iteration 5 (rollout schedule optimization)
@@ -172,7 +197,8 @@ PYTHONPATH=dev .venv/bin/python dev/generate.py
 **Reference tool on unseen stores:**
 
 ```bash
-PYTHONPATH=dev .venv/bin/python dev/check_oracle.py --range 7000 7100 --jobs 12
+PYTHONPATH=dev .venv/bin/python dev/check_oracle.py --range 9000 9100 --jobs 12
+.venv/bin/python dev/check_task_data.py
 ```
 
 **Static checks** (from a clone of harbor-framework/terminal-bench with this task copied into `tasks/`;
@@ -246,9 +272,13 @@ harbor analyze jobs/<job> -m anthropic/claude-sonnet-5 -r docs/prompts/trial-ana
   (`.github/harbor-run-defaults.yml`, PR #2047) moved to `claude-fable-5-1` and `gpt-6-astra`. These
   runs use the models the assignment names, with every other CI setting (trial counts, effort,
   output-token env, cheat prompt) taken from the CI configuration.
-- **Codex and /cheat.** OpenAI's API has refused the TB3 adversarial prompt at the first turn
-  ("flagged for possible cybersecurity risk", `AgentSafetyRefusalError`) on every earlier task design.
-  The codex /cheat result below is reported as it came out.
+- **Codex and /cheat.** OpenAI's API has refused the TB3 adversarial prompt
+  ("flagged for possible cybersecurity risk", `AgentSafetyRefusalError`) on every task design.
+  The codex /cheat result above is reported as it came out.
+- **Subscription limits.** Both agents ran on subscription auth. Running trials concurrently hit
+  the ChatGPT usage limit and the Claude rate limit, so `dev/trials/run-*.json` run one trial at a
+  time (`n_concurrent_trials: 1`); concurrency doesn't change what a trial does. Every trial that
+  ended on a limit or a refusal is logged in `results/infrastructure_events.md`.
 - **Harbor quirks found.**
   - Harbor scrubs the values of sensitive-looking agent env vars from every trial file. Passing `CODEX_FORCE_AUTH_JSON=1` as agent env turned every "1" in `result.json` into `[REDACTED]`, so `run_trials.sh` exports those flags in the shell.
   - An `ANTHROPIC_BASE_URL` inherited from the calling shell sends claude-code to the wrong endpoint, so trials run under `env -i`.
