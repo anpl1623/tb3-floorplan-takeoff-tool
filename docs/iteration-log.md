@@ -398,7 +398,7 @@ reward 0 both times, as in iteration 6.
 The passing Codex tool matched regions and poché against samples from each sheet's legend, as the
 design intended, and also read the plan's ten boxed finish-tag callouts with an OCR template bank
 built from the examples, voting them into the regions they sit in. On 100 random unseen stores it is
-fully right on 92 (the reference tool: 96; the Claude trials' tools: 82 and up). At 92% per store a
+fully right on 92 (the reference tool: 96; the three Claude trials' tools: 82, 88 and 75). At 92% per store a
 twelve-store hidden set passes about a third of the time, so the pass was neither a fluke nor
 something the tool would reliably repeat.
 

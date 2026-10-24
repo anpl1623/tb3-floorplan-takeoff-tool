@@ -82,8 +82,8 @@ cooler and door counts ([`results/pilots.json`](results/pilots.json)).
 | codex | gpt-6.1-sol, xhigh | `gZjLQvJ` | **1** | 12 / 12 | 201 min | 92 / 100 |
 | codex | gpt-6.1-sol, xhigh | 2 more attempts | not completed | - | - | ended on the subscription usage limit (see below) |
 | claude-code | claude-opus-5-5, max | `fBBJ7gq` | 0 | 11 / 12 | 436 min | 82 / 100 |
-| claude-code | claude-opus-5-5, max | `6b7acCd` | 0 | 10 / 12 | 154 min | TOOL_6b7acCd / 100 |
-| claude-code | claude-opus-5-5, max | `YTZsPf4` | 0 | 9 / 12 | 349 min | TOOL_YTZsPf4 / 100 |
+| claude-code | claude-opus-5-5, max | `6b7acCd` | 0 | 10 / 12 | 154 min | 88 / 100 |
+| claude-code | claude-opus-5-5, max | `YTZsPf4` | 0 | 9 / 12 | 349 min | 75 / 100 |
 
 Requirement: all three trials fail for each agent. **Not met**: Claude failed all three, but Codex passed.
 
@@ -135,7 +135,7 @@ The passing Codex tool (`gZjLQvJ`, about 1,900 lines) did three things right:
 - **It was robust to the scan states.** It corrects rotation and anisotropic scaling, calibrates on
   the graphic scale's numbers, and validates on the examples.
 
-On 100 random stores its tool is fully right on 92, against 96 for the reference tool. At 92% per
+On 100 random stores its tool is fully right on 92, against 96 for the reference tool and 75-88 for the three Claude trials' tools. At 92% per
 store, a twelve-store hidden set passes about a third of the time (0.92^12 = 0.37). So the pass
 was not a fluke, but neither is this tool reliably right: with thirty hidden stores it would pass
 about 8% of the time.

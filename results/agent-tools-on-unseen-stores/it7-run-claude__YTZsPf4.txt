@@ -1,0 +1,101 @@
+BAD 9000 STILLWATER clean     scale 0.957 skew +0.22  LVT-1 2465.0 vs 5010.1; PC-1 7871.2 vs 5326.2; SC-1 2417.7 vs 2319.3; EP-1 510.1 vs 608.5
+BAD 9001 HARGROVE   photocopy scale 0.959 skew +0.59  LVT-1 3261.7 vs 6434.8; PC-1 8048.3 vs 4875.1
+ok  9002 BRANDT     colour    scale 0.965 skew -0.09  
+ok  9003 ARDEN      colour    scale 0.961 skew +0.38  
+ok  9004 KESSLER    photocopy scale 0.961 skew +0.61  
+BAD 9005 STILLWATER clean     scale 0.984 skew +0.57  LVT-1 0.0 vs 4572.9; PC-1 0.0 vs 5029.0; SC-1 0.0 vs 2125.6; EP-1 0.0 vs 664.4; VCT-1 0.0 vs 1689.0; CT-1 0.0 vs 350.9; CPT-1 0.0 vs 336.1; WOM-1 0.0 vs 240.3; EXT 0.0 vs 505.33; P1 0.0 vs 220.33; P2 0.0 vs 114.67; P3 0.0 vs 149.33; single 0 vs 1
+ok  9006 MERIDIAN   faded     scale 0.963 skew -0.30  
+ok  9007 KESSLER    colour    scale 0.985 skew -0.72  
+BAD 9008 HARGROVE   faded     scale 0.975 skew -0.30  LVT-1 2116.9 vs 4383.5; PC-1 6927.1 vs 4660.5
+BAD 9009 KESSLER    faded     scale 0.973 skew +0.60  LVT-1 2168.4 vs 3778.3; PC-1 6156.1 vs 4546.2
+ok  9010 HARGROVE   faded     scale 0.993 skew +0.59  
+BAD 9011 CALLOWAY   faded     scale 0.994 skew -0.07  CT-1 87.6 vs 171.0
+ok  9012 NORTHLINE  photocopy scale 0.969 skew +0.58  
+ok  9013 MERIDIAN   photocopy scale 0.950 skew +0.63  
+BAD 9014 HARGROVE   colour    scale 0.969 skew -0.12  LVT-1 3189.7 vs 6518.2; PC-1 7887.6 vs 4559.1
+ok  9015 MERIDIAN   colour    scale 0.960 skew -0.13  
+BAD 9016 NORTHLINE  colour    scale 0.970 skew -0.06  cooler_doors 42 vs 41
+ok  9017 ARDEN      photocopy scale 0.956 skew -0.26  
+ok  9018 MERIDIAN   photocopy scale 0.979 skew +0.28  
+ok  9019 ARDEN      colour    scale 0.965 skew -0.11  
+ok  9020 BRANDT     faded     scale 0.958 skew +0.72  
+ok  9021 CALLOWAY   colour    scale 1.000 skew +0.36  
+ok  9022 BRANDT     colour    scale 0.974 skew +0.35  
+ok  9023 KESSLER    colour    scale 0.959 skew -0.79  
+ok  9024 STILLWATER colour    scale 0.982 skew +0.32  
+ok  9025 KESSLER    photocopy scale 0.980 skew -0.37  
+ok  9026 CALLOWAY   faded     scale 0.959 skew -0.56  
+BAD 9027 HARGROVE   faded     scale 0.981 skew -0.41  P2 97.67 vs 106.67; P3 150.33 vs 141.33
+ok  9028 HARGROVE   photocopy scale 0.974 skew -0.48  
+ok  9029 BRANDT     colour    scale 0.973 skew -0.48  
+ok  9030 MERIDIAN   faded     scale 0.985 skew +0.00  
+ok  9031 MERIDIAN   faded     scale 0.995 skew +0.55  
+ok  9032 BRANDT     photocopy scale 0.977 skew +0.09  
+BAD 9033 MERIDIAN   faded     scale 0.951 skew -0.10  VCT-1 1320.6 vs 1197.0; CPT-1 96.7 vs 212.8; P2 97.67 vs 110.67
+ok  9034 STILLWATER photocopy scale 0.984 skew +0.74  
+ok  9035 KESSLER    photocopy scale 0.997 skew +0.74  
+ok  9036 MERIDIAN   photocopy scale 0.954 skew -0.73  
+ok  9037 ARDEN      photocopy scale 0.989 skew -0.72  
+ok  9038 BRANDT     clean     scale 0.953 skew -0.54  
+ok  9039 KESSLER    clean     scale 0.952 skew -0.53  
+ok  9040 BRANDT     clean     scale 0.974 skew -0.55  
+ok  9041 NORTHLINE  colour    scale 0.961 skew -0.12  
+BAD 9042 CALLOWAY   faded     scale 0.996 skew -0.18  LVT-1 0.0 vs 5004.9; PC-1 0.0 vs 4883.5; SC-1 0.0 vs 2519.9; EP-1 0.0 vs 522.9; VCT-1 0.0 vs 1562.6; CT-1 0.0 vs 230.7; CPT-1 0.0 vs 117.9; WOM-1 0.0 vs 178.9; EXT 0.0 vs 505.33; P1 0.0 vs 176.33; P2 0.0 vs 122.67; P3 0.0 vs 149.33; single 0 vs 1
+ok  9043 STILLWATER photocopy scale 0.961 skew +0.06  
+ok  9044 STILLWATER photocopy scale 0.978 skew +0.47  
+ok  9045 MERIDIAN   faded     scale 0.956 skew +0.38  
+BAD 9046 BRANDT     faded     scale 0.959 skew -0.64  LVT-1 1398.9 vs 3397.5; PC-1 6467.9 vs 4469.4
+ok  9047 MERIDIAN   colour    scale 0.998 skew -0.65  
+ok  9048 CALLOWAY   faded     scale 0.969 skew -0.20  
+ok  9049 STILLWATER faded     scale 0.980 skew -0.70  
+ok  9050 CALLOWAY   faded     scale 0.954 skew -0.32  
+ok  9051 MERIDIAN   colour    scale 0.981 skew +0.63  
+ok  9052 ARDEN      faded     scale 0.963 skew +0.26  
+ok  9053 ARDEN      faded     scale 0.995 skew -0.74  
+ok  9054 MERIDIAN   faded     scale 0.967 skew +0.64  
+BAD 9055 ARDEN      colour    scale 0.951 skew -0.49  P2 96.67 vs 106.67; P3 154.33 vs 145.33
+BAD 9056 STILLWATER colour    scale 0.979 skew +0.58  LVT-1 0.0 vs 7034.1; PC-1 0.0 vs 5110.6; SC-1 0.0 vs 1973.7; EP-1 0.0 vs 634.9; VCT-1 0.0 vs 1235.6; CT-1 0.0 vs 180.1; CPT-1 0.0 vs 188.0; WOM-1 0.0 vs 160.6; EXT 0.0 vs 525.33; P1 0.0 vs 176.33; P2 0.0 vs 106.67; P3 0.0 vs 149.33; single 0 vs 1
+ok  9057 MERIDIAN   clean     scale 0.973 skew +0.78  
+BAD 9058 CALLOWAY   photocopy scale 0.966 skew +0.52  LVT-1 0.0 vs 6747.5; PC-1 0.0 vs 4740.4; SC-1 0.0 vs 2270.0; EP-1 0.0 vs 742.6; VCT-1 0.0 vs 1270.7; CT-1 0.0 vs 377.2; CPT-1 0.0 vs 223.3; WOM-1 0.0 vs 142.4; EXT 0.0 vs 525.33; P1 0.0 vs 188.33; P2 0.0 vs 104.67; P3 0.0 vs 149.33; single 0 vs 1
+ok  9059 HARGROVE   photocopy scale 0.961 skew +0.09  
+ok  9060 MERIDIAN   clean     scale 0.967 skew -0.54  
+BAD 9061 CALLOWAY   clean     scale 0.997 skew +0.04  LVT-1 10338.4 vs 6001.9; PC-1 0.0 vs 4336.5
+ok  9062 ARDEN      photocopy scale 0.973 skew +0.54  
+BAD 9063 HARGROVE   colour    scale 0.972 skew +0.23  LVT-1 3170.3 vs 6223.0; PC-1 7932.7 vs 4880.0; single 10 vs 12
+ok  9064 NORTHLINE  clean     scale 0.961 skew +0.45  
+ok  9065 ARDEN      photocopy scale 0.994 skew +0.49  
+ok  9066 STILLWATER photocopy scale 0.988 skew -0.43  
+ok  9067 NORTHLINE  clean     scale 0.956 skew -0.17  
+ok  9068 MERIDIAN   faded     scale 0.976 skew -0.20  
+ok  9069 ARDEN      colour    scale 0.965 skew -0.17  
+ok  9070 CALLOWAY   faded     scale 0.972 skew +0.74  
+ok  9071 MERIDIAN   faded     scale 0.969 skew -0.61  
+ok  9072 KESSLER    colour    scale 0.978 skew +0.01  
+BAD 9073 MERIDIAN   faded     scale 0.970 skew +0.22  cooler_doors 40 vs 39
+BAD 9074 CALLOWAY   colour    scale 0.954 skew -0.54  LVT-1 3056.1 vs 6171.5; PC-1 8251.0 vs 5135.5
+ok  9075 HARGROVE   faded     scale 0.963 skew -0.32  
+ok  9076 MERIDIAN   clean     scale 0.992 skew -0.19  
+ok  9077 ARDEN      clean     scale 0.957 skew +0.71  
+BAD 9078 MERIDIAN   colour    scale 0.961 skew -0.67  cooler_doors 38 vs 37
+ok  9079 HARGROVE   photocopy scale 0.988 skew +0.67  
+ok  9080 NORTHLINE  faded     scale 0.971 skew -0.74  
+ok  9081 NORTHLINE  colour    scale 0.976 skew +0.34  
+ok  9082 HARGROVE   clean     scale 0.995 skew +0.29  
+ok  9083 KESSLER    colour    scale 0.979 skew -0.09  
+ok  9084 CALLOWAY   colour    scale 0.971 skew -0.08  
+BAD 9085 ARDEN      colour    scale 0.992 skew -0.63  CPT-1 105.9 vs 184.5
+ok  9086 ARDEN      faded     scale 0.957 skew +0.04  
+ok  9087 NORTHLINE  colour    scale 0.955 skew -0.32  
+ok  9088 NORTHLINE  clean     scale 0.991 skew +0.11  
+ok  9089 MERIDIAN   colour    scale 0.969 skew -0.63  
+ok  9090 CALLOWAY   photocopy scale 0.963 skew -0.63  
+BAD 9091 NORTHLINE  clean     scale 0.989 skew -0.59  LVT-1 0.0 vs 5254.9; PC-1 0.0 vs 5272.5; SC-1 0.0 vs 2075.7; EP-1 0.0 vs 799.3; VCT-1 0.0 vs 1333.1; CT-1 0.0 vs 297.4; CPT-1 0.0 vs 204.1; WOM-1 0.0 vs 195.8; EXT 0.0 vs 513.33; P1 0.0 vs 194.33; P2 0.0 vs 104.67; P3 0.0 vs 153.33; single 0 vs 1
+ok  9092 ARDEN      colour    scale 0.986 skew +0.20  
+ok  9093 BRANDT     clean     scale 0.959 skew +0.30  
+ok  9094 ARDEN      photocopy scale 0.988 skew -0.11  
+BAD 9095 MERIDIAN   faded     scale 0.975 skew -0.26  cooler_doors 39 vs 38
+ok  9096 HARGROVE   photocopy scale 0.955 skew +0.01  
+BAD 9097 ARDEN      faded     scale 0.963 skew -0.19  P2 113.67 vs 122.67; P3 160.33 vs 151.33
+BAD 9098 MERIDIAN   clean     scale 0.994 skew -0.33  CT-1 96.7 vs 180.1; CPT-1 440.6 vs 357.3
+ok  9099 NORTHLINE  clean     scale 0.981 skew -0.54  
+75/100 stores fully correct
