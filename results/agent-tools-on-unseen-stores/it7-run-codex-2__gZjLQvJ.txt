@@ -1,0 +1,101 @@
+ok  9000 STILLWATER clean     scale 0.957 skew +0.22  
+ok  9001 HARGROVE   photocopy scale 0.959 skew +0.59  
+ok  9002 BRANDT     colour    scale 0.965 skew -0.09  
+ok  9003 ARDEN      colour    scale 0.961 skew +0.38  
+ok  9004 KESSLER    photocopy scale 0.961 skew +0.61  
+ok  9005 STILLWATER clean     scale 0.984 skew +0.57  
+ok  9006 MERIDIAN   faded     scale 0.963 skew -0.30  
+ok  9007 KESSLER    colour    scale 0.985 skew -0.72  
+BAD 9008 HARGROVE   faded     scale 0.975 skew -0.30  P2 99.71 vs 119.67
+ok  9009 KESSLER    faded     scale 0.973 skew +0.60  
+ok  9010 HARGROVE   faded     scale 0.993 skew +0.59  
+ok  9011 CALLOWAY   faded     scale 0.994 skew -0.07  
+ok  9012 NORTHLINE  photocopy scale 0.969 skew +0.58  
+ok  9013 MERIDIAN   photocopy scale 0.950 skew +0.63  
+ok  9014 HARGROVE   colour    scale 0.969 skew -0.12  
+ok  9015 MERIDIAN   colour    scale 0.960 skew -0.13  
+ok  9016 NORTHLINE  colour    scale 0.970 skew -0.06  
+ok  9017 ARDEN      photocopy scale 0.956 skew -0.26  
+ok  9018 MERIDIAN   photocopy scale 0.979 skew +0.28  
+ok  9019 ARDEN      colour    scale 0.965 skew -0.11  
+ok  9020 BRANDT     faded     scale 0.958 skew +0.72  
+BAD 9021 CALLOWAY   colour    scale 1.000 skew +0.36  gondola_sections_3ft 30 vs 29
+ok  9022 BRANDT     colour    scale 0.974 skew +0.35  
+ok  9023 KESSLER    colour    scale 0.959 skew -0.79  
+ok  9024 STILLWATER colour    scale 0.982 skew +0.32  
+ok  9025 KESSLER    photocopy scale 0.980 skew -0.37  
+ok  9026 CALLOWAY   faded     scale 0.959 skew -0.56  
+ok  9027 HARGROVE   faded     scale 0.981 skew -0.41  
+ok  9028 HARGROVE   photocopy scale 0.974 skew -0.48  
+BAD 9029 BRANDT     colour    scale 0.973 skew -0.48  PC-1 7244.3 vs 4916.0; SC-1 177.3 vs 2522.2
+ok  9030 MERIDIAN   faded     scale 0.985 skew +0.00  
+ok  9031 MERIDIAN   faded     scale 0.995 skew +0.55  
+ok  9032 BRANDT     photocopy scale 0.977 skew +0.09  
+ok  9033 MERIDIAN   faded     scale 0.951 skew -0.10  
+ok  9034 STILLWATER photocopy scale 0.984 skew +0.74  
+ok  9035 KESSLER    photocopy scale 0.997 skew +0.74  
+ok  9036 MERIDIAN   photocopy scale 0.954 skew -0.73  
+ok  9037 ARDEN      photocopy scale 0.989 skew -0.72  
+ok  9038 BRANDT     clean     scale 0.953 skew -0.54  
+ok  9039 KESSLER    clean     scale 0.952 skew -0.53  
+ok  9040 BRANDT     clean     scale 0.974 skew -0.55  
+ok  9041 NORTHLINE  colour    scale 0.961 skew -0.12  
+ok  9042 CALLOWAY   faded     scale 0.996 skew -0.18  
+ok  9043 STILLWATER photocopy scale 0.961 skew +0.06  
+ok  9044 STILLWATER photocopy scale 0.978 skew +0.47  
+ok  9045 MERIDIAN   faded     scale 0.956 skew +0.38  
+ok  9046 BRANDT     faded     scale 0.959 skew -0.64  
+ok  9047 MERIDIAN   colour    scale 0.998 skew -0.65  
+ok  9048 CALLOWAY   faded     scale 0.969 skew -0.20  
+ok  9049 STILLWATER faded     scale 0.980 skew -0.70  
+ok  9050 CALLOWAY   faded     scale 0.954 skew -0.32  
+ok  9051 MERIDIAN   colour    scale 0.981 skew +0.63  
+ok  9052 ARDEN      faded     scale 0.963 skew +0.26  
+ok  9053 ARDEN      faded     scale 0.995 skew -0.74  
+ok  9054 MERIDIAN   faded     scale 0.967 skew +0.64  
+ok  9055 ARDEN      colour    scale 0.951 skew -0.49  
+ok  9056 STILLWATER colour    scale 0.979 skew +0.58  
+ok  9057 MERIDIAN   clean     scale 0.973 skew +0.78  
+ok  9058 CALLOWAY   photocopy scale 0.966 skew +0.52  
+ok  9059 HARGROVE   photocopy scale 0.961 skew +0.09  
+ok  9060 MERIDIAN   clean     scale 0.967 skew -0.54  
+BAD 9061 CALLOWAY   clean     scale 0.997 skew +0.04  gondola_sections_4ft 36 vs 38; gondola_sections_3ft 7 vs 9; endcaps 8 vs 12
+ok  9062 ARDEN      photocopy scale 0.973 skew +0.54  
+ok  9063 HARGROVE   colour    scale 0.972 skew +0.23  
+ok  9064 NORTHLINE  clean     scale 0.961 skew +0.45  
+ok  9065 ARDEN      photocopy scale 0.994 skew +0.49  
+ok  9066 STILLWATER photocopy scale 0.988 skew -0.43  
+ok  9067 NORTHLINE  clean     scale 0.956 skew -0.17  
+BAD 9068 MERIDIAN   faded     scale 0.976 skew -0.20  PC-1 6396.8 vs 4723.5; SC-1 170.4 vs 1853.6
+ok  9069 ARDEN      colour    scale 0.965 skew -0.17  
+ok  9070 CALLOWAY   faded     scale 0.972 skew +0.74  
+ok  9071 MERIDIAN   faded     scale 0.969 skew -0.61  
+ok  9072 KESSLER    colour    scale 0.978 skew +0.01  
+ok  9073 MERIDIAN   faded     scale 0.970 skew +0.22  
+ok  9074 CALLOWAY   colour    scale 0.954 skew -0.54  
+ok  9075 HARGROVE   faded     scale 0.963 skew -0.32  
+ok  9076 MERIDIAN   clean     scale 0.992 skew -0.19  
+ok  9077 ARDEN      clean     scale 0.957 skew +0.71  
+ok  9078 MERIDIAN   colour    scale 0.961 skew -0.67  
+BAD 9079 HARGROVE   photocopy scale 0.988 skew +0.67  P1 190.48 vs 174.33
+ok  9080 NORTHLINE  faded     scale 0.971 skew -0.74  
+ok  9081 NORTHLINE  colour    scale 0.976 skew +0.34  
+ok  9082 HARGROVE   clean     scale 0.995 skew +0.29  
+ok  9083 KESSLER    colour    scale 0.979 skew -0.09  
+BAD 9084 CALLOWAY   colour    scale 0.971 skew -0.08  gondola_sections_4ft 38 vs 44; gondola_sections_3ft 13 vs 8; endcaps 11 vs 13
+ok  9085 ARDEN      colour    scale 0.992 skew -0.63  
+ok  9086 ARDEN      faded     scale 0.957 skew +0.04  
+ok  9087 NORTHLINE  colour    scale 0.955 skew -0.32  
+ok  9088 NORTHLINE  clean     scale 0.991 skew +0.11  
+ok  9089 MERIDIAN   colour    scale 0.969 skew -0.63  
+ok  9090 CALLOWAY   photocopy scale 0.963 skew -0.63  
+ok  9091 NORTHLINE  clean     scale 0.989 skew -0.59  
+BAD 9092 ARDEN      colour    scale 0.986 skew +0.20  single 12 vs 13
+ok  9093 BRANDT     clean     scale 0.959 skew +0.30  
+ok  9094 ARDEN      photocopy scale 0.988 skew -0.11  
+ok  9095 MERIDIAN   faded     scale 0.975 skew -0.26  
+ok  9096 HARGROVE   photocopy scale 0.955 skew +0.01  
+ok  9097 ARDEN      faded     scale 0.963 skew -0.19  
+ok  9098 MERIDIAN   clean     scale 0.994 skew -0.33  
+ok  9099 NORTHLINE  clean     scale 0.981 skew -0.54  
+92/100 stores fully correct
