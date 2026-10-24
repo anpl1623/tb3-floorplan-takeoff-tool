@@ -1,0 +1,149 @@
+{
+  "checks": {
+    "verifiable": {
+      "outcome": "pass",
+      "explanation": "The verifier is a deterministic pytest suite that reruns the agent's tool against 12 fixed hidden PDFs and compares its JSON output to quantities recomputed from a seeded vector plan model (plan.py); no LLM-as-judge, no runtime network installs, all deps baked into tests/Dockerfile."
+    },
+    "solvable": {
+      "outcome": "pass",
+      "explanation": "solution/takeoff.py is a complete ~1000-line OpenCV/numpy/scipy pipeline that the README documents as passing all three examples and all twelve hidden stores; the approach (deskew, scale calibration, legend matching, wall tracing, fixture cell counting) is a reasonable, bounded engineering effort for an expert already familiar with this problem domain."
+    },
+    "difficult": {
+      "outcome": "pass",
+      "explanation": "The task combines construction-estimating domain knowledge (centerline measurement conventions, drafting standards) with nontrivial computer-vision engineering (per-sheet legend-relative texture classification, sub-pixel wall/jamb tracing, scale calibration) that must generalize to five unseen architects' offices and four scan degradation states — well beyond an undergraduate course project."
+    },
+    "interesting": {
+      "outcome": "pass",
+      "explanation": "Automating quantity takeoffs from scanned as-built archives is a real need in retail construction/remodel programs, and the author states direct professional experience with this exact problem (4URSPACE)."
+    },
+    "outcome_verified": {
+      "outcome": "pass",
+      "explanation": "instruction.md specifies the end-state behavior (CLI interface, output format, estimating conventions, tolerances) without mandating any particular algorithm or library; tests only check the output JSON values, not implementation approach."
+    },
+    "anti_cheat_robustness": {
+      "outcome": "pass",
+      "explanation": "Hidden scans and the plan.py ground-truth generator live only in tests/ (separate verifier container, chmod go-rwx, built after the agent container is torn down); the agent's tool runs as an unprivileged user with no access to /tests, and the README documents an adversarial probe suite confirming cheats like reading /tests or leaving a reward-overwriting daemon score 0."
+    },
+    "task_security": {
+      "outcome": "pass",
+      "explanation": "All Dockerfiles, test.sh, solve.sh, and the Python sources perform only legitimate setup/build/verify actions; no exfiltration, obfuscation, or prompt injection was found."
+    },
+    "functional_verification": {
+      "outcome": "pass",
+      "explanation": "test_takeoff.py executes the agent's takeoff.py as a subprocess on real scanned PDFs and numerically compares its JSON output against computed ground truth; no string/keyword matching is used."
+    },
+    "deterministic_reproducible": {
+      "outcome": "pass",
+      "explanation": "All dependencies are version-pinned identically in environment/Dockerfile and tests/Dockerfile, the hidden store PDFs are static files baked into the verifier image, and the solution uses a fixed RNG seed (np.random.default_rng(0)) for its one stochastic step, so repeated verifier runs are reproducible."
+    },
+    "essential_difficulty": {
+      "outcome": "pass",
+      "explanation": "Difficulty comes from genuine image-understanding and geometric reasoning (legend-relative texture matching, wall centerline tracing, scale calibration) rather than output formatting; tolerances (2%/8sf, 1.5%/2lf) are generous enough that clerical precision is not the limiting factor."
+    },
+    "test_instruction_alignment": {
+      "outcome": "pass",
+      "explanation": "The test's four sections (floor_sf, wall_lf, doors, fixtures) and its stated tolerances (2%/8sf for areas, 1.5%/2lf for lengths, exact counts) directly mirror the quantities and tolerances enumerated in instruction.md, with no extra or missing requirements."
+    },
+    "novel": {
+      "outcome": "pass",
+      "explanation": "This is a bespoke synthetic domain (a fictional retail chain's CAD archive with per-office hatch variation and scan degradation) with no standard textbook or widely-available solution to memorize."
+    },
+    "agentic": {
+      "outcome": "pass",
+      "explanation": "Building and debugging a multi-stage CV pipeline against sample PDFs requires iterative exploration, experimentation, and testing across many files — this cannot be produced by a single zero-shot generation."
+    },
+    "reviewable": {
+      "outcome": "pass",
+      "explanation": "Ground truth is derived programmatically from tests/plan.py (not hardcoded), and the README's detailed difficulty/solution/verification explanations let a non-specialist reviewer follow the chain of reasoning even without construction-estimating expertise."
+    },
+    "instruction_concision": {
+      "outcome": "pass",
+      "explanation": "instruction.md uses absolute paths, states the end goal and required conventions without prescribing an implementation approach, and does not name any libraries or tools the agent should instead discover itself."
+    },
+    "effective_instruction_length": {
+      "outcome": "pass",
+      "level": "medium",
+      "explanation": "instruction.md is 378 words (multiplier 1.0, no extra referenced requirement documents); the detail is domain-necessary (estimating conventions, tolerances, runtime constraints) rather than padding or repetition."
+    },
+    "solution_quality": {
+      "outcome": "pass",
+      "explanation": "solve.sh copies the ~1000-line takeoff.py (a separate file, not a heredoc) into place and runs it against the example scans as a smoke test; the tool performs genuine image processing computation rather than emitting a precomputed answer."
+    },
+    "separate_verifier_configured": {
+      "outcome": "pass",
+      "explanation": "tests/Dockerfile bakes the exact same pinned numpy/scipy/opencv/pymupdf/scikit-image/shapely versions used in environment/Dockerfile into a dedicated /opt/runtime venv (byte-identical pins, no test.sh runtime installs), and all verifier tooling (pytest, pytest-json-ctrf) is pre-installed in /opt/verifier-venv."
+    },
+    "environment_hygiene": {
+      "outcome": "pass",
+      "explanation": "environment/Dockerfile only copies data/examples and installs the agent's runtime deps, never tests/ or solution/; tests/Dockerfile owns all test-only tooling; neither Dockerfile uses apt, so apt cleanup rules are not applicable."
+    },
+    "structured_data_schema": {
+      "outcome": "pass",
+      "explanation": "instruction.md explicitly states the example store-*.takeoff.json files 'are the format the tool has to write,' marking them as normative rather than illustrative, which satisfies the schema-documentation requirement."
+    },
+    "typos": {
+      "outcome": "pass",
+      "explanation": "Paths and filenames (/app/takeoff/takeoff.py, /app/examples/, takeoff.json, store codes, key names across plan.py/examples/tool output) are consistent across all files with no typos found."
+    },
+    "difficulty_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "README's Difficulty explanation describes the core challenge (per-office hatch variation, four scan degradation states, legend-relative matching) for both human estimators and agents, notes the data is synthetic but follows standard drafting practice, and names the realistic practitioner (construction technology/CV engineer), without citing any benchmark pass rates."
+    },
+    "solution_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "README's Solution explanation walks through the four-stage approach (prepare scan, classify finishes, trace walls/doors, count fixtures) at a level consistent with the actual function structure in takeoff.py."
+    },
+    "verification_explanation_quality": {
+      "outcome": "pass",
+      "explanation": "README's Verification explanation describes the separate-container setup, the seed-rebuilt plan-model ground truth, and justifies the area/length tolerances via a documented simulated-estimator click-error calibration, consistent with test_takeoff.py's actual checks."
+    },
+    "category_and_tags": {
+      "outcome": "pass",
+      "explanation": "Category 'Media' with subcategory 'Design' is a reasonable fit for a document-digitization/computer-vision task over architectural drawings, and tags (quantity-takeoff, construction-estimating, architectural-drawings, computer-vision, document-digitization, retail-remodel) are specific and relevant rather than generic."
+    },
+    "task_name": {
+      "outcome": "pass",
+      "explanation": "\"floorplan-takeoff-tool\" is a concise, descriptive, kebab-case, 3-word name that clearly conveys what the task involves."
+    },
+    "resource_configuration": {
+      "outcome": "pass",
+      "explanation": "Verifier timeout (4500s) comfortably covers 12 stores at up to 300s each plus overhead, agent timeout (8h) matches the task's professional-level difficulty, and the bumped memory (8GB) is justified by multi-megapixel image processing rather than being used to inflate difficulty artificially."
+    },
+    "task_readme": {
+      "outcome": "pass",
+      "explanation": "README.md includes all required sections (Difficulty, Solution, Verification explanations, Relevant experience) plus a task metadata summary, with no unnecessary duplication of instruction or solution code."
+    },
+    "expert_time_estimate_hours": {
+      "outcome": "pass",
+      "explanation": "The 6-hour estimate is nonzero and plausible for a domain expert with prior experience building similar takeoff tools, consistent with the difficulty explanation and the 8-hour agent timeout."
+    },
+    "task_toml_schema": {
+      "outcome": "pass",
+      "explanation": "task.toml contains only recognized fields across [task], [metadata], [verifier], [agent], and [environment], with no invented keys."
+    },
+    "no_extraneous_files": {
+      "outcome": "pass",
+      "explanation": "Every file in the task directory is referenced by a Dockerfile, test, or solve.sh (or is required scaffold), with no editor cruft, backups, or unused assets found."
+    },
+    "artifact_efficiency": {
+      "outcome": "pass",
+      "explanation": "The single artifact (/app/takeoff/) is the agent's small deliverable tool itself — no large build-time-fixed trees or dependency directories are shipped as artifacts, and no collect hooks are used."
+    },
+    "verifier_execution_isolation": {
+      "outcome": "pass",
+      "explanation": "The verifier runs the agent's takeoff.py via runuser as an unprivileged 'takeoff' user in a subprocess (never imported into the root pytest process), the reward directory is created by root with default non-writable permissions for other users, and kill_runner_processes (run both on timeout and unconditionally after each test, by UID rather than process group) sweeps up any backgrounded or double-forked processes before the root-derived reward is written."
+    },
+    "ctrf_reporting": {
+      "outcome": "pass",
+      "explanation": "test.sh runs pytest with --ctrf /logs/verifier/ctrf.json against test_takeoff.py's per-store parametrized tests, giving per-test granularity."
+    },
+    "do_not_modify_enforced": {
+      "outcome": "not_applicable",
+      "explanation": "instruction.md contains no constraint telling the agent not to modify, delete, or preserve any concrete artifact."
+    },
+    "binary_reward": {
+      "outcome": "pass",
+      "explanation": "test.sh writes exactly 1 or 0 to reward.txt based solely on pytest's exit status, with no fractional or weighted scoring path."
+    }
+  }
+}

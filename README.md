@@ -54,7 +54,7 @@ stores) was solved in all six official trials; its records are kept in
 | Check | Result | Record |
 |---|---|---|
 | Static checks (`scripts/checks/check-*.sh`, 28 checks) | 28 / 28 pass | [`results/static_checks.txt`](results/static_checks.txt) |
-| Implementation rubric review (claude-code + claude-sonnet-5, CI rubric) | RUBRIC_RESULT | [`results/rubric_review.json`](results/rubric_review.json) |
+| Implementation rubric review (claude-code + claude-sonnet-5, CI rubric) | 35 pass, 1 not applicable (`do_not_modify_enforced`), 0 fail | [`results/rubric_review.json`](results/rubric_review.json) |
 | Docker build (environment and verifier images) | builds | `harbor run` below |
 | Oracle validation | reward 1.0 (13/13 tests, 110 s) | [`results/oracle_nop.txt`](results/oracle_nop.txt) |
 | Nop validation | reward 0.0 (0/13 tests) | [`results/oracle_nop.txt`](results/oracle_nop.txt) |
