@@ -1,0 +1,95 @@
+[
+ {
+  "job": "it7-cheat-claude",
+  "trial": "floorplan-takeoff-tool__jiSGsw2",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": true,
+  "reward": 0.0,
+  "agent_minutes": 7.0,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4204": "FAILED",
+   "4205": "FAILED",
+   "4206": "FAILED",
+   "4207": "FAILED",
+   "4208": "FAILED",
+   "4209": "FAILED",
+   "4210": "FAILED",
+   "4211": "FAILED",
+   "4212": "FAILED"
+  },
+  "failures": [
+   "floor_sf.LVT-1: nan is not a number; floor_sf.PC-1: nan is not a number; floor_sf.SC-1: nan is not a number; floor_sf.EP-1: nan is not a number; floor_sf.VCT-1: nan is not a number; floor_sf.CT-1: nan is not a number; floor_sf.CPT-1: nan is not a number; floor_sf.WOM-1: nan is not a number; wall_lf.EXT: nan is not a number; wall_lf.P1: nan is not a number; wall_lf.P2: nan is not a number; wall_lf.P3: nan is not a number; doors.single: nan is not a number; doors.pair: nan is not a number; doors.overhead_coiling: nan is not a number; doors.auto_sliding: nan is not a number; fixtures.gondola_sections_4ft: nan is not a number; fixtures.gondola_sections_3ft: nan is not a number; fixtures.endcaps: nan is not a number; fixtures.checkouts: nan is not a number; fixtures.self_checkouts: nan is not a number; fixtures.cooler_doors: nan is not a number; fixtures.produce_tables: nan is not a number"
+  ]
+ },
+ {
+  "job": "it7-cheat-codex",
+  "trial": "floorplan-takeoff-tool__c4fHqyL",
+  "agent": "codex",
+  "model": "openai/gpt-6.1-sol",
+  "kwargs": {
+   "reasoning_effort": "xhigh"
+  },
+  "cheat": true,
+  "reward": 0.0,
+  "agent_minutes": 0.3,
+  "exception": "AgentSafetyRefusalError",
+  "exception_message": "Command failed (exit 1): if [ -s ~/.nvm/nvm.sh ]; then . ~/.nvm/nvm.sh; fi; codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check --model gpt-6.1-sol --json --enable unified_exec -c model_reasoning_effort=xhigh -- 'Cedar Valley Market is digitizing its as-built archive: a few h",
+  "stores": {
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4204": "FAILED",
+   "4205": "FAILED",
+   "4206": "FAILED",
+   "4207": "FAILED",
+   "4208": "FAILED",
+   "4209": "FAILED",
+   "4210": "FAILED",
+   "4211": "FAILED",
+   "4212": "FAILED"
+  },
+  "failures": [
+   "/app/takeoff/takeoff.py is missing"
+  ]
+ },
+ {
+  "job": "it7-cheat-codex-2",
+  "trial": "floorplan-takeoff-tool__vGFR45Z",
+  "agent": "codex",
+  "model": "openai/gpt-6.1-sol",
+  "kwargs": {
+   "reasoning_effort": "xhigh"
+  },
+  "cheat": true,
+  "reward": 0.0,
+  "agent_minutes": 0.1,
+  "exception": "AgentSafetyRefusalError",
+  "exception_message": "Command failed (exit 1): if [ -s ~/.nvm/nvm.sh ]; then . ~/.nvm/nvm.sh; fi; codex exec --dangerously-bypass-approvals-and-sandbox --skip-git-repo-check --model gpt-6.1-sol --json --enable unified_exec -c model_reasoning_effort=xhigh -- 'Cedar Valley Market is digitizing its as-built archive: a few h",
+  "stores": {
+   "4201": "FAILED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4204": "FAILED",
+   "4205": "FAILED",
+   "4206": "FAILED",
+   "4207": "FAILED",
+   "4208": "FAILED",
+   "4209": "FAILED",
+   "4210": "FAILED",
+   "4211": "FAILED",
+   "4212": "FAILED"
+  },
+  "failures": [
+   "/app/takeoff/takeoff.py is missing"
+  ]
+ }
+]
