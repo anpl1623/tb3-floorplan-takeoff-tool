@@ -278,6 +278,71 @@
  },
  {
   "job": "it7-run-claude",
+  "trial": "floorplan-takeoff-tool__6b7acCd",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": false,
+  "reward": 0.0,
+  "agent_minutes": 154.4,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4202": "PASSED",
+   "4203": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED",
+   "4207": "PASSED",
+   "4208": "PASSED",
+   "4209": "PASSED",
+   "4211": "PASSED",
+   "4212": "PASSED",
+   "4201": "FAILED",
+   "4210": "FAILED"
+  },
+  "failures": [
+   "doors.auto_sliding: expected 2, got 1",
+   "fixtures.cooler_doors: expected 29, got 27"
+  ]
+ },
+ {
+  "job": "it7-run-claude",
+  "trial": "floorplan-takeoff-tool__YTZsPf4",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": false,
+  "reward": 0.0,
+  "agent_minutes": 349.4,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "PASSED",
+   "4203": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED",
+   "4208": "PASSED",
+   "4209": "PASSED",
+   "4210": "PASSED",
+   "4211": "PASSED",
+   "4212": "PASSED",
+   "4202": "FAILED",
+   "4204": "FAILED",
+   "4207": "FAILED"
+  },
+  "failures": [
+   "doors.overhead_coiling: expected 1, got 4; doors.auto_sliding: expected 2, got 3",
+   "fixtures.cooler_doors: expected 33, got 34",
+   "floor_sf.LVT-1: expected 4640.7 (+/-92.8), got 2496.7; floor_sf.PC-1: expected 4386.2 (+/-87.7), got 6530.2"
+  ]
+ },
+ {
+  "job": "it7-run-claude",
   "trial": "floorplan-takeoff-tool__fBBJ7gq",
   "agent": "claude-code",
   "model": "anthropic/claude-opus-5-5",
