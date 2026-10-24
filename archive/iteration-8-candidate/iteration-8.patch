@@ -1,0 +1,54 @@
+diff --git a/dev/generate.py b/dev/generate.py
+index 4d1620e..1e40a89 100644
+--- a/dev/generate.py
++++ b/dev/generate.py
+@@ -35,10 +35,9 @@ TASK = ROOT / "tasks" / "floorplan-takeoff-tool"
+ SCANS = ["clean", "faded", "photocopy", "colour"]
+ # (seed, office, scan): the example sheets come from three offices, the hidden stores from the other five
+ EXAMPLES = [(3101, "NORTHLINE", "clean"), (3102, "HARGROVE", "photocopy"), (3103, "MERIDIAN", "colour")]
+-HIDDEN = [(4201, "CALLOWAY", "clean"), (4202, "CALLOWAY", "photocopy"), (4203, "BRANDT", "faded"),
+-          (4204, "BRANDT", "colour"), (4205, "STILLWATER", "photocopy"), (4206, "STILLWATER", "clean"),
+-          (4207, "KESSLER", "colour"), (4208, "KESSLER", "faded"), (4209, "ARDEN", "photocopy"),
+-          (4210, "ARDEN", "clean"), (4211, "CALLOWAY", "faded"), (4212, "KESSLER", "photocopy")]
++# thirty hidden stores, six from each hidden office, each office in every scan state
++HIDDEN = [(4201 + 6 * i + k, office, (SCANS + SCANS[2:])[(k + i) % 6])
++          for i, office in enumerate(HIDDEN_OFFICES) for k in range(6)]
+ BAYER = (np.array([[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]) + 0.5) / 16
+ 
+ 
+diff --git a/dev/render.py b/dev/render.py
+index e834f77..3ba2042 100644
+--- a/dev/render.py
++++ b/dev/render.py
+@@ -345,15 +345,9 @@ def draw_fixtures(sh, plan, z):
+ 
+ 
+ def draw_annotations(sh, plan, z):
+-    for code, x, y in plan.finish_tags:
+-        sx, sy = S(x, y)
+-        sh.ax.text(sx, sy, code, fontsize=6, ha="center", va="center", family="DejaVu Sans", zorder=z,
+-                   bbox=dict(boxstyle="round,pad=0.25", fc="white", ec="black", lw=0.4))
+-    for code, x, y in plan.wall_tags:
+-        sx, sy = S(x, y)
+-        sh.ax.add_patch(RegularPolygon((sx, sy), 6, radius=0.13, orientation=math.pi / 6, fc="white", ec="black",
+-                                       lw=0.45, zorder=z))
+-        sh.ax.text(sx, sy, code, fontsize=5, ha="center", va="center", family="DejaVu Sans", zorder=z + 0.1)
++    # These as-builts carry no finish or partition callouts on the plan: the hatch and poche, read
++    # against the sheet's legend, are the only record of which finish and wall type is where. (The
++    # plan model still reserves the callouts' places, so the layout is unchanged.)
+     for name, num, x, y in plan.rooms:
+         sx, sy = S(x, y)
+         sh.ax.text(sx, sy + 0.07, name, fontsize=7.5, fontweight="bold", ha="center", va="center",
+diff --git a/tasks/floorplan-takeoff-tool/task.toml b/tasks/floorplan-takeoff-tool/task.toml
+index 6795965..833aa19 100644
+--- a/tasks/floorplan-takeoff-tool/task.toml
++++ b/tasks/floorplan-takeoff-tool/task.toml
+@@ -22,7 +22,7 @@ tags = ["quantity-takeoff", "construction-estimating", "architectural-drawings",
+ expert_time_estimate_hours = 6
+ 
+ [verifier]
+-timeout_sec = 4500.0
++timeout_sec = 9600.0
+ environment_mode = "separate"
+ 
+ [agent]

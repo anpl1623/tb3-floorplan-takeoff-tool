@@ -402,7 +402,7 @@ fully right on 92 (the reference tool: 96; the three Claude trials' tools: 82, 8
 twelve-store hidden set passes about a third of the time, so the pass was neither a fluke nor
 something the tool would reliably repeat.
 
-**Iteration 8 candidate (not trialled).** Branch `iteration-8` removes the finish and partition
+**Iteration 8 candidate (not trialled).** [`archive/iteration-8-candidate`](../archive/iteration-8-candidate) removes the finish and partition
 callouts from the plans (the hatch and poché, read against the legend, become the only record) and
 raises the hidden set to thirty stores, six per hidden office in every scan state. A tool that is
 right on 92% of stores would pass thirty about 8% of the time. The reference tool passes all thirty

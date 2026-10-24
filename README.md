@@ -140,7 +140,7 @@ store, a twelve-store hidden set passes about a third of the time (0.92^12 = 0.3
 was not a fluke, but neither is this tool reliably right: with thirty hidden stores it would pass
 about 8% of the time.
 
-**What would likely have held.** An iteration 8 candidate is on the `iteration-8` branch: the plans
+**What would likely have held.** An iteration 8 candidate is in [`archive/iteration-8-candidate`](archive/iteration-8-candidate): the plans
 carry no finish or partition callouts (the hatch and poché, read against the legend, are the only
 record), and the verifier runs thirty hidden stores, six per hidden office in every scan state. The
 reference tool passes all thirty and the three examples, and the Docker oracle (31/31), nop, static
@@ -176,6 +176,7 @@ docs/iteration-7-design.md         the iteration 7 difficulty mechanism, written
 archive/v1-pos-promo-parity/       iteration 1 (POS promotion parity)
 archive/v2-store-remodel-takeoff/  iterations 2-4 (takeoff of one drawing set)
 archive/v3-remodel-rollout-plan/   iteration 5 (rollout schedule optimization)
+archive/iteration-8-candidate/     iteration 8: a patch, built and checked but not trialled
 ```
 
 ## Reproducing
