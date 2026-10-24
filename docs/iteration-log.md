@@ -363,3 +363,16 @@ rebuilt where the offices differ:
 
 It matches every quantity on the three examples and on all twelve hidden stores, and Docker oracle
 validation scores 1.0.
+
+**Pilots.** Both pilots failed, so the design went to the official runs.
+- Codex (GPT-6.1-sol, xhigh) worked for 158 minutes. Its tool passed 6 of the 12 hidden stores. Four
+  of the six misses were partition lengths: P1 short by 6-31 LF and P2 or P3 long by 6 LF, i.e. wall
+  runs typed wrong on offices it had not seen. The others were one single door and one cooler door.
+- Claude Code (Opus 5.5, max) hit the subscription rate limit after 88 minutes (`ApiRateLimitError`,
+  logged as infrastructure; its tool then passed 5 of 12). The rerun worked for 319 minutes and its
+  tool passed 7 of 12. It read a whole polished-concrete sales floor as sealed concrete on one store
+  and was 100 SF off between the two on another, typed a 10 ft run of P2 as P3, was four cooler
+  doors short on one store and one single door over on another.
+
+The misses are the legend-matching judgments the design is built on: which finish a region is and
+which partition type a wall run is, on drawing standards the examples don't show.
