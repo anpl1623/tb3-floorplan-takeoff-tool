@@ -69,5 +69,40 @@
    "floor_sf.LVT-1: expected 7161.6 (+/-143.2), got 12604.4; floor_sf.PC-1: expected 5439.1 (+/-108.8), got 0.0",
    "floor_sf.PC-1: expected 4395.1 (+/-87.9), got 0.0; floor_sf.SC-1: expected 2080.5 (+/-41.6), got 6484.1; doors.single: expected 13, got 12; fixtures.produce_tables: expected 3, got 2"
   ]
+ },
+ {
+  "job": "it7-pilot-claude-2",
+  "trial": "floorplan-takeoff-tool__RK7KPKg",
+  "agent": "claude-code",
+  "model": "anthropic/claude-opus-5-5",
+  "kwargs": {
+   "reasoning_effort": "max"
+  },
+  "cheat": false,
+  "reward": 0.0,
+  "agent_minutes": 318.6,
+  "exception": null,
+  "exception_message": null,
+  "stores": {
+   "4201": "PASSED",
+   "4204": "PASSED",
+   "4205": "PASSED",
+   "4206": "PASSED",
+   "4207": "PASSED",
+   "4209": "PASSED",
+   "4212": "PASSED",
+   "4202": "FAILED",
+   "4203": "FAILED",
+   "4208": "FAILED",
+   "4210": "FAILED",
+   "4211": "FAILED"
+  },
+  "failures": [
+   "doors.single: expected 12, got 13",
+   "fixtures.cooler_doors: expected 39, got 35",
+   "floor_sf.LVT-1: expected 4640.7 (+/-92.8), got 4461.4; floor_sf.PC-1: expected 4386.2 (+/-87.7), got 0.0; floor_sf.SC-1: expected 2056.9 (+/-41.1), got 6624.7",
+   "floor_sf.PC-1: expected 4166.3 (+/-83.3), got 4265.7; floor_sf.SC-1: expected 1752.2 (+/-35.0), got 1658.6",
+   "wall_lf.P2: expected 123.67 (+/-2.0), got 113.67; wall_lf.P3: expected 139.33 (+/-2.1), got 149.33"
+  ]
  }
 ]
